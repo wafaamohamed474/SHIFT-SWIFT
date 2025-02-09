@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Lato", serif;
+}
+img{
+    width: 100%;
+}
+:root{
+    --bg-color : #F9F6EE;
+    --fill-bg-color :#E9E9E9;
+    --main-color :#2B5B8D;
+    --main-text :#1E1E1E;
+    --dark-text : #706F6B;
+    --active-btn : #BDCCDC;
+    --disable-btn : #BBB9B3;
+    --light-hover : #DFE6EE;
+}

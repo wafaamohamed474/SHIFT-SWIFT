@@ -4,13 +4,13 @@ import Button from "../../../components/button/Button";
 
 const EducationSection = () => {
   return (
-    <div className="mt-4 border-b border-border-color pb-6">
+    <div className="mt-4  pb-6">
       <label className="font-semibold text-2xl text-main-color">
         Add Education
       </label>
       <Formik>
         <Form className="mt-5">
-          <div className="mt-4 w-full md:w-1/2">
+          <div className="mt-4 w-full md:w-2/3 lg:w-1/2">
             {/* Education Level */}
             <div className="mt-2">
               <label

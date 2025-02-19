@@ -24,7 +24,7 @@ const CompanySidebar = () => {
           <li><SidebarItem itemName="Edit Profile" icon={penIcon} url="/company/profile"/></li>
           <li><SidebarItem itemName="Settings" icon={settingsIcon} url="/company/settings"/></li>
           <li><SidebarItem itemName="My Reviews" icon={starIcon} url="/company/reviews"/></li>
-          <li><SidebarItem itemName="Notifications" icon={bellIcon} url="/company/notification"/></li>
+          <li><SidebarItem itemName="Notifications" icon={bellIcon} url="/company/notifications"/></li>
           <li><SidebarItem itemName="Help Center" icon={phoneIcon} url="/company/helpcenter"/></li>
           <li><SidebarItem itemName="About Us" icon={warningIcon} url="/company/about"/></li>
           <li><SidebarItem itemName="Sign Out" icon={logOutIcon} url="/home"/></li>

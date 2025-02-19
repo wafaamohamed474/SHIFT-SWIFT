@@ -3,13 +3,16 @@ import Main from "../layouts/main";
 import Home from "../pages/Home";
 import Auth from "../layouts/auth";
 import Login from "../pages/Login";
-import Company from "../layouts/company";
 import About from "../pages/About/About";
 import Profile from "../pages/Profile/Profile";
 import HelpCenter from "../pages/HelpCenter/HelpCenter";
 import Notification from "../pages/Notification/Notification";
 import Settings from "../pages/Settings/Settings";
 import Reviews from "../pages/Reviews/Reviews";
+import CompanyLayout from "../layouts/companyLayout";
+import UserLayout from "../layouts/userLayout";
+import MyJops from "../pages/MyJops/MyJops";
+import UserNotifications from "../pages/UserNotifications/UserNotifications";
 
 export const routes = createBrowserRouter([
   {
@@ -22,7 +25,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "company",
-        Component: Company,
+        Component: CompanyLayout,
         children: [
           {
             path: "about",
@@ -37,7 +40,7 @@ export const routes = createBrowserRouter([
             Component: HelpCenter
           },
           {
-            path: "notification",
+            path: "notifications",
             Component: Notification
           },
           {
@@ -50,6 +53,20 @@ export const routes = createBrowserRouter([
           },
         ],
       },
+      {
+        path : "user",
+        Component : UserLayout,
+        children :[
+          {
+            path: "myjobs",
+            Component: MyJops
+          },
+          {
+            path: "notifications",
+            Component: UserNotifications,
+          },
+        ]
+      }
     ],
   },
   {

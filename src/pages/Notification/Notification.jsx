@@ -1,5 +1,4 @@
-import { faToggleOff } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
 

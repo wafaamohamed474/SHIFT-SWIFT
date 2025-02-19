@@ -1,7 +1,7 @@
 import CompanySidebar from "../../components/companySidebar/CompanySidebar";
 import { Outlet } from "react-router-dom";
 
-const Company = () => {
+const CompanyLayout = () => {
   return (
     <div className="container">
       <div className="grid grid-cols-12 h-full">
@@ -16,4 +16,4 @@ const Company = () => {
   );
 };
 
-export default Company;
+export default CompanyLayout;

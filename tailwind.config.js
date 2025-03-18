@@ -10,6 +10,7 @@ export default {
         "bg-color": "var(--bg-color)",
         "fill-bg-color": "var(--fill-bg-color)",
         "main-color": "var(--main-color)",
+        "secondary-color": "var(--secondary-color)",
         "main-text": "var(--main-text)",
         "dark-text": "var(--dark-text)",
         "active-btn": "var(--active-btn)",

@@ -16,12 +16,12 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/company/reviews" className="text-base font-normal mx-2 Lg:mx-5">
+              <Link to="/reviews" className="text-base font-normal mx-2 Lg:mx-5">
                 Company Reviews
               </Link>
             </li>
             <li>
-              <Link to="/company/about" className="text-base font-normal mx-2 Lg:mx-5">
+              <Link to="/user/about" className="text-base font-normal mx-2 Lg:mx-5">
                 About Us
               </Link>
             </li>

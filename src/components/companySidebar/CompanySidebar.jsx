@@ -1,13 +1,9 @@
 
 import employer from "../../assets/61802b25e543f0595b8c08e4b4902fcf.png";
-import penIcon from "../../assets/Edit_Pencil_01.png"
-import settingsIcon from "../../assets/Settings.png"
-import starIcon from "../../assets/Star.png"
 import bellIcon from "../../assets/Bell.png"
-import phoneIcon from "../../assets/Phone.png"
-import warningIcon from "../../assets/Info.png"
-import logOutIcon from "../../assets/Log_Out.png"
+import bookIcon from "../../assets/Bookmark.png"
 import SidebarItem from "../sidebarItem/SidebarItem";
+import plusIcon from "../../assets/Add_Plus.png"
 
 const CompanySidebar = () => {
   return (
@@ -21,13 +17,9 @@ const CompanySidebar = () => {
       </div>
       <div>
         <ul>
-          <li><SidebarItem itemName="Edit Profile" icon={penIcon} url="/company/profile"/></li>
-          <li><SidebarItem itemName="Settings" icon={settingsIcon} url="/company/settings"/></li>
-          <li><SidebarItem itemName="My Reviews" icon={starIcon} url="/company/reviews"/></li>
-          <li><SidebarItem itemName="Notifications" icon={bellIcon} url="/company/notifications"/></li>
-          <li><SidebarItem itemName="Help Center" icon={phoneIcon} url="/company/helpcenter"/></li>
-          <li><SidebarItem itemName="About Us" icon={warningIcon} url="/company/about"/></li>
-          <li><SidebarItem itemName="Sign Out" icon={logOutIcon} url="/home"/></li>
+        <li><SidebarItem itemName="Post Job" icon={plusIcon} url="/company/postjob"/></li>
+        <li><SidebarItem itemName="Myjobs" icon={bookIcon} url="/company/myjobs"/></li>
+        <li><SidebarItem itemName="Notifications" icon={bellIcon} url="/company/notifications"/></li>
         </ul>
 
       </div>

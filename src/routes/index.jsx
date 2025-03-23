@@ -29,8 +29,8 @@ export const routes = createBrowserRouter([
         Component: MainHome
       },
       {
-        path: "company",
-        Component: CompanyLayout,
+        path: "user",
+        Component: UserLayout,
         children: [
           {
             path: "about",
@@ -59,8 +59,8 @@ export const routes = createBrowserRouter([
         ],
       },
       {
-        path : "user",
-        Component : UserLayout,
+        path : "company",
+        Component : CompanyLayout,
         children :[
           {
             path: "myjobs",

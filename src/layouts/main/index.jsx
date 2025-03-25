@@ -1,12 +1,6 @@
 import { Outlet } from "react-router"
 import Navbar from "../../components/navbar/Navbar"
-import Footer from "../../components/footer/footer"
- 
- 
-
-
- 
-
+import Footer from "../../components/Footer/Footer"
 const Main = () => {
   return (
     <>

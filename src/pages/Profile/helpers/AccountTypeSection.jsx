@@ -1,7 +1,5 @@
 import { Field, Form, Formik } from 'formik'
 import Button from '../../../components/button/Button'
- 
-
 const AccountTypeSection = () => {
   return (
    <div className="mt-4 border-b border-border-color pb-6">

@@ -1,7 +1,9 @@
+import React from 'react'
 import { Link } from "react-router";
 import employer from "../../assets/61802b25e543f0595b8c08e4b4902fcf.png";
+import Button from '../button/Button';
 
-const Navbar = () => {
+function index() {
   return (
     <div className="border-b border-border-color py-4">
       <div className="container flex justify-between items-center">
@@ -16,31 +18,28 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/reviews" className="text-base font-normal mx-2 Lg:mx-5">
+              <Link to="/company/reviews" className="text-base font-normal mx-2 Lg:mx-5">
                 Company Reviews
               </Link>
             </li>
             <li>
-              <Link to="/user/about" className="text-base font-normal mx-2 Lg:mx-5">
+              <Link to="/company/about" className="text-base font-normal mx-2 Lg:mx-5">
                 About Us
-              </Link>
-            </li>
-            <li>
-              <Link to="/mainHome" className="text-base font-normal mx-2 Lg:mx-5">
-                Main Home
               </Link>
             </li>
           </ul>
         </div>
-        <Link to="/" className="flex justify-between items-center">
-          <span className="mr-3">Employers / Post Job</span>
-          <div className="w-12 h-12 rounded-full overflow-hidden">
-            <img src={employer} />
-          </div>
-        </Link>
+        <div className="flex  items-center">
+          <Link to="/Login/employer">
+          <Button className="rounded-lg w-40  me-3" type="submit" label="For Employer" variant="primary" />
+          </Link>
+          <Link to="/Login/signIn">
+          <Button className="rounded-lg  w-40" type="submit" label="Sign In" variant="secondary" />
+          </Link>
+        </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default index

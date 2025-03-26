@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 const CompanyLayout = () => {
   return (
-    <div className="container">
+    <div className="container ">
       <div className="grid grid-cols-12 h-full">
         <div className=" hidden md:block md:col-span-3 border-r border-border-color pt-14 ">
           <CompanySidebar />

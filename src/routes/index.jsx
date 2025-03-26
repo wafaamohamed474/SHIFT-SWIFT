@@ -13,6 +13,8 @@ import CompanyLayout from "../layouts/companyLayout";
 import UserLayout from "../layouts/userLayout";
 import MyJops from "../pages/MyJops/MyJops";
 import UserNotifications from "../pages/UserNotifications/UserNotifications";
+import RegisterUser from "../pages/RegisterUser";
+import RegisterCompany from "../pages/RegisterCompany";
 
 export const routes = createBrowserRouter([
   {
@@ -76,6 +78,14 @@ export const routes = createBrowserRouter([
       {
         path: "login",
         Component: Login,
+      },
+      {
+        path: "register-user",
+        Component: RegisterUser,
+      },
+      {
+        path: "register-company",
+        Component: RegisterCompany,
       },
     ],
   },

@@ -38,14 +38,14 @@ const RegisterUser = () => {
       setError("");
       try {
         await RegisterMember(values);
-        navigate("/auth/login");
+        navigate("/login");
       } catch (error) {
         setError(error?.data);
       }
     },
   });
   return (
-    <div className="flex justify-center items-center min-h-screen bg-bg-color">
+    <div className="flex justify-center items-center h-[calc(100vh-30rem)] md:h-[calc(100vh-22rem)] lg:min-h-screenbg-bg-color">
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-main-text mb-4">Sign Up</h2>
         <form onSubmit={formik.handleSubmit}>
@@ -142,7 +142,7 @@ const RegisterUser = () => {
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <div className="mt-4 flex items-center justify-center">
           <p className="text-sm text-dark-text">Already have an account?</p>
-          <Link to="/auth/login" className="text-blue-500 hover:underline ml-1">
+          <Link to="/login" className="text-blue-500 hover:underline ml-1">
             Login
           </Link>
         </div>

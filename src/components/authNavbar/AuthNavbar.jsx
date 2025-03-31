@@ -1,9 +1,9 @@
-import React from 'react'
+ 
 import { Link } from "react-router";
-import employer from "../../assets/61802b25e543f0595b8c08e4b4902fcf.png";
+ 
 import Button from '../button/Button';
 
-function index() {
+const AuthNavbar =()=> {
   return (
     <div className="border-b border-border-color py-4">
       <div className="container flex justify-between items-center">
@@ -17,7 +17,7 @@ function index() {
                 Home
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/company/reviews" className="text-base font-normal mx-2 Lg:mx-5">
                 Company Reviews
               </Link>
@@ -26,14 +26,14 @@ function index() {
               <Link to="/company/about" className="text-base font-normal mx-2 Lg:mx-5">
                 About Us
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="flex  items-center">
-          <Link to="/Login/employer">
+          <Link to="/">
           <Button className="rounded-lg w-40  me-3" type="submit" label="For Employer" variant="primary" />
           </Link>
-          <Link to="/Login/signIn">
+          <Link to="/login">
           <Button className="rounded-lg  w-40" type="submit" label="Sign In" variant="secondary" />
           </Link>
         </div>
@@ -42,4 +42,4 @@ function index() {
   )
 }
 
-export default index
+export default AuthNavbar

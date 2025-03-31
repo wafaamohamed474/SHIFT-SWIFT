@@ -17,11 +17,10 @@ const CompanySidebar = () => {
       </div>
       <div>
         <ul>
-        <li><SidebarItem itemName="Post Job" icon={plusIcon} url="/company/postjob"/></li>
-        <li><SidebarItem itemName="Myjobs" icon={bookIcon} url="/company/myjobs"/></li>
-        <li><SidebarItem itemName="Notifications" icon={bellIcon} url="/company/notifications"/></li>
+        <li><SidebarItem itemName="Post Job" icon={plusIcon} url="/home/company/postjob"/></li>
+        <li><SidebarItem itemName="Myjobs" icon={bookIcon} url="/home/company/myjobs"/></li>
+        <li><SidebarItem itemName="Notifications" icon={bellIcon} url="/home/company/notifications"/></li>
         </ul>
-
       </div>
     </div>
   );

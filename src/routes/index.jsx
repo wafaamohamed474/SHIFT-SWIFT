@@ -1,8 +1,6 @@
 import { createBrowserRouter } from "react-router";
-import Main from "../layouts/main";
 import Home from "../pages/Home";
-import MainHome from "../pages/MainHome/Home"
-import Auth from "../layouts/auth";
+import MainHome from "../pages/MainHome/Home";
 import Login from "../pages/Login";
 import About from "../pages/About/About";
 import Profile from "../pages/Profile/Profile";
@@ -16,20 +14,19 @@ import MyJops from "../pages/MyJops/MyJops";
 import UserNotifications from "../pages/UserNotifications/UserNotifications";
 import RegisterUser from "../pages/RegisterUser";
 import RegisterCompany from "../pages/RegisterCompany";
+import PublicLayout from "../layouts/publicLayout";
+import PrivateLayout from "../layouts/privateLayout";
 
 export const routes = createBrowserRouter([
   {
-    path: "/",
-    Component: Main,
+    path: "/home",
+    Component: PrivateLayout,
     children: [
       {
         path: "",
-        Component: Home,
+        Component: MainHome,
       },
-      {
-        path: "mainHome",
-        Component: MainHome
-      },
+
       {
         path: "user",
         Component: UserLayout,
@@ -40,46 +37,50 @@ export const routes = createBrowserRouter([
           },
           {
             path: "profile",
-            Component: Profile
+            Component: Profile,
           },
           {
             path: "helpcenter",
-            Component: HelpCenter
+            Component: HelpCenter,
           },
           {
             path: "notifications",
-            Component: Notification
+            Component: Notification,
           },
           {
             path: "settings",
-            Component: Settings
+            Component: Settings,
           },
           {
             path: "reviews",
-            Component: Reviews
+            Component: Reviews,
           },
         ],
       },
       {
-        path : "company",
-        Component : CompanyLayout,
-        children :[
+        path: "company",
+        Component: CompanyLayout,
+        children: [
           {
             path: "myjobs",
-            Component: MyJops
+            Component: MyJops,
           },
           {
             path: "notifications",
             Component: UserNotifications,
           },
-        ]
-      }
+        ],
+      },
     ],
   },
   {
-    path: "/auth",
-    Component: Auth,
+    path: "/",
+    Component: PublicLayout,
     children: [
+      {
+        path: "",
+        Component: Home,
+      },
       {
         path: "login",
         Component: Login,

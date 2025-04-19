@@ -10,11 +10,12 @@ import Reviews from "../pages/Reviews/Reviews";
 import CompanyLayout from "../layouts/companyLayout";
 import UserLayout from "../layouts/userLayout";
 import MyJops from "../pages/MyJops/MyJops";
-import UserNotifications from "../pages/UserNotifications/UserNotifications";
 import RegisterUser from "../pages/RegisterUser";
 import RegisterCompany from "../pages/RegisterCompany";
 import PublicLayout from "../layouts/publicLayout";
 import PrivateLayout from "../layouts/privateLayout";
+import ProtectedRoute from "../components/protectedRoute/ProtectedRoute";
+import PostJob from "../pages/PostJob/PostJob";
 
 export const routes = createBrowserRouter([
   {
@@ -61,8 +62,8 @@ export const routes = createBrowserRouter([
         Component: CompanyLayout,
         children: [
           {
-            path: "notifications",
-            Component: UserNotifications,
+            path: "postjob",
+            Component: PostJob,
           },
         ],
       },

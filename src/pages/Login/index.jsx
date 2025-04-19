@@ -23,7 +23,13 @@ const Login = () => {
       setError("")
       try {
         const userData = await login(values , userType)
-        userData && navigate("/home");
+        if (userData) {
+          if (userType === "user") {
+            navigate("/home");
+          } else if (userType === "company") {
+            navigate("/home/company/postjob");
+          }
+        }
       } catch (error) {
         console.error("Login failed:", error);
         setError(error?.data);
@@ -54,7 +60,6 @@ const Login = () => {
               <p className="text-red-500 text-sm">{formik.errors.userName}</p>
             ) : null}
           </div>
-
           <div className="mb-4">
             <div className="flex items-center w-full px-2 py-2 border text-md font-medium rounded-md">
               <FontAwesomeIcon icon={faLock} />

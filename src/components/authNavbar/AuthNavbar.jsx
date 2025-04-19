@@ -17,24 +17,21 @@ const AuthNavbar =()=> {
                 Home
               </Link>
             </li>
-            {/* <li>
-              <Link to="/company/reviews" className="text-base font-normal mx-2 Lg:mx-5">
-                Company Reviews
-              </Link>
-            </li>
+            
             <li>
-              <Link to="/company/about" className="text-base font-normal mx-2 Lg:mx-5">
+              <Link to="/" className="text-base font-normal mx-2 Lg:mx-5">
                 About Us
               </Link>
-            </li> */}
+            </li>
           </ul>
         </div>
         <div className="flex  items-center">
-          <Link to="/">
-          <Button className="rounded-lg w-40  me-3" type="submit" label="For Employer" variant="primary" />
+          
+          <Link to="/login" className="mx-1">
+          <Button className="rounded-lg  w-40" type="submit" label="Login" variant="secondary" />
           </Link>
-          <Link to="/login">
-          <Button className="rounded-lg  w-40" type="submit" label="Sign In" variant="secondary" />
+          <Link to="/" className="mx-1">
+          <Button className="rounded-lg w-40  me-3" type="submit" label="Sign Up" variant="primary" />
           </Link>
         </div>
       </div>

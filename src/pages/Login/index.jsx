@@ -31,7 +31,7 @@ const Login = () => {
   }});
 
   return (
-    <div className="flex justify-center items-center h-[calc(100vh-30rem)] md:h-[calc(100vh-22rem)] lg:min-h-screen bg-bg-color">
+    <div className="flex justify-center items-center h-[calc(100vh-20rem)] md:h-[calc(100vh-22rem)] lg:min-h-screen bg-bg-color">
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-main-text mb-4">Login</h2>
         <form onSubmit={formik.handleSubmit}>

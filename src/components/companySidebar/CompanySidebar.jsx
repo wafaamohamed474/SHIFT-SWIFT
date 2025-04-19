@@ -5,7 +5,7 @@ import bookIcon from "../../assets/Bookmark.png"
 import SidebarItem from "../sidebarItem/SidebarItem";
 import plusIcon from "../../assets/Add_Plus.png"
 
-const CompanySidebar = () => {
+const CompanySidebar = ({onItemClick}) => {
   return (
     <div className="w-full pr-5">
       <div className="w-full h-48 rounded-md bg-main-color flex flex-col justify-center items-center">
@@ -17,9 +17,9 @@ const CompanySidebar = () => {
       </div>
       <div>
         <ul>
-        <li><SidebarItem itemName="Post Job" icon={plusIcon} url="/home/company/postjob"/></li>
-        <li><SidebarItem itemName="Myjobs" icon={bookIcon} url="/home/company/myjobs"/></li>
-        <li><SidebarItem itemName="Notifications" icon={bellIcon} url="/home/company/notifications"/></li>
+        <li><SidebarItem onClick={onItemClick}  itemName="Post Job" icon={plusIcon} url="/home/company/postjob"/></li>
+        <li><SidebarItem onClick={onItemClick}  itemName="Myjobs" icon={bookIcon} url="/home/company/myjobs"/></li>
+        <li><SidebarItem onClick={onItemClick}  itemName="Notifications" icon={bellIcon} url="/home/company/notifications"/></li>
         </ul>
       </div>
     </div>

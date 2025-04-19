@@ -5,7 +5,6 @@ import Login from "../pages/Login";
 import About from "../pages/About/About";
 import Profile from "../pages/Profile/Profile";
 import HelpCenter from "../pages/HelpCenter/HelpCenter";
-import Notification from "../pages/Notification/Notification";
 import Settings from "../pages/Settings/Settings";
 import Reviews from "../pages/Reviews/Reviews";
 import CompanyLayout from "../layouts/companyLayout";
@@ -44,10 +43,6 @@ export const routes = createBrowserRouter([
             Component: HelpCenter,
           },
           {
-            path: "notifications",
-            Component: Notification,
-          },
-          {
             path: "settings",
             Component: Settings,
           },
@@ -55,16 +50,16 @@ export const routes = createBrowserRouter([
             path: "reviews",
             Component: Reviews,
           },
+          {
+            path: "myjobs",
+            Component: MyJops,
+          },
         ],
       },
       {
         path: "company",
         Component: CompanyLayout,
         children: [
-          {
-            path: "myjobs",
-            Component: MyJops,
-          },
           {
             path: "notifications",
             Component: UserNotifications,

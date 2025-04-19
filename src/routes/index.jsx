@@ -11,11 +11,15 @@ import Reviews from "../pages/Reviews/Reviews";
 import CompanyLayout from "../layouts/companyLayout";
 import UserLayout from "../layouts/userLayout";
 import MyJops from "../pages/MyJops/MyJops";
+import PostJop from "../pages/PostJob/PostJob";
 import UserNotifications from "../pages/UserNotifications/UserNotifications";
 import RegisterUser from "../pages/RegisterUser";
 import RegisterCompany from "../pages/RegisterCompany";
 import PublicLayout from "../layouts/publicLayout";
 import PrivateLayout from "../layouts/privateLayout";
+import CreatePost from "../pages/PostJob/helpers/CreatePost";
+import ContinueCreatePost from "../pages/PostJob/helpers/ContinueCreatePost";
+import Requists from "../pages/PostJob/helpers/Requists";
 
 export const routes = createBrowserRouter([
   {
@@ -26,7 +30,6 @@ export const routes = createBrowserRouter([
         path: "",
         Component: MainHome,
       },
-
       {
         path: "user",
         Component: UserLayout,
@@ -61,6 +64,22 @@ export const routes = createBrowserRouter([
         path: "company",
         Component: CompanyLayout,
         children: [
+          {
+            path: "postjob",
+            Component: PostJop,
+          },        
+          {
+            path: "continue-createpost",
+            Component: ContinueCreatePost,
+          },
+          {
+            path: "createpost",
+            Component: CreatePost,
+          },
+          {
+            path: "requists",
+            Component: Requists,
+          },
           {
             path: "myjobs",
             Component: MyJops,

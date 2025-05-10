@@ -39,8 +39,10 @@ export const getUserData = () => {
     return null;
 };
 export const getUserType = () => {
-    return Cookies.get("user_type");
+    const userType = Cookies.get("user_type");
+    return userType || null
   };
+ 
 export const logout = () => {
     Cookies.remove("auth_token");
     Cookies.remove("user_data");

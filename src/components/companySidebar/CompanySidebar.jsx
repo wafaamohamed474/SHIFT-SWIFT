@@ -4,6 +4,11 @@ import bellIcon from "../../assets/Bell.png"
 import bookIcon from "../../assets/Bookmark.png"
 import SidebarItem from "../sidebarItem/SidebarItem";
 import plusIcon from "../../assets/Add_Plus.png"
+import penIcon from "../../assets/Edit_Pencil_01.png"
+import settingsIcon from "../../assets/Settings.png"
+import starIcon from "../../assets/Star.png"
+import phoneIcon from "../../assets/Phone.png"
+import warningIcon from "../../assets/Info.png"
 
 const CompanySidebar = ({onItemClick}) => {
   return (
@@ -19,7 +24,12 @@ const CompanySidebar = ({onItemClick}) => {
         <ul>
         <li><SidebarItem onClick={onItemClick}  itemName="Post Job" icon={plusIcon} url="/home/company/postjob"/></li>
         <li><SidebarItem onClick={onItemClick}  itemName="Myjobs" icon={bookIcon} url="/home/company/myjobs"/></li>
-        <li><SidebarItem onClick={onItemClick}  itemName="Notifications" icon={bellIcon} url="/home/company/notifications"/></li>
+        <li ><SidebarItem onClick={onItemClick}  itemName="Edit Profile" icon={penIcon} url="/home/company/profile"/></li>
+        <li><SidebarItem onClick={onItemClick} itemName="Settings" icon={settingsIcon} url="/home/company/settings"/></li>
+        <li><SidebarItem onClick={onItemClick} itemName="My Reviews" icon={starIcon} url="/home/company/reviews"/></li>
+        <li><SidebarItem onClick={onItemClick} itemName="Help Center" icon={phoneIcon} url="/home/company/helpcenter"/></li>
+        <li><SidebarItem onClick={onItemClick} itemName="About Us" icon={warningIcon} url="/home/company/about"/></li>
+        
         </ul>
       </div>
     </div>

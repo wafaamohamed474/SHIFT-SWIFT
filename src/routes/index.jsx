@@ -16,6 +16,7 @@ import PublicLayout from "../layouts/publicLayout";
 import PrivateLayout from "../layouts/privateLayout";
 import ProtectedRoute from "../components/protectedRoute/ProtectedRoute";
 import PostJob from "../pages/PostJob/PostJob";
+import CompanyProfile from "../pages/CompanyProfile/CompanyProfile";
 
 export const routes = createBrowserRouter([
   {
@@ -48,10 +49,6 @@ export const routes = createBrowserRouter([
             Component: Settings,
           },
           {
-            path: "reviews",
-            Component: Reviews,
-          },
-          {
             path: "myjobs",
             Component: MyJops,
           },
@@ -64,6 +61,26 @@ export const routes = createBrowserRouter([
           {
             path: "postjob",
             Component: PostJob,
+          },
+          {
+            path: "about",
+            Component: About,
+          },
+          {
+            path: "profile",
+            Component: CompanyProfile,
+          },
+          {
+            path: "helpcenter",
+            Component: HelpCenter,
+          },
+          {
+            path: "settings",
+            Component: Settings,
+          },
+          {
+            path: "reviews",
+            Component: Reviews,
           },
         ],
       },

@@ -12,7 +12,7 @@ import User from "../../assets/mainuser.png";
 import VectorTech from "../../assets/Vector_tech.png";
 import Logo from '../../assets/logo.png';
 import SearchIcon from '../../assets/Search_Magnifying_Glass.png';
-import Cards  from './helpers/Cards';
+import ReviewCards  from './helpers/Cards';
 import Team from '../../assets/team.png';
 import Share from '../../assets/share.png';
 import Flag from '../../assets/Flag.png';
@@ -179,7 +179,7 @@ function Home() {
               </div>
               {/*Reviews*/}
               <div className=''>
-                <Cards />
+                <ReviewCards />
               </div>
               {/*Hiring Team*/}
               <div className='bg-fill-bg-color rounded-lg p-3 border-[0.5px] border-gray-300'>

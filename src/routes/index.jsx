@@ -1,26 +1,22 @@
 import { createBrowserRouter } from "react-router";
 import Home from "../pages/Home";
-import MainHome from "../pages/MainHome/Home";
+import CompanyHome from "../pages/CompanyHome/Home";
 import Login from "../pages/Login";
 import About from "../pages/About/About";
 import Profile from "../pages/Profile/Profile";
 import HelpCenter from "../pages/HelpCenter/HelpCenter";
-import Notification from "../pages/Notification/Notification";
 import Settings from "../pages/Settings/Settings";
 import Reviews from "../pages/Reviews/Reviews";
 import CompanyLayout from "../layouts/companyLayout";
 import UserLayout from "../layouts/userLayout";
 import MyJops from "../pages/MyJops/MyJops";
-import PostJop from "../pages/PostJob/PostJob";
-import UserNotifications from "../pages/UserNotifications/UserNotifications";
+import Applicants from "../pages/Applicants/Applicants";
 import RegisterUser from "../pages/RegisterUser";
 import RegisterCompany from "../pages/RegisterCompany";
 import PublicLayout from "../layouts/publicLayout";
 import PrivateLayout from "../layouts/privateLayout";
-import CreatePost from "../pages/PostJob/helpers/CreatePost";
-import ContinueCreatePost from "../pages/PostJob/helpers/ContinueCreatePost";
-import Requists from "../pages/PostJob/helpers/Requists";
-
+import ProtectedRoute from "../components/protectedRoute/ProtectedRoute";
+import Post from "../pages/PostJob/CreatePost";
 export const routes = createBrowserRouter([
   {
     path: "/home",
@@ -28,7 +24,7 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: "",
-        Component: MainHome,
+        Component: CompanyHome,
       },
       {
         path: "user",
@@ -47,16 +43,16 @@ export const routes = createBrowserRouter([
             Component: HelpCenter,
           },
           {
-            path: "notifications",
-            Component: Notification,
-          },
-          {
             path: "settings",
             Component: Settings,
           },
           {
             path: "reviews",
             Component: Reviews,
+          },
+          {
+            path: "myjobs",
+            Component: MyJops,
           },
         ],
       },
@@ -66,27 +62,11 @@ export const routes = createBrowserRouter([
         children: [
           {
             path: "postjob",
-            Component: PostJop,
+            Component: Post,
           },        
           {
-            path: "continue-createpost",
-            Component: ContinueCreatePost,
-          },
-          {
-            path: "createpost",
-            Component: CreatePost,
-          },
-          {
-            path: "requists",
-            Component: Requists,
-          },
-          {
-            path: "myjobs",
-            Component: MyJops,
-          },
-          {
-            path: "notifications",
-            Component: UserNotifications,
+            path: "applicants",
+            Component: Applicants,
           },
         ],
       },

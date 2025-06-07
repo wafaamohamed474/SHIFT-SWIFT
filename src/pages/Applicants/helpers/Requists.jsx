@@ -1,16 +1,24 @@
 import {  faGraduationCap, faLeftLong, faLocationDot, faPhone, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import compnayLogo from "../../../assets/Frame 1618873262.png";
+import { useNavigate } from "react-router-dom";
 
+function Requists({ applicant }) {
+  const navigate = useNavigate();
 
-function Requists() {
   return (
-    <div className="w-full">
+    <div className="w-full mt-10">
     <div className="md:pl-10 ">
+    <button
+  onClick={() => navigate(-1)}
+  className="mb-6 flex items-center gap-2 text-sm text-main-color border border-main-color px-3 py-1.5 rounded-md hover:bg-main-color hover:text-white transition w-fit"
+>
+  <span className="text-base">←</span> Back
+</button>
       <h1 className="font-bold text-4xl pb-10">Requests Recieved</h1>
       <div className="flex border-b border-dark-text pb-5">
       <div className="w-24">
-              <img src={compnayLogo} />
+              <img src={applicant.applicantPhoto} />
            </div>
            <div className="md:pl-10">
               <h2 className="font-semibold text-3xl mb-1">Medical Asistant</h2>

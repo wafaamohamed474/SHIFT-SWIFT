@@ -14,3 +14,26 @@ export const addEducation = async (data , MemberID)=>{
     }
 
 }
+
+export const getAllSavedJobs = async(MemberID)=>{
+    try{
+        const response = await apiClient.get(`/Member/GetAllSavedJobs/${MemberID}`)
+        return response.data
+    }catch(error){
+        console.error("Error retreive saved jobs:", error.response?.data || error)
+        throw error.response?.data || error;
+
+    }
+
+}
+export const getAllMyJobApplications = async(MemberID)=>{
+    try{
+        const response = await apiClient.get(`/Member/GetAllMyJobApplications/${MemberID}`)
+        return response.data
+    }catch(error){
+        console.error("Error retreive job applications:", error.response?.data || error)
+        throw error.response?.data || error;
+
+    }
+
+}

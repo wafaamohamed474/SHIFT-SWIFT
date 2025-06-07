@@ -7,6 +7,7 @@ export const login = async (data , userType)=>{
             Cookies.set('auth_token' , response.token , {expires : 10 , secure : true})
             const userData = userType === 'user'? response.memberResponse : response.companyResponse
             Cookies.set('user_data' , JSON.stringify(userData) , {expires : 10 , secure : true})
+            Cookies.set("user_type", userType, { expires: 10, secure: true });
             return userData
         }
     } catch (error) {
@@ -37,7 +38,9 @@ export const getUserData = () => {
     }
     return null;
 };
-
+export const getUserType = () => {
+    return Cookies.get("user_type");
+  };
 export const logout = () => {
     Cookies.remove("auth_token");
     Cookies.remove("user_data");

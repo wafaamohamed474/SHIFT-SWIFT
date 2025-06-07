@@ -1,6 +1,6 @@
 import employer from "../../assets/61802b25e543f0595b8c08e4b4902fcf.png";
 import SidebarItem from "../sidebarItem/SidebarItem";
-import bellIcon from "../../assets/Bell.png"
+import bookMarkIcon from "../../assets/Bookmark.png"
 import penIcon from "../../assets/Edit_Pencil_01.png"
 import settingsIcon from "../../assets/Settings.png"
 import starIcon from "../../assets/Star.png"
@@ -8,10 +8,8 @@ import phoneIcon from "../../assets/Phone.png"
 import warningIcon from "../../assets/Info.png"
 import { getUserData } from "../../services/authService";
 import LogoutButton from "../logoutButton/LogoutButton";
-
-const UserSidbar = () => {
+const UserSidbar = ({onItemClick}) => {
   const {userName , email}= getUserData()
-  
   return (
     <div className="w-full pr-5">
     <div className="w-full h-48 rounded-md bg-main-color flex flex-col justify-center items-center">
@@ -23,12 +21,12 @@ const UserSidbar = () => {
     </div>
     <div>
       <ul>
-        <li><SidebarItem itemName="Edit Profile" icon={penIcon} url="/home/user/profile"/></li>
-          <li><SidebarItem itemName="Settings" icon={settingsIcon} url="/home/user/settings"/></li>
-          <li><SidebarItem itemName="My Reviews" icon={starIcon} url="/home/user/reviews"/></li>
-          <li><SidebarItem itemName="Notifications" icon={bellIcon} url="/home/user/notifications"/></li>
-          <li><SidebarItem itemName="Help Center" icon={phoneIcon} url="/home/user/helpcenter"/></li>
-          <li><SidebarItem itemName="About Us" icon={warningIcon} url="/home/user/about"/></li>
+          <li><SidebarItem onClick={onItemClick} itemName="My Jobs" icon={bookMarkIcon} url="/home/user/myjobs"/></li>
+          <li ><SidebarItem onClick={onItemClick}  itemName="Edit Profile" icon={penIcon} url="/home/user/profile"/></li>
+          <li><SidebarItem onClick={onItemClick} itemName="Settings" icon={settingsIcon} url="/home/user/settings"/></li>
+          <li><SidebarItem onClick={onItemClick} itemName="My Reviews" icon={starIcon} url="/home/user/reviews"/></li>
+          <li><SidebarItem onClick={onItemClick} itemName="Help Center" icon={phoneIcon} url="/home/user/helpcenter"/></li>
+          <li><SidebarItem onClick={onItemClick} itemName="About Us" icon={warningIcon} url="/home/user/about"/></li>
           <li><LogoutButton/></li>  
       </ul>
     </div>

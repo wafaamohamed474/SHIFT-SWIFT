@@ -4,7 +4,7 @@ function SideJobsSection() {
   return (
     <div className="container border-y border-border-color pb-20">
       <div className="flex flex-col items-center py-10">
-        <h6 className="font-semibold text-2xl lg:text-4xl">
+        <h6 className="font-semibold text-2xl lg:text-4xl mb-5">
           Side jobs and temp staff across Egypt
         </h6>
         <p>Reach your Job goals fast with the world`s #1 Job app</p>

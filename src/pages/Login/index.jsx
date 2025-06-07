@@ -23,7 +23,13 @@ const Login = () => {
       setError("")
       try {
         const userData = await login(values , userType)
-        userData && navigate("/home");
+        if (userData) {
+          if (userType === "user") {
+            navigate("/home");
+          } else if (userType === "company") {
+            navigate("/home/company/postjob");
+          }
+        }
       } catch (error) {
         console.error("Login failed:", error);
         setError(error?.data);
@@ -31,7 +37,7 @@ const Login = () => {
   }});
 
   return (
-    <div className="flex justify-center items-center h-[calc(100vh-30rem)] md:h-[calc(100vh-22rem)] lg:min-h-screen bg-bg-color">
+    <div className="flex justify-center items-center h-[calc(100vh-20rem)] md:h-[calc(100vh-22rem)] lg:min-h-screen bg-bg-color">
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-main-text mb-4">Login</h2>
         <form onSubmit={formik.handleSubmit}>
@@ -54,7 +60,6 @@ const Login = () => {
               <p className="text-red-500 text-sm">{formik.errors.userName}</p>
             ) : null}
           </div>
-
           <div className="mb-4">
             <div className="flex items-center w-full px-2 py-2 border text-md font-medium rounded-md">
               <FontAwesomeIcon icon={faLock} />

@@ -1,5 +1,6 @@
 
 import Button from "../../../components/button/Button";
+import LogoutButton from "../../../components/logoutButton/LogoutButton";
 
 const devices = [
   {
@@ -47,7 +48,7 @@ const DeviceManagementSection = () => {
               {device.isCurrent ? (
                 <span className="text-dark-text">This Device</span>
               ) : ( 
-                <Button type="button" variant="primary" label="Sign Out"/>
+                 <LogoutButton/>
               )}
             </div>
           </div>

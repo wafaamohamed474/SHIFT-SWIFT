@@ -1,9 +1,14 @@
 import { Link } from "react-router";
-import employer from "../../assets/61802b25e543f0595b8c08e4b4902fcf.png";
-import { getUserData } from "../../services/authService";
+ 
+import { getUserData, getUserType } from "../../services/authService";
+import userLogo from "../../assets/userLogo.jpg"
 
 const Navbar = () => {
-  const Name = getUserData().userName;
+  const Name = getUserData().firstName + ' ' + getUserData().lastName;
+  const  userType =  getUserType()
+
+  const profilePath = userType === "company" ? "/home/company/profile" : "/home/user/profile";
+
   return (
     <div className="border-b border-border-color py-4">
       <div className="container flex justify-between items-center">
@@ -24,10 +29,10 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <Link to="/home/user/profile" className="flex justify-between items-center">
+        <Link to= {profilePath} className="flex justify-between items-center">
           <span className="mr-3">{Name}</span>
           <div className="w-12 h-12 rounded-full overflow-hidden">
-            <img src={employer} />
+            <img src={userLogo} />
           </div>
         </Link>
       </div>

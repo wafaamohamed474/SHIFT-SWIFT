@@ -1,11 +1,26 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { createJobPost } from "../../services/api/company";
-import { getUserData } from "../../services/authService";
 import { useNavigate } from "react-router";
 
 function CreatePost() {
   const navigate = useNavigate();
+  const jobTypeMap = {
+  "Full Time": 1,
+  "Part Time": 2,
+  "Freelance": 3,
+};
+
+const workModeMap = {
+  "On Site": 1,
+  "Remotely": 2,
+  "Hybrid": 3,
+};
+const salaryType ={
+  "Per Month" :1,
+  "Per Hour":2,
+  "Contract":3
+}
   const validationSchema = Yup.object({
     JobTitle: Yup.string().required("Job Title is required"),
     JobType: Yup.string().required("Job Type is required"),
@@ -22,16 +37,15 @@ function CreatePost() {
               title: values.JobTitle,
               description: values.JobDescription,
               location: values.city,
-              jobType: parseInt(values.JobType),
-              workMode: parseInt(values.JobLocation),
+              jobType: jobTypeMap[values.JobType] || 0,
+              workMode: workModeMap[values.JobLocation] || 0,
               salary: parseFloat(values.Salary),
-              salaryType: parseInt(values.SalaryType),
+              salaryType: salaryType[values.salaryType] || 0,
               requirements: values.JobRequirements,
-              keywords: values.Keywords || "",
             };
       await createJobPost(payload);
       //console.log("Job post created successfully!");
-      navigate("");
+      navigate("/home");
     } catch (error) {
       console.error("Error creating job post:", error);
     }
@@ -51,132 +65,75 @@ function CreatePost() {
             SalaryType: "",
             JobDescription: "",
             JobRequirements: "",
-            Keywords: "",
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          <Form className="flex flex-col">
+          <Form className="flex flex-col gap-8">
             {/* Job Title */}
-            <label className="font-semibold text-2xl text-main-color">
+            <label className="font-semibold text-2xl text-main-color ">
               Job Title <span className="text-red-500 text-md">*</span>
             </label>
             <Field
               name="JobTitle"
               placeholder="Enter Here"
-              className="border border-dark-text rounded px-2 py-2 my-5 text-sm w-full bg-transparent focus:outline-none text-dark-text"
+              className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text"
             />
             <ErrorMessage
               name="JobTitle"
               component="div"
               className="text-red-500 text-sm"
             />
-           {/* Job Type */}
+           {/* Job Type */}          
 <label className="font-semibold text-2xl text-main-color">
   Job Type <span className="text-red-500 text-md">*</span>
 </label>
-<div className="flex gap-8 mt-2">
-  <div className="flex gap-4 my-5">
-    <div className="flex items-center gap-2">
-      <Field
-        type="radio"
-        name="JobType"
-        value="1"
-        className="border border-main-color rounded-full"
-      />
-      <label className="border border-main-color rounded-xl text-main-color p-1 w-24 flex justify-center items-center text-sm">
-        Full Time
-      </label>
-    </div>
-    <div className="flex items-center gap-2">
-      <Field
-        type="radio"
-        name="JobType"
-        value="2"
-        className="border border-main-color rounded-full"
-      />
-      <label className="border border-main-color rounded-xl text-main-color p-1 w-24 flex justify-center items-center text-sm">
-        Part Time
-      </label>
-    </div>
-    <div className="flex items-center gap-2">
-      <Field
-        type="radio"
-        name="JobType"
-        value="3"
-        className="border border-main-color rounded-full"
-      />
-      <label className="border border-main-color rounded-xl text-main-color p-1 w-24 flex justify-center items-center text-sm">
-        Freelance
-      </label>
-    </div>
-  </div>
+<div className="flex gap-4">
+  {["Full Time", "Part Time", "Freelance"].map((type) => (
+    <Field name="JobType" key={type}>
+      {({ field, form }) => (
+        <button
+          type="button"
+          onClick={() => form.setFieldValue("JobType", type)}
+          className={`border rounded-xl px-4 py-1 text-sm ${
+            field.value === type
+              ? "bg-secondary-color text-main-color border-main-color"
+              : "text-main-color border-main-color"
+          }`}
+        >
+          {type}
+        </button>
+      )}
+    </Field>
+  ))}
 </div>
-<ErrorMessage
-              name="JobType"
-              component="div"
-              className="text-red-500 text-sm"
-            />
-{/* Job Location */}
+<ErrorMessage name="JobType" component="div" className="text-red-500 text-sm" />
 <label className="font-semibold text-2xl text-main-color">
   Job Location <span className="text-red-500 text-md">*</span>
 </label>
-<div className="flex gap-8 mt-2">
-  <div className="flex gap-2 my-5">
-    <div className="flex items-center gap-2">
-      <Field
-        type="radio"
-        name="JobLocation"
-        value="1"
-        className="border border-main-color rounded-full"
-      />
-      <label className="border border-main-color rounded-xl text-main-color p-1 w-24 flex justify-center items-center text-sm">
-        On Site
-      </label>
-    </div>
-    <div className="flex items-center gap-2">
-      <Field
-        type="radio"
-        name="JobLocation"
-        value="2"
-        className="border border-main-color rounded-full"
-      />
-      <label className="border border-main-color rounded-xl text-main-color p-1 w-24 flex justify-center items-center text-sm">
-        Remotly
-      </label>
-    </div>
-    <div className="flex items-center gap-2">
-      <Field
-        type="radio"
-        name="JobLocation"
-        value="3"
-        className="border border-main-color rounded-full"
-      />
-      <label className="border border-main-color rounded-xl text-main-color p-1 w-24 flex justify-center items-center text-sm">
-        Hybrid
-      </label>
-    </div>
-  </div>
-              <div className="w-1/4 flex items-center">
-                <Field
-                  as="select"
-                  name="city"
-                  className="border rounded p-2 w-full focus:outline-none bg-fill-bg-color text-sm"
-                >
-                  <option value="">Choose</option>
-                  <option value="Sohag">Sohag</option>
-                  <option value="Cairo">Cairo</option>
-                  <option value="Alex">Alex</option>
-                </Field>
-              </div>
-            </div>
-            <ErrorMessage
-              name="JobLocation"
-              component="div"
-              className="text-red-500 text-sm"
-            />
+<div className="flex gap-4 ">
+  {["On Site", "Remotely", "Hybrid"].map((mode) => (
+    <Field name="JobLocation" key={mode}>
+      {({ field, form }) => (
+        <button
+          type="button"
+          onClick={() => form.setFieldValue("JobLocation", mode)}
+          className={`border rounded-xl px-4 py-1 text-sm ${
+            field.value === mode
+              ? "bg-secondary-color text-main-color border-main-color"
+              : "text-main-color border-main-color"
+          }`}
+        >
+          {mode}
+        </button>
+      )}
+    </Field>
+  ))}
+</div>
+<ErrorMessage name="JobLocation" component="div" className="text-red-500 text-sm" />
+
             {/* Salary */}
-            <label className="font-semibold text-2xl text-main-color mt-20">
+            <label className="font-semibold text-2xl text-main-color ">
               Salary <span className="text-red-500 text-md">*</span>
             </label>
             <div className="flex gap-8">
@@ -205,7 +162,7 @@ function CreatePost() {
             </div>
 
             {/* Job Description */}
-            <label className="font-semibold text-2xl text-main-color mt-20 mb-5">
+            <label className="font-semibold text-2xl text-main-color ">
               Job Description <span className="text-red-500 text-md">*</span>
             </label>
             <Field
@@ -220,7 +177,7 @@ function CreatePost() {
             />
 
             {/* Job Requirements */}
-            <label className="font-semibold text-2xl text-main-color my-5">
+            <label className="font-semibold text-2xl text-main-color ">
               Job Requirements <span className="text-red-500 text-md">*</span>
             </label>
             <Field
@@ -234,22 +191,10 @@ function CreatePost() {
               className="text-red-500 text-sm"
             />
 
-            {/* Key Words */}
-            <label className="text-xl text-main-color mt-10 mb-2">
-              Key Words
-            </label>
-            <Field
-              name="Keywords"
-              className="border rounded p-2 w-full focus:outline-none bg-inherit border-dark-text text-sm"
-            />
-            <ErrorMessage
-              name="Keywords"
-              component="div"
-              className="text-red-500 text-sm"
-            />
+            
 
-            {/* Save & Continue */}
-            <div className="mt-10 ">
+            {/* post */}
+            <div className="">
               
               <button
                 type="submit"

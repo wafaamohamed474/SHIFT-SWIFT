@@ -37,3 +37,16 @@ export const getAllMyJobApplications = async(MemberID)=>{
     }
 
 }
+
+export const changeMemberEmail = async(MemberID , Email)=>{
+    try{
+        const response = await apiClient.post(`/Member/ChangeMemberEmail/${MemberID}?Email=${encodeURIComponent(Email)}`)
+        return response.data
+    }catch(error){
+        console.error("change email fail:", error.response?.data || error)
+        throw error.response?.data || error;
+
+    }
+
+}
+

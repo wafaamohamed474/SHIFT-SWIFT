@@ -2,9 +2,6 @@ import  { useState, useEffect } from 'react';
 import JobCard from "./helpers/JobCard";
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo.png';
-import VectorImage from '../../assets/Vector_tech.png'
-import JobLogo from '../../assets/image 4.png'
-import Team from '../../assets/team.png';
 import JobDetails from './helpers/JobDetails'
 import { getAllJobsForCompany } from "../../services/api/company"
 import { getUserData } from '../../services/authService';
@@ -19,11 +16,12 @@ const Home = () => {
   useEffect(() => {
     const userData = getUserData();
     const companyId = userData.companyId;
+    
     const fetchJobs = async () => {
       try {
-        const jobs = await getAllJobsForCompany(companyId); 
-        console.log(jobs);
-        setJobData(jobs);
+        const job = await getAllJobsForCompany(companyId); 
+        setJobData(job);
+        console.log(job);
         setLoading(false);
       } catch (err) {
         setError("Error Fitching Jops");
@@ -33,6 +31,11 @@ const Home = () => {
   
     fetchJobs();
   }, []);
+  useEffect(() => {
+  if (jobData.length > 0 && !selectedJob) {
+    setSelectedJob(jobData[0]);
+  }
+}, [jobData]);
   const handleViewDetails = (job) => {
     if (job !== selectedJob) {
       setSelectedJob(job);

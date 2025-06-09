@@ -1,7 +1,13 @@
 import employer from "../../assets/61802b25e543f0595b8c08e4b4902fcf.png";
-import usersIcon from "../../assets/user_group.png"
 import SidebarItem from "../sidebarItem/SidebarItem";
-import bagIcon from "../../assets/basil_bag-solid.png" 
+import plusIcon from "../../assets/Add_Plus.png"
+import penIcon from "../../assets/Edit_Pencil_01.png"
+import settingsIcon from "../../assets/Settings.png"
+import starIcon from "../../assets/Star.png"
+import bookIcon from "../../assets/Bookmark.png"
+import phoneIcon from "../../assets/Phone.png"
+import warningIcon from "../../assets/Info.png"
+
 const CompanySidebar = ({onItemClick}) => {
   return (
     <div className="w-full pr-5">
@@ -14,9 +20,15 @@ const CompanySidebar = ({onItemClick}) => {
       </div>
       <div>
         <ul>
-        <li><SidebarItem onClick={onItemClick}  itemName="Post Job" icon={bagIcon} url="/home/company/postjob"/></li>
-        <li><SidebarItem onClick={onItemClick}  itemName="Applicants" icon={usersIcon} url="/home/company/applicants"/></li>       
-       </ul>
+        <li><SidebarItem onClick={onItemClick}  itemName="Post Job" icon={plusIcon} url="/home/company/postjob"/></li>
+        <li><SidebarItem onClick={onItemClick}  itemName="Myjobs" icon={bookIcon} url="/home/company/myjobs"/></li>
+        <li ><SidebarItem onClick={onItemClick}  itemName="Edit Profile" icon={penIcon} url="/home/company/profile"/></li>
+        <li><SidebarItem onClick={onItemClick} itemName="Settings" icon={settingsIcon} url="/home/company/settings"/></li>
+        <li><SidebarItem onClick={onItemClick} itemName="My Reviews" icon={starIcon} url="/home/company/reviews"/></li>
+        <li><SidebarItem onClick={onItemClick} itemName="Help Center" icon={phoneIcon} url="/home/company/helpcenter"/></li>
+        <li><SidebarItem onClick={onItemClick} itemName="About Us" icon={warningIcon} url="/home/company/about"/></li>
+        
+        </ul>
       </div>
     </div>
   );

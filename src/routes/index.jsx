@@ -16,7 +16,9 @@ import RegisterCompany from "../pages/RegisterCompany";
 import PublicLayout from "../layouts/publicLayout";
 import PrivateLayout from "../layouts/privateLayout";
 import ProtectedRoute from "../components/protectedRoute/ProtectedRoute";
-import Post from "../pages/PostJob/CreatePost";
+import PostJob from "../pages/PostJob/CreatePost";
+import CompanyProfile from "../pages/CompanyProfile/CompanyProfile";
+
 export const routes = createBrowserRouter([
   {
     path: "/home",
@@ -47,10 +49,6 @@ export const routes = createBrowserRouter([
             Component: Settings,
           },
           {
-            path: "reviews",
-            Component: Reviews,
-          },
-          {
             path: "myjobs",
             Component: MyJops,
           },
@@ -62,11 +60,31 @@ export const routes = createBrowserRouter([
         children: [
           {
             path: "postjob",
-            Component: Post,
+            Component: PostJob,
           },        
           {
             path: "applicants",
             Component: Applicants,
+          },
+          {
+            path: "about",
+            Component: About,
+          },
+          {
+            path: "profile",
+            Component: CompanyProfile,
+          },
+          {
+            path: "helpcenter",
+            Component: HelpCenter,
+          },
+          {
+            path: "settings",
+            Component: Settings,
+          },
+          {
+            path: "reviews",
+            Component: Reviews,
           },
         ],
       },

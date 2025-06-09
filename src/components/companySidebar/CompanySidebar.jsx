@@ -12,8 +12,10 @@ import userLogo from "../../assets/userLogo.jpg"
 import LogoutButton from "../logoutButton/LogoutButton";
 
 const CompanySidebar = ({onItemClick}) => {
-  const CompanyName = getUserData().firstName + ' ' + getUserData().lastName
-  const CompanyEmail = getUserData().email
+   const userData = getUserData();
+
+const CompanyName = `${userData?.firstName ?? ''} ${userData?.lastName ?? ''}`.trim();
+const CompanyEmail = userData?.email ?? '';
   return (
     <div className="w-full pr-5">
       <div className="w-full h-48 rounded-md bg-main-color flex flex-col justify-center items-center">

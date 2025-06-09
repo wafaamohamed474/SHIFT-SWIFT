@@ -9,7 +9,8 @@ import { getUserData } from "../../services/authService";
 import LogoutButton from "../logoutButton/LogoutButton";
 import userLogo from "../../assets/userLogo.jpg"
 const UserSidbar = ({onItemClick}) => {
-  const {firstName , lastName , email}= getUserData()
+   const { firstName = '', lastName = '', email = '' } = getUserData() ?? {};
+
   
   
   return (

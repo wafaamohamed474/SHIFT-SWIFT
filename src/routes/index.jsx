@@ -27,7 +27,6 @@ export const routes = createBrowserRouter([
         path: "",
         Component: MainHome,
       },
-
       {
         path: "user",
         Component: UserLayout,

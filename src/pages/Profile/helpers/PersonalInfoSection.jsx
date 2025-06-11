@@ -19,7 +19,8 @@ console.log(getUserData());
     location: data.location || '',
     phoneNumber: data.phoneNumber || '',
     alternativeNumber: data.alternativeNumber || "",
-    genderId: data.genderId || 0,
+    // genderId: data.genderId || 0,
+    genderId: data.genderId?.toString() || '',
     dateOfBirth: data.dateOfBirth || "",
   };
 
@@ -31,7 +32,7 @@ console.log(getUserData());
     alternativeNumber: Yup.string(),
     genderId: Yup.number()
       .required("Gender is required")
-      .oneOf([1, 2], "Invalid gender"),
+      .oneOf(["1", "2"], "Invalid gender"),
     dateOfBirth: Yup.date().required("Date of Birth is required"),
   });
 

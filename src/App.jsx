@@ -1,11 +1,9 @@
 import { RouterProvider } from "react-router-dom";
 import { routes } from "./routes";
 import "./App.css";
-import { getUserData } from "./services/authService";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { getCurrentUserData } from "./services/api/account";
 
- 
 
 function App() {
    

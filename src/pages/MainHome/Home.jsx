@@ -8,7 +8,7 @@ import MainLocation from "../../assets/Location.png";
 import Cash from "../../assets/mdi_cash-100.png";
 import MainCash from "../../assets/cash-100.png";
 import Our from "../../assets/our.png";
-import User from "../../assets/mainuser.png";
+import User from "../../assets/mainUser.png";
 import VectorTech from "../../assets/Vector_tech.png";
 import Logo from '../../assets/logo.png';
 import SearchIcon from '../../assets/Search_Magnifying_Glass.png';

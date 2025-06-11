@@ -57,8 +57,6 @@ export const AddOrUpdateProfilePicture = async (file) => {
     const formData = new FormData();
     formData.append("FormFile", file);  
     const response = await apiClient.post("/Account/AddOrUpdateProfilePicture", formData);
-
-    console.log("from account",response.data);
     return response.data;
     
   } catch (error) {
@@ -72,8 +70,6 @@ export const GetProfilePicture = async (id) => {
   try {
      
     const response = await apiClient.get(`/Account/GetProfilePicture/${id}`);
-
-    console.log("from get picture",response.data);
     return response.data;
     
   } catch (error) {

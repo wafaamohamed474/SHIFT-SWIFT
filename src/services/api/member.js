@@ -76,3 +76,12 @@ export const AddRating = async(companyID , RatedByid , data)=>{
 
 }
 
+ export const RemoveJobFromSavedJobs  = async (jobId) => {
+  try {
+    const response = await apiClient.put(`/Member/RemoveJobFromSavedJobs?jobId=${jobId}`);
+    return response.data;
+  } catch (error) {
+    console.error("❌ Failed to remove job fromm saved jobs:", error.response?.data || error);
+    throw error.response?.data || error;
+  }
+};

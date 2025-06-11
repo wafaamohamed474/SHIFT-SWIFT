@@ -7,30 +7,41 @@ import {
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 import { useEffect, useState } from "react";
-import { getAllSavedJobs } from "../../../services/api/member";
+import { getAllSavedJobs, RemoveJobFromSavedJobs } from "../../../services/api/member";
 import { getUserData } from "../../../services/authService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../../../components/button/Button";
+import { useAlert } from "../../../context/AlertContext";
 
 const SavedJobs = () => {
   const [savedJobs, setSavedJobs] = useState([]);
   const { memberId } = getUserData();
+  const { showAlert } = useAlert();
+
+  const fetchSavedJobs = async () => {
+    try {
+      const response = await getAllSavedJobs(memberId);
+      const jobs = Array.isArray(response) ? response : response?.data || [];
+      setSavedJobs(jobs);
+    } catch (err) {
+      console.error(err.message || "Something went wrong");
+      setSavedJobs([]);
+    }
+  };
 
   useEffect(() => {
-    const fetchSavedJobs = async () => {
-      try {
-        const response = await getAllSavedJobs(memberId);
-        // Safely extract jobs array
-        const jobs = Array.isArray(response) ? response : response?.data || [];
-        setSavedJobs(jobs);
-      } catch (err) {
-        console.error(err.message || "Something went wrong");
-        setSavedJobs([]); // fallback to empty array
-      }
-    };
-
     fetchSavedJobs();
   }, [memberId]);
+
+  const handleRemove = async (jobId) => {
+    try {
+      await RemoveJobFromSavedJobs(jobId);
+      showAlert("Job removed from saved successfully", "success");
+      fetchSavedJobs();  
+    } catch (error) {
+      showAlert("Failed to remove job from saved", "error");
+    }
+  };
 
   return (
     <div className="w-full mt-7">
@@ -39,11 +50,14 @@ const SavedJobs = () => {
       ) : (
         <>
           {savedJobs.map((job) => (
+            
             <div
-              key={job.id}
+              key={job.jobId}
+               
               className="rounded-md bg-fill-bg-color w-full px-4 pt-8 pb-3 mb-10 border border-border-color"
             >
               {/* Job Details */}
+               
               <div className="flex justify-between items-start mb-5">
                 <div>
                   <h2 className="font-semibold text-3xl">{job.jobTitle}</h2>
@@ -52,7 +66,7 @@ const SavedJobs = () => {
                   </span>
                 </div>
                 <div className="w-16 h-16">
-                  <img src={job.companyLogo} alt="Company Logo" />
+                  <img src={job.companyPictureUrl} alt="Company Logo" />
                 </div>
               </div>
 
@@ -89,22 +103,24 @@ const SavedJobs = () => {
                 </div>
                 <div className="flex justify-between items-center">
                   <div className="px-1 rounded mr-1">
-                    <span className="text-sm font-semibold">{job.rating}</span>
+                    <span className="text-sm font-semibold">
+                      {job.rating.averageScore}
+                    </span>
                     <FontAwesomeIcon
                       icon={faStar}
                       className="text-sm text-yellow-400 pl-1"
                     />
                   </div>
                   <span className="text-sm font-semibold text-main-color">
-                    ({job.reviewsCount} reviews)
+                    ({job.rating.ratings.length} reviews)
                   </span>
                 </div>
               </div>
 
               {/* Buttons */}
               <div className="mt-5 flex gap-4">
-                {/* <Button
-                  type="reset"
+                <Button
+                  type="button"
                   label={
                     <>
                       <FontAwesomeIcon icon={faBookmark} className="mr-2" />
@@ -113,7 +129,8 @@ const SavedJobs = () => {
                   }
                   variant="secondary"
                   className="w-1/4 text-main-color border-main-color"
-                /> */}
+                  onClick={() => handleRemove(job.jobId)}  
+                />
                 <Button
                   type="submit"
                   label="View"

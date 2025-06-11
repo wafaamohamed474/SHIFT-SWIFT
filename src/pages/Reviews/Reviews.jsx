@@ -23,7 +23,7 @@ const Reviews = ({ companyId }) => {
         
         const enrichedData = data.ratings.map((review) => ({
           ...review,
-          img: userLogo,
+          // img: userLogo,
         }));
         setReviews(enrichedData);
       } catch (error) {
@@ -85,7 +85,7 @@ const Reviews = ({ companyId }) => {
                 <div key={index} className="w-full pb-3 border-b border-border-color mb-5">
                   <div className="flex items-center gap-5 mb-3">
                     <div className="w-12 h-12 rounded-full overflow-hidden">
-                      <img src={review.ratedByImageUrl} alt={review.ratedByUserName} />
+                      <img src={review.ratedByImageUrl ? review.ratedByImageUrl : userLogo} alt={review.ratedByUserName} />
                     </div>
                     <div>
                       <h4>{review.ratedByUserName}</h4>

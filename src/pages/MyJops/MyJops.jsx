@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../../components/button/Button";
 import AppliedJobs from "./helpers/AppliedJobs";
 import LastWork from "./helpers/LastWork";
-import SavedJobs from "./helpers/savedJobs";
+import SavedJobs from "./helpers/SavedJobs";
 
 const MyJops = () => {
   const [activeTab, setActiveTab] = useState("saved");

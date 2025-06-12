@@ -8,14 +8,14 @@ function FindJobSection() {
   const navigate = useNavigate();
 
   const handleFindJobs = () => {
-    if (email.trim() !== "") {
-      localStorage.setItem("userEmail", email);
-      setError("");
-      navigate("/register-user");
-    } else {
-      setError("Please enter your email.");
-    }
-  };
+  if (email.trim() !== "") {
+    setError("");
+    navigate(`/register-company?email=${encodeURIComponent(email)}`);
+  } else {
+    setError("Please enter your email.");
+  }
+};
+
   return (
     <div className="container justify-center py-10 flex flex-col-2 gap-x-10  ">
       {/* Search Section */}

@@ -5,6 +5,16 @@ import { getUserData } from "../../../services/authService";
 const JobDetails = ({ selectedJob, onClose, navigateToApplicants }) => {
    const userData=getUserData();
    const companyName =userData.userName;
+   const salaryTypeReverseMap = {
+  1: "Per Month",
+  2: "Per Hour",
+  3: "Contract",
+};
+const jobTypeReverseMap = {
+  1: "Full Time",
+  2: "Part Time",
+  3: "Freelance",
+};
   return (
     <div className="border border-border-color rounded-xl flex flex-col gap-y-5 p-5 md:w-1/2 overflow-hidden">
       <div className="hover:bg-transparent hover:cursor-pointer ml-auto">
@@ -43,8 +53,8 @@ const JobDetails = ({ selectedJob, onClose, navigateToApplicants }) => {
         <div className='flex flex-wrap gap-5'>
           <InfoItem icon={faLocationDot} label="Location" value={selectedJob.location} />
           <InfoItem icon={faUser} label="Gender" value={"Male/Female"} />
-          <InfoItem icon={faClock} label="Job Type" value={selectedJob.jobType} />
-          <InfoItem icon={faMoneyBillWave} label="Salary" value={selectedJob.salary + " EGP/Month"} />
+          <InfoItem icon={faClock} label="Job Type" value={jobTypeReverseMap[selectedJob.jobType]} />
+          <InfoItem icon={faMoneyBillWave} label="Salary" value={selectedJob.salary + " EGP/" + salaryTypeReverseMap[selectedJob.salaryType]} />
         </div>
       </div>
 

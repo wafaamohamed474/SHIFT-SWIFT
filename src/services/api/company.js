@@ -24,6 +24,7 @@ export const createJobPost = async (data) => {
   }
 };
 
+
 //  Get All Applicants for a Job
 export const getApplicantsForJob = async (jobId) => {
   try {
@@ -64,25 +65,6 @@ export const getAllJobsForCompany = async (companyId) => {
     throw error.response?.data || error;
   }
 };
-// get rating
-export const getCompanyRating = async (companyId) => {
-  try {
-    const response = await apiClient.get(`/Company/GetRating/${companyId}`);
-    if (response.data.isSuccess) {
-      return response.data.data; // { rating, reviews }
-    } else {
-      console.warn("Failed to fetch rating:", response.data.message);
-      return null;
-    }
-  } catch (error) {
-    if (error.response?.status === 404) {
-      // company don't have rating
-      return null;
-    }
-    console.error("Error fetching company rating:", error);
-    throw error;
-  }
-};
 
 // fetch logo
 export const fetchCompanyLogo = async (companyId) => {
@@ -111,7 +93,7 @@ export const fetchCompanyLogo = async (companyId) => {
 
 export const changeCompanyEmail = async(CompanyID , Email)=>{
     try{
-        const response = await apiClient.post(`/Member/ChangeCompanyEmail/${CompanyID}?Email=${encodeURIComponent(Email)}`)
+        const response = await apiClient.post(`/Company/ChangeCompanyEmail/${CompanyID}?Email=${encodeURIComponent(Email)}`)
         return response.data
     }catch(error){
         console.error("change email fail:", error.response?.data || error)
@@ -120,3 +102,31 @@ export const changeCompanyEmail = async(CompanyID , Email)=>{
     }
 
 }
+
+export const AddCompanyProfileData = async(data)=>{
+   
+    try{
+        const response = await apiClient.post(`/Company/AddOrUpdateCompanyProfileData` , data)
+        return response.data
+    }catch(error){
+        console.error("add coompany data fail:", error.response?.data || error)
+        throw error.response?.data || error;
+    }
+}
+
+export const GetRating = async (companyId) => {
+  try {
+    const response = await apiClient.get(`/Company/GetRating`, {
+      params: {
+        companyId: companyId,
+      },
+    });
+
+    return response.data.data; 
+  } catch (error) {
+    console.error("get company rating failed:", error.response?.data || error);
+    throw error.response?.data || error;
+  }
+};
+
+

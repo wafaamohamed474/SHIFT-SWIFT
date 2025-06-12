@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
@@ -10,17 +10,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { RegisterCompany as Register } from "../../services/api/account";
 import { useState } from "react";
-
 const RegisterCompany = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialEmail = queryParams.get("email") || "";
   const formik = useFormik({
     initialValues: {
-      email: "",
+      email: initialEmail,
       userName: "",
       password: "",
       phoneNumber: "",
     },
+    enableReinitialize: true,
     validationSchema: Yup.object({
       userName: Yup.string().required("required"),
       email: Yup.string().email("Invalid email").required("required"),

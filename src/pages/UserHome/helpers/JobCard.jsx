@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faClock, faMoneyBillWave, faStar } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router';
-import {  getUserData } from '../../../services/authService';
 import { GetRating } from '../../../services/api/company';
 import VectorImage from "../../../assets/Vector_tech.png"
-const JobCard = ({ job, onClick }) => {
-  const navigate = useNavigate();
+import BookMark from "../../../assets/Bookmark.png"
+import { getUserData } from '../../../services/authService';
+import { saveJob } from '../../../services/api/member';
+import { useAlert } from '../../../context/AlertContext';
+import Image from "../../../assets/userLogo.jpg";
+const JobCard = ({ job, onView }) => {
   const userData = getUserData();
-  const companyName = userData.userName;
-  const companyId = userData.companyId;
+  const navigate = useNavigate();
+   const { showAlert } = useAlert();
   const [ratingData, setRatingData] = useState(null);
   const jobTypeReverseMap = {
   1: "Full Time",
@@ -17,28 +20,37 @@ const JobCard = ({ job, onClick }) => {
   3: "Freelance",
 };
  useEffect(() => {
-    if (!companyId) return;
+    if (!job.companyId) return;
 
-    GetRating(companyId)
+    GetRating(job.companyId)
       .then((data) => {
         setRatingData(data);
+        //console.log(data);
       })
       .catch((err) => {
         console.error("Error loading company rating:", err);
       });
-  }, [companyId]);
+  }, [job.companyId]);
+const handleSave = async () => {
+    try {
+      const memberId = userData.memberId;
+      await saveJob(job.id, memberId);
+     showAlert("Job Saved Successfully", "success");
+    } catch (error) {
+     const errorMsg = error?.response?.data?.data?.[0];
+      if (error?.response?.status === 409 && errorMsg === "The job has already been saved by this member.") {
+      showAlert("You've already saved this job.");
+     } else {
+     showAlert("Something went wrong while saving the job.");
+     }
 
-
-
-  const navigateToApplicants = (e) => {
-    e.stopPropagation();
-    navigate("company/applicants");
+    }
   };
 
+ 
   return (
     <div
       className="bg-secondary-color rounded-xl p-4 hover:shadow-md transition cursor-pointer"
-      onClick={() => onClick(job)}
     >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
         <div className="flex flex-col gap-1 sm:w-3/4">
@@ -47,19 +59,17 @@ const JobCard = ({ job, onClick }) => {
               <img src={VectorImage} alt="vector" className="w-5 h-5 mt-1" />
            
           </div>
-          <p className="text-sm text-gray-600">{companyName}</p>
+          <p className="text-sm text-gray-600">{job.companyFirstName + " " + job.companyLastName}</p>
         </div>
 
        {/* logo */}
-        {job.companyLogo ? (
+      <span className="bg-white h-20 w-20 rounded-xl ml-auto overflow-hidden flex items-center justify-center">
           <img
-            src={job.companyLogo}
-            alt="logo"
-            className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover mt-4 sm:mt-0"
+          className="object-cover w-full h-full rounded-xl"
+          src={job.companyPictureUrl || Image}
+          alt="Company Logo"
           />
-        ) : (
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-200 rounded-lg mt-4 sm:mt-0" />
-        )}
+      </span>
       </div>
         
         
@@ -73,7 +83,7 @@ const JobCard = ({ job, onClick }) => {
         </span>
         <span className="flex items-center gap-2">
           <FontAwesomeIcon icon={faClock} className="text-dark-text" />
-          {jobTypeReverseMap[job.jobType]}
+          {jobTypeReverseMap[job.jobTypeTd]}
         </span>
         <span className="flex items-center gap-2">
           <FontAwesomeIcon icon={faMoneyBillWave} className="text-dark-text" />
@@ -92,16 +102,24 @@ const JobCard = ({ job, onClick }) => {
 )}
 
       </div>
+     {/*Buttons*/}
+     <div className="flex gap-3 mt-2">
+  <button
+    className="border border-main-color text-main-color w-36 h-8   rounded-xl flex items-center justify-center gap-2  "
+    onClick={handleSave}
+  >
+    <img src={BookMark} alt="bookmark" className="w-4 h-4" />
+    Save
+  </button>
 
-      {/* View Applicants */}
-      <div className="w-full mt-2">
-        <button
-          className="border border-main-color bg-main-color text-white w-full sm:w-56 h-10 rounded-lg flex items-center justify-center hover:bg-main-color/90 transition"
-          onClick={navigateToApplicants}
-        >
-          View Applicants
-        </button>
-      </div>
+  <button
+    className="border border-main-color bg-main-color text-white w-36  rounded-xl flex items-center justify-center"
+    onClick={onView}
+  >
+    View
+  </button>
+</div>
+
     </div>
   );
 };

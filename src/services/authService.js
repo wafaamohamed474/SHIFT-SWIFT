@@ -1,4 +1,4 @@
-import { LoginCompany, LoginMember } from "./api/account"
+import {   LoginCompany, LoginMember } from "./api/account"
 import Cookies from "js-cookie";
 export const login = async (data , userType)=>{
     try {
@@ -6,7 +6,7 @@ export const login = async (data , userType)=>{
         if (response.token){
             Cookies.set('auth_token' , response.token , {expires : 10 , secure : true})
             const userData = userType === 'user'? response.memberResponse : response.companyResponse
-            Cookies.set('user_data' , JSON.stringify(userData) , {expires : 10 , secure : true})
+            // Cookies.set('user_data' , JSON.stringify(userData) , {expires : 10 , secure : true})
             Cookies.set("user_type", userType, { expires: 10, secure: true });
             return userData
         }
@@ -38,6 +38,8 @@ export const getUserData = () => {
     }
     return null;
 };
+
+ 
 export const getUserType = () => {
     const userType = Cookies.get("user_type");
     return userType || null

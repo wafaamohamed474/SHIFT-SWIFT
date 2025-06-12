@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Home from "../pages/Home";
-import CompanyHome from "../pages/CompanyHome/Home";
+import UserHome from "../pages/UserHome/Home";
 import Login from "../pages/Login";
 import About from "../pages/About/About";
 import Profile from "../pages/Profile/Profile";
@@ -10,13 +10,12 @@ import Reviews from "../pages/Reviews/Reviews";
 import CompanyLayout from "../layouts/companyLayout";
 import UserLayout from "../layouts/userLayout";
 import MyJops from "../pages/MyJops/MyJops";
-import Applicants from "../pages/Applicants/Applicants";
 import RegisterUser from "../pages/RegisterUser";
 import RegisterCompany from "../pages/RegisterCompany";
 import PublicLayout from "../layouts/publicLayout";
 import PrivateLayout from "../layouts/privateLayout";
 import ProtectedRoute from "../components/protectedRoute/ProtectedRoute";
-import PostJob from "../pages/PostJob/CreatePost";
+import PostJob from "../pages/PostJob/PostJob";
 import CompanyProfile from "../pages/CompanyProfile/CompanyProfile";
 
 export const routes = createBrowserRouter([
@@ -26,7 +25,7 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: "",
-        Component: CompanyHome,
+        Component: UserHome,
       },
       {
         path: "user",
@@ -61,10 +60,6 @@ export const routes = createBrowserRouter([
           {
             path: "postjob",
             Component: PostJob,
-          },        
-          {
-            path: "applicants",
-            Component: Applicants,
           },
           {
             path: "about",

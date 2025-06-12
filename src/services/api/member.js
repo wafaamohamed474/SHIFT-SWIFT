@@ -1,18 +1,23 @@
 
 import apiClient from "./apiClient";
-
-
-export const addEducation = async (data , MemberID)=>{
+export const AddOrUpdateMemberProfileData = async ( data )=>{
 
     try{
-        const response = await apiClient.post(`/Member/AddOrUpdateEducation/${MemberID}` , data)
+        const response = await apiClient.post(`/Member/AddOrUpdateMamberProfileData` , data)
+        return response.data
+    }catch(error){
+        console.error("Error adding profile:", error.response?.data || error)
+        throw error.response?.data || error;
+    }
+}
+export const addEducation = async ( MemberID ,data )=>{
+    try{
+        const response = await apiClient.post(`/Member/AddEducation/${MemberID}` , data)
         return response.data
     }catch(error){
         console.error("Error adding education:", error.response?.data || error)
         throw error.response?.data || error;
-
     }
-
 }
 
 export const getAllSavedJobs = async(MemberID)=>{
@@ -22,7 +27,6 @@ export const getAllSavedJobs = async(MemberID)=>{
     }catch(error){
         console.error("Error retreive saved jobs:", error.response?.data || error)
         throw error.response?.data || error;
-
     }
 
 }
@@ -50,3 +54,50 @@ export const changeMemberEmail = async(MemberID , Email)=>{
 
 }
 
+ export const GetLastwork = async () => {
+  try {
+    const response = await apiClient.get("/Member/GetLastWork");
+    return response.data;
+  } catch (error) {
+    console.error("❌ Failed to get last work:", error.response?.data || error);
+    throw error.response?.data || error;
+  }
+};
+
+export const AddRating = async(companyID , RatedByid , data)=>{
+    try{
+        const response = await apiClient.post(`/Member/AddRating/${companyID}?ratedByid=${RatedByid}` , data)
+        return response.data
+    }catch(error){
+        console.error(" add rating failed:", error.response?.data || error)
+        throw error.response?.data || error;
+
+    }
+
+}
+//save job
+export const saveJob = async (jobId, memberId) => {
+  try {
+    const response = await apiClient.post(`/Member/SaveJob`, null, {
+      params: {
+        JobId: jobId,
+        MemberId: memberId
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error saving job:", error);
+    throw error;
+  }
+};
+export const applyToJob = async (jobId, memberId) => {
+  try {
+    const response = await apiClient.post("/Member/AddJobApplication", {
+      jobId,
+      memberId,
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};

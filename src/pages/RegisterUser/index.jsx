@@ -142,7 +142,7 @@ const RegisterUser = () => {
 
           <button
             type="submit"
-            className={`w-full text-white py-2 rounded-md  bg-gray-400 cursor-not-allowed bg-blue-500 hover:bg-blue-600
+            className={`w-full text-white py-2 rounded-md  bg-gray-400   bg-blue-500 hover:bg-blue-600
             }`}
           >
             Register

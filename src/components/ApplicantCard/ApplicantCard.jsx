@@ -6,11 +6,8 @@ import {
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../button/Button";
-import { useNavigate } from "react-router-dom";
 
 const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryLabel, secondaryLabel }) => {
-  const navigate = useNavigate();
-
   return (
     <div className="rounded-md bg-fill-bg-color w-full px-4 pt-8 pb-3 mb-10 border border-border-color">
       {/* Applicant Header */}
@@ -45,7 +42,9 @@ const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryL
         <div className="flex items-center gap-2">
           <span className="text-sm font-semibold">{applicant.rating}</span>
           <FontAwesomeIcon icon={faStar} className="text-yellow-400" />
-          <span className="text-sm font-semibold text-main-color">({applicant.reviews} reviews)</span>
+          <span className="text-sm font-semibold text-main-color">
+            ({applicant.reviews} reviews)
+          </span>
         </div>
       </div>
 
@@ -57,7 +56,7 @@ const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryL
             label={secondaryLabel}
             variant="secondary"
             className="w-full md:w-64 text-lg border-main-color text-main-color"
-            onClick={onSecondaryAction || (() => navigate(`/src/pages/Applicants/helpers/Requists.jsx${applicant.id}`))}
+            onClick={onSecondaryAction}
           />
         )}
         {primaryLabel && (
@@ -66,7 +65,7 @@ const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryL
             label={primaryLabel}
             variant="primary"
             className="w-full md:w-28 text-lg"
-            onClick={onPrimaryAction || (() => navigate(`${applicant.id}`))}
+            onClick={onPrimaryAction}
           />
         )}
       </div>
@@ -75,4 +74,3 @@ const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryL
 };
 
 export default ApplicantCard;
- 

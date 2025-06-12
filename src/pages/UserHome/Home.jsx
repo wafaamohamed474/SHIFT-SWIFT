@@ -22,6 +22,7 @@ const Home = () => {
 
   const fetchJobs = async () => {
     const data = await getRandomJobs();
+    console.log(data);
     setJobs(data);
     setFilteredJobs(data);
     setSimilarJobs(data);

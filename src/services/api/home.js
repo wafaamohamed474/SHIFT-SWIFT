@@ -5,7 +5,7 @@ export const getRandomJobs = async () => {
     const response = await apiClient.get('/Home/GetRandomJobs', {
       params: {
         PageNumber: 1,
-        PageSize: 4,
+        PageSize: 10,
         SortBy: 'JobType',
         SortOrder: 'asc',
         JobTypeIdFilterValue: 0,

@@ -2,14 +2,15 @@ import { useState } from "react";
 import Button from "../../components/button/Button";
 import Received from "./helpers/Received";
 import ShortList from "./helpers/ShortList";
-import SavedJobs from "./helpers/SavedJobs";
 import Requests from "./helpers/Requists";
+import { useSearchParams } from "react-router";
 
-const MyJops = () => {
+const Applicants = () => {
   const [activeTab, setActiveTab] = useState("received");
   const [previousTab, setPreviousTab] = useState(null);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
-
+  const [searchParams] = useSearchParams();
+  const jobId = searchParams.get("jobId");
   const handleToggle = (tab) => {
     setActiveTab(tab);
   };
@@ -33,18 +34,12 @@ const MyJops = () => {
             <Button type="button" label="Short List" variant={activeTab === "shortList" ? "active" : "disable"} onClick={() => handleToggle('shortList')} />
           </div>
 
-          {activeTab === 'received' && <Received onView={handleViewApplicant} />}
+          {activeTab === 'received' && <Received onPrimaryAction={handleViewApplicant} jobId={jobId} />}
           {activeTab === 'shortList' && <ShortList onView={handleViewApplicant} />}
-          {activeTab === 'request' && selectedApplicant && (
-            <Requests
-              applicant={selectedApplicant}
-              onBack={() => setActiveTab(previousTab)}
-            />
-          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default MyJops;
+export default Applicants;

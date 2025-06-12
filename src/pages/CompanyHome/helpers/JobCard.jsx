@@ -1,39 +1,20 @@
-import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faClock, faMoneyBillWave, faStar } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router';
 import {  getUserData } from '../../../services/authService';
-import { GetRating } from '../../../services/api/company';
 import VectorImage from "../../../assets/Vector_tech.png"
-const JobCard = ({ job, onClick }) => {
-  const navigate = useNavigate();
+const JobCard = ({ job, onClick ,navigateToApplicants ,ratingData }) => {
   const userData = getUserData();
-  const companyName = userData.userName;
-  const companyId = userData.companyId;
-  const [ratingData, setRatingData] = useState(null);
+  const companyName = userData.firstName + " " + userData.lastName;
   const jobTypeReverseMap = {
   1: "Full Time",
   2: "Part Time",
   3: "Freelance",
 };
- useEffect(() => {
-    if (!companyId) return;
-
-    GetRating(companyId)
-      .then((data) => {
-        setRatingData(data);
-      })
-      .catch((err) => {
-        console.error("Error loading company rating:", err);
-      });
-  }, [companyId]);
-
-
-
-  const navigateToApplicants = (e) => {
-    e.stopPropagation();
-    navigate("company/applicants");
-  };
+ const salaryTypeReverseMap = {
+  1: "Per Month",
+  2: "Per Hour",
+  3: "Contract",
+};
 
   return (
     <div
@@ -77,7 +58,7 @@ const JobCard = ({ job, onClick }) => {
         </span>
         <span className="flex items-center gap-2">
           <FontAwesomeIcon icon={faMoneyBillWave} className="text-dark-text" />
-          {job.salary}
+          {job.salary +" EGP/" +salaryTypeReverseMap[job.salaryType]}
         </span>
         {ratingData !== null ? (
   <span className="flex items-center gap-2 text-main-color">                                                           
@@ -96,11 +77,12 @@ const JobCard = ({ job, onClick }) => {
       {/* View Applicants */}
       <div className="w-full mt-2">
         <button
-          className="border border-main-color bg-main-color text-white w-full sm:w-56 h-10 rounded-lg flex items-center justify-center hover:bg-main-color/90 transition"
-          onClick={navigateToApplicants}
-        >
-          View Applicants
-        </button>
+  className="border border-main-color bg-main-color text-white w-full sm:w-56 h-10 rounded-lg flex items-center justify-center hover:bg-main-color/90 transition"
+  onClick={(e) => navigateToApplicants(e, job)}
+>
+  View Applicants
+</button>
+
       </div>
     </div>
   );

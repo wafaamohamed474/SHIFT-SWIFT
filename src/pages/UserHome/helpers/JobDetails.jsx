@@ -22,7 +22,7 @@ const JobDetails = ({ selectedJob }) => {
 
    const { showAlert } = useAlert();
    const userData = getUserData();
-   const memberId = userData.memberId;
+   const memberId = userData?.memberId;
 
   useEffect(() => {
   if (!selectedJob.companyId) return;

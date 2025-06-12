@@ -29,13 +29,32 @@ export const createJobPost = async (data) => {
 export const getApplicantsForJob = async (jobId) => {
   try {
     const response = await apiClient.get(`/Company/GetAllApplicantsForSpecificJob/${jobId}`);
-    return response.data;
+    return response.data.data;
   } catch (error) {
-    console.error("Error fetching applicants:", error.response?.data || error);
+    console.error("Error fetching applicants:", error);
+    return [];
+  }
+};
+// specificApplicantforJob
+export const getSpecificApplicantForJob = async (jobId, memberId) => {
+  try {
+    const response = await apiClient.get("/Company/GetSpecificApplicantForSpecificJob", {
+      params: {
+        JobId: jobId,
+        MemberId: memberId,
+      },
+    });
+
+    if (response?.data?.isSuccess) {
+      return response.data.data;
+    } else {
+      throw new Error(response?.data?.message || "Failed to fetch applicant");
+    }
+  } catch (error) {
+    console.error("Error in getSpecificApplicantForJob:", error);
     throw error;
   }
 };
-
 //  Apply Applicant to Job
 export const applyApplicant = async (jobId, data) => {
   try {

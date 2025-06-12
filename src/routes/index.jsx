@@ -17,7 +17,9 @@ import PrivateLayout from "../layouts/privateLayout";
 import ProtectedRoute from "../components/protectedRoute/ProtectedRoute";
 import PostJob from "../pages/PostJob/PostJob";
 import CompanyProfile from "../pages/CompanyProfile/CompanyProfile";
-
+import Applicants from "../pages/Applicants/Applicants"
+import CompanyHome from "../pages/CompanyHome/Home"
+import Requists from "../pages/Applicants/helpers/Requists";
 export const routes = createBrowserRouter([
   {
     path: "/home",
@@ -60,6 +62,18 @@ export const routes = createBrowserRouter([
           {
             path: "postjob",
             Component: PostJob,
+          },
+          {
+            path: "home",
+            Component: CompanyHome,
+          },
+          {
+            path: "applicants",
+            Component: Applicants,
+          },
+          {
+            path: "request",
+            Component: Requists,
           },
           {
             path: "about",

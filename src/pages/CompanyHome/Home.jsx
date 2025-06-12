@@ -1,49 +1,59 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import JobCard from "./helpers/JobCard";
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo.png';
-import JobDetails from './helpers/JobDetails'
-import { getAllJobsForCompany } from "../../services/api/company"
+import JobDetails from './helpers/JobDetails';
+import { getAllJobsForCompany, GetRating } from "../../services/api/company";
 import { getUserData } from '../../services/authService';
+
 const Home = () => {
   const [jobData, setJobData] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [ratingData, setRatingData] = useState(null);
 
-  
+  const navigate = useNavigate();
+  const userData = getUserData();
+  const companyId = userData.companyId;
+
   useEffect(() => {
-    const userData = getUserData();
-    const companyId = userData.companyId;
-    
+    if (!companyId) return;
+    GetRating(companyId)
+      .then(setRatingData)
+      .catch(console.error);
+  }, [companyId]);
+
+  useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const job = await getAllJobsForCompany(companyId); 
+        const job = await getAllJobsForCompany(companyId);
         setJobData(job);
-        console.log(job);
         setLoading(false);
       } catch (err) {
-        setError("Error Fitching Jops");
+        setError("Error Fetching Jobs");
         setLoading(false);
       }
     };
-  
+
     fetchJobs();
   }, []);
+
   useEffect(() => {
-  if (jobData.length > 0 && !selectedJob) {
-    setSelectedJob(jobData[0]);
-  }
-}, [jobData]);
+    if (jobData.length > 0 && !selectedJob) {
+      setSelectedJob(jobData[0]);
+    }
+  }, [jobData]);
+
   const handleViewDetails = (job) => {
     if (job !== selectedJob) {
       setSelectedJob(job);
     }
   };
 
-  const navigateToApplicants = () => {
-    navigate("company/applicants");
+  const navigateToApplicants = (e, job) => {
+    e.stopPropagation();
+    navigate(`/home/company/applicants?jobId=${job.jobId}`);
   };
 
   return (
@@ -57,24 +67,30 @@ const Home = () => {
       <div className="flex flex-col md:flex-row w-full py-10 gap-x-3">
         <div className="flex flex-col gap-3 w-full md:w-1/2">
           {loading ? (
-            <p>Loading......</p>
+            <p>Loading...</p>
           ) : (
             jobData.map((job, index) => (
-              <JobCard key={index} job={job} onClick={handleViewDetails} />
+              <JobCard
+                key={index}
+                job={job}
+                onClick={handleViewDetails}
+                navigateToApplicants={(e) => navigateToApplicants(e, job)} // ✅ الصحيح
+                ratingData={ratingData}
+              />
             ))
           )}
         </div>
+
         {selectedJob && (
-  <JobDetails
-    selectedJob={selectedJob}
-    onClose={() => setSelectedJob(null)}
-    navigateToApplicants={navigateToApplicants}
-  />
-)}
-    
-  </div>
-</div>
-);
+          <JobDetails
+            selectedJob={selectedJob}
+            onClose={() => setSelectedJob(null)}
+            navigateToApplicants={(e) => navigateToApplicants(e, selectedJob)}
+          />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Home;

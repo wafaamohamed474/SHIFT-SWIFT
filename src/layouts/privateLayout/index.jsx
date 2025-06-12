@@ -1,8 +1,9 @@
 import { Outlet } from "react-router";
-import Footer from "../../components/Footer/Footer";
+ 
 import Navbar from "../../components/navbar/Navbar";
 import { isAuthenticated } from "../../services/authService";
 import { Navigate } from "react-router";
+import Footer from "../../components/footer/Footer";
 
 const PrivateLayout = () => {
   if (!isAuthenticated()) {
@@ -12,7 +13,7 @@ const PrivateLayout = () => {
     <>
       <Navbar />
       <Outlet />
-      <Footer />
+      <Footer/>
     </>
   );
 };

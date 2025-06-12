@@ -83,7 +83,9 @@ const AppliedJobs = () => {
                 <div className="flex justify-between items-center">
                   <div className="px-1 rounded bg-orange-50 mr-2">
                     <span className="text-sm font-semibold">
-                      {job.rating.score}
+                      {job?.averageRating?.averageScore
+                        ? job.averageRating.averageScore
+                        : "0"}
                     </span>
                     <FontAwesomeIcon
                       icon={faStar}
@@ -91,7 +93,9 @@ const AppliedJobs = () => {
                     />
                   </div>
                   <span className="text-sm font-semibold text-main-color">
-                    ({job.reviewsCount} reviews)
+                    {job?.averageRating?.numberOfRating
+                      ? `(${job.averageRating.numberOfRating} reviews)`
+                      : "(0 reviews)"}
                   </span>
                 </div>
               </div>
@@ -108,7 +112,6 @@ const AppliedJobs = () => {
               </div>
             </div>
 
-            
             <div className="rounded-md bg-fill-bg-color w-full p-4 mb-5 border border-border-color">
               <div className="flex justify-between items-start mb-5">
                 <h2 className="font-semibold text-3xl">Application Status</h2>
@@ -121,7 +124,9 @@ const AppliedJobs = () => {
                   { label: "Application viewed by recruiter", code: 4 },
                   { label: "", code: 0 },
                 ].map((step, index, arr) => {
-                  const activeIndex = arr.findIndex((s) => s.code === job.jobApplicationStatus);  
+                  const activeIndex = arr.findIndex(
+                    (s) => s.code === job.jobApplicationStatus
+                  );
                   const isPast = index < activeIndex;
                   const isActive = index === activeIndex;
                   const isFuture = index > activeIndex;

@@ -8,7 +8,6 @@ import {
   faClock,
   faMoneyBillWave,
   faBookmark,
-  faStar,
   faChartLine,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router";

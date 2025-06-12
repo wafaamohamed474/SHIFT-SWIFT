@@ -4,23 +4,15 @@ import bookMarkIcon from "../../assets/Bookmark.png"
 import penIcon from "../../assets/Edit_Pencil_01.png"
 import settingsIcon from "../../assets/Settings.png"
 import phoneIcon from "../../assets/Phone.png"
-import warningIcon from "../../assets/Info.png"
-import { getUserData } from "../../services/authService";
+import warningIcon from "../../assets/Info.png" 
 import LogoutButton from "../logoutButton/LogoutButton";
-import userLogo from "../../assets/userLogo.jpg"
+ 
+import ProfileCard from "../profilePictureCard/ProfilePictureCard";
 const UserSidbar = ({onItemClick}) => {
-  const {firstName , lastName , email}= getUserData()
-  
-  
+ 
   return (
     <div className="w-full pr-5">
-    <div className="w-full h-48 rounded-md bg-main-color flex flex-col justify-center items-center">
-      <div className="w-20 h-20 rounded-full overflow-hidden">
-        <img src={userLogo} />
-      </div>
-      <h4 className="text-bg-color">{firstName + ' ' + lastName}</h4>
-      <p className="text-border-color">{email}</p>
-    </div>
+    <ProfileCard/>
     <div>
       <ul>
           <li><SidebarItem onClick={onItemClick} itemName="My Jobs" icon={bookMarkIcon} url="/home/user/myjobs"/></li>

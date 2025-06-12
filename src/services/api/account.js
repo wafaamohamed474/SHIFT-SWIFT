@@ -51,3 +51,29 @@ export const getCurrentUserData = async () => {
     throw error.response?.data || error;
   }
 };
+
+export const AddOrUpdateProfilePicture = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append("FormFile", file);  
+    const response = await apiClient.post("/Account/AddOrUpdateProfilePicture", formData);
+    return response.data;
+    
+  } catch (error) {
+    console.error("Failed to update profile picture:", error.response?.data || error);
+    throw error.response?.data || error;
+  }
+};
+
+
+export const GetProfilePicture = async (id) => {
+  try {
+     
+    const response = await apiClient.get(`/Account/GetProfilePicture/${id}`);
+    return response.data;
+    
+  } catch (error) {
+    console.error("Failed to display profile picture:", error.response?.data || error);
+    throw error.response?.data || error;
+  }
+};

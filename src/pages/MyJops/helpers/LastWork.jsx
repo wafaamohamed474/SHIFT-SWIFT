@@ -80,7 +80,7 @@ const LastWork = () => {
                 </span>
               </div>
               <div className="w-16 h-16">
-                <img src={compnayLogo} alt="company logo" />
+                <img src={last.companyPictureUrl} alt="company logo" />
               </div>
             </div>
 

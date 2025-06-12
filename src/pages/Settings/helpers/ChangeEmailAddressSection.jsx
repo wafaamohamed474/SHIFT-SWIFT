@@ -6,7 +6,7 @@ import Button from "../../../components/button/Button";
 import { getUserData, getUserType } from "../../../services/authService";
 import { changeCompanyEmail } from "../../../services/api/company";
 import { useAlert } from "../../../context/AlertContext";
-import { changeMemberEmail } from "../../../services/api/Member";
+import { changeMemberEmail } from "../../../services/api/member";
 
 const validationSchema = Yup.object({
   emailAddress: Yup.string()

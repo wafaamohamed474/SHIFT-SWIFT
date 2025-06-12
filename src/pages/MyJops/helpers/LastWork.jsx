@@ -1,10 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import compnayLogo from "../../../assets/userLogo.jpg";
 import Button from "../../../components/button/Button";
 import { useEffect, useState } from "react";
 import { getUserData } from "../../../services/authService";
-import { AddRating, GetLastwork } from "../../../services/api/Member";
+import { AddRating, GetLastwork } from "../../../services/api/member";
 import { useAlert } from "../../../context/AlertContext";
 
 const LastWork = () => {

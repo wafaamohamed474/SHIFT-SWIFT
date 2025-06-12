@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import Button from "../../../components/button/Button";
 import { getUserData } from "../../../services/authService";
 import { useAlert } from "../../../context/AlertContext";
-import { addEducation } from "../../../services/api/Member";
+import { addEducation } from "../../../services/api/member";
 
 const EducationSection = () => {
   const userId = getUserData()?.memberId;

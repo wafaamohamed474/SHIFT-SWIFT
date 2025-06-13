@@ -40,6 +40,12 @@ export const getUserData = () => {
 };
 
  
+ 
+
+ 
+ 
+
+ 
 export const getUserType = () => {
     const userType = Cookies.get("user_type");
     return userType || null

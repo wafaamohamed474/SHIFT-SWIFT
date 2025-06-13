@@ -9,7 +9,7 @@ import { login } from "../../services/authService";
 const Login = () => {
   const [userType, setUserType] = useState("user");
   const [error, setError] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       userName: "",
@@ -19,22 +19,30 @@ const Login = () => {
       userName: Yup.string().required("required"),
       password: Yup.string().required("required"),
     }),
-    onSubmit: async(values) => {
-      setError("")
+    onSubmit: async (values) => {
+      setError("");
       try {
-        const userData = await login(values , userType)
+        const userData = await login(values, userType);
         if (userData) {
           if (userType === "user") {
             navigate("/home");
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
           } else if (userType === "company") {
             navigate("/home/company/postjob");
+ 
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
           }
         }
       } catch (error) {
         console.error("Login failed:", error);
         setError(error?.data);
       }
-  }});
+    },
+  });
 
   return (
     <div className="flex justify-center items-center h-[calc(100vh-20rem)] md:h-[calc(100vh-22rem)] lg:min-h-screen bg-bg-color">
@@ -79,7 +87,7 @@ const Login = () => {
               <p className="text-red-500 text-sm">{formik.errors.password}</p>
             ) : null}
           </div>
- 
+
           <div className="mb-4">
             <label className="flex items-center">
               <input

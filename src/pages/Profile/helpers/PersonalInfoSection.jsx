@@ -1,48 +1,60 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import Button from "../../../components/button/Button";
- 
 import { getUserData } from "../../../services/authService";
 import { useAlert } from "../../../context/AlertContext";
 import { AddOrUpdateMemberProfileData } from "../../../services/api/member";
 
 const PersonalInfoSection = () => {
-  const {showAlert}=useAlert()
-   
-  const data = getUserData()
-console.log(getUserData());
+  const { showAlert } = useAlert();
+
+  const data = getUserData();
+
+  console.log("data", data);
 
   const initialValues = {
-    memberId: data.memberId || '',
-    firstName: data.firstName || '',
-    lastName: data.lastName || '',
-    location: data.location || '',
-    phoneNumber: data.phoneNumber || '',
-    alternativeNumber: data.alternativeNumber || "",
-    // genderId: data.genderId || 0,
-    genderId: data.genderId?.toString() || '',
-    dateOfBirth: data.dateOfBirth || "",
+    memberId: data?.memberId || "",
+    firstName: data?.firstName || "",
+    lastName: data?.lastName || "",
+    phoneNumber: data?.phoneNumber || "",
+    alternativeNumber: data?.alternativeNumber || "",
+    genderId: data?.genderId?.toString() || "",
+    dateOfBirth: data?.dateOfBirth
+      ? new Date(data.dateOfBirth).toISOString().split("T")[0]
+      : "",
+    location: data?.location || "",
+    city: data?.city || "",
+    area: data?.area || "",
   };
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First Name is required"),
     lastName: Yup.string().required("Last Name is required"),
-    location: Yup.string().required("Location is required"),
-    phoneNumber: Yup.string().required("Phone Number is required"),
-    alternativeNumber: Yup.string(),
+    phoneNumber: Yup.string()
+      .matches(/^(\+20)?(10|11|12|15)\d{8}$/, "Invalid phone number.")
+      .required("Phone Number is required"),
+    alternativeNumber: Yup.string()
+      .matches(/^(\+20)?(10|11|12|15)\d{8}$/, "Invalid phone number.")
+      .notRequired()
+      .transform((value) => (value ? value : "")),
     genderId: Yup.number()
       .required("Gender is required")
-      .oneOf(["1", "2"], "Invalid gender"),
+      .oneOf([1, 2], "Invalid gender"),
     dateOfBirth: Yup.date().required("Date of Birth is required"),
+    location: Yup.string().required("Nationality is required"),
+    city: Yup.string().required("City is required"),
+    area: Yup.string().required("Area is required"),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      await AddOrUpdateMemberProfileData(values);
-      showAlert("Profile updated successfully!" , "success");
+      const res = await AddOrUpdateMemberProfileData(values);
+      console.log("res is ", res.data);
+
+      showAlert("Profile updated successfully!", "success");
     } catch (error) {
-       console.error("Failed to update profile: " + (error.message || error));
-       showAlert("Failed to update profile" , "error")
+      console.error("Failed to update profile: " + (error.message || error));
+      showAlert("Failed to update profile", "error");
     } finally {
       setSubmitting(false);
     }
@@ -52,6 +64,7 @@ console.log(getUserData());
     <div className="mt-4 border-b border-border-color pb-6">
       <Formik
         initialValues={initialValues}
+        enableReinitialize
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
@@ -64,7 +77,10 @@ console.log(getUserData());
               </label>
               <div className="flex gap-4 mt-5">
                 <div className="w-full md:w-1/2">
-                  <label htmlFor="firstName" className="block text-sm text-main-text">
+                  <label
+                    htmlFor="firstName"
+                    className="block text-sm text-main-text"
+                  >
                     First Name
                   </label>
                   <Field
@@ -72,10 +88,17 @@ console.log(getUserData());
                     name="firstName"
                     className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text"
                   />
-                  <ErrorMessage name="firstName" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="firstName"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
                 </div>
                 <div className="w-full md:w-1/2">
-                  <label htmlFor="lastName" className="block text-sm text-main-text">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm text-main-text"
+                  >
                     Last Name
                   </label>
                   <Field
@@ -83,13 +106,16 @@ console.log(getUserData());
                     name="lastName"
                     className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text"
                   />
-                  <ErrorMessage name="lastName" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="lastName"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
                 </div>
               </div>
             </div>
 
             {/* Gender */}
-            
             <div className="mt-6 w-full md:w-2/3">
               <label className="font-semibold text-2xl text-main-color">
                 Gender <span className="text-red-500 text-md">*</span>
@@ -130,7 +156,10 @@ console.log(getUserData());
               </label>
               <div className="flex gap-4 mt-5">
                 <div className="w-1/2">
-                  <label htmlFor="phoneNumber" className="block text-sm text-main-text">
+                  <label
+                    htmlFor="phoneNumber"
+                    className="block text-sm text-main-text"
+                  >
                     Mobile Number
                   </label>
                   <Field
@@ -138,10 +167,17 @@ console.log(getUserData());
                     name="phoneNumber"
                     className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text"
                   />
-                  <ErrorMessage name="phoneNumber" component="div" className="text-red-500 text-sm" />
+                  <ErrorMessage
+                    name="phoneNumber"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
                 </div>
                 <div className="w-1/2">
-                  <label htmlFor="alternativeNumber" className="block text-sm text-main-text">
+                  <label
+                    htmlFor="alternativeNumber"
+                    className="block text-sm text-main-text"
+                  >
                     Alternative Number
                   </label>
                   <Field
@@ -169,25 +205,108 @@ console.log(getUserData());
                 max={new Date().toISOString().split("T")[0]}
                 className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text mt-2"
               />
-              <ErrorMessage name="dateOfBirth" component="div" className="text-red-500 text-sm" />
+              <ErrorMessage
+                name="dateOfBirth"
+                component="div"
+                className="text-red-500 text-sm"
+              />
             </div>
 
-            {/* Location */}
+            {/* Location (Nationality, City, Area) */}
             <div className="mt-6 w-full md:w-2/3">
               <label className="font-semibold text-2xl text-main-color">
                 Location <span className="text-red-500 text-md">*</span>
               </label>
-              <Field
-                name="location"
-                className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text mt-2"
-              />
-              <ErrorMessage name="location" component="div" className="text-red-500 text-sm" />
+              <div className="flex gap-4 mt-5">
+                {/* Nationality */}
+                <div className="flex-1">
+                  <label
+                    htmlFor="location"
+                    className="block text-sm text-main-text"
+                  >
+                    Nationality
+                  </label>
+                  <Field
+                    as="select"
+                    id="location"
+                    name="location"
+                    className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text"
+                  >
+                    <option value="">Select Nationality</option>
+                    <option value="Egyptian">Egyptian</option>
+                    <option value="Sudanese">Sudanese</option>
+                    <option value="Syrian">Syrian</option>
+                  </Field>
+                  <ErrorMessage
+                    name="location"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+                </div>
+
+                {/* City */}
+                <div className="flex-1">
+                  <label
+                    htmlFor="city"
+                    className="block text-sm text-main-text"
+                  >
+                    City
+                  </label>
+                  <Field
+                    as="select"
+                    id="city"
+                    name="city"
+                    className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text"
+                  >
+                    <option value="">Select City</option>
+                    <option value="Cairo">Cairo</option>
+                    <option value="Alexandria">Alexandria</option>
+                    <option value="Giza">Giza</option>
+                  </Field>
+                  <ErrorMessage
+                    name="city"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+                </div>
+
+                {/* Area */}
+                <div className="flex-1">
+                  <label
+                    htmlFor="area"
+                    className="block text-sm text-main-text"
+                  >
+                    Area
+                  </label>
+                  <Field
+                    as="select"
+                    id="area"
+                    name="area"
+                    className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text"
+                  >
+                    <option value="">Select Area</option>
+                    <option value="Downtown">Downtown</option>
+                    <option value="Heliopolis">Heliopolis</option>
+                    <option value="Zamalek">Zamalek</option>
+                  </Field>
+                  <ErrorMessage
+                    name="area"
+                    component="div"
+                    className="text-red-500 text-sm"
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Buttons */}
             <div className="mt-10 flex gap-4 w-full md:w-2/3">
               <Button type="reset" label="Cancel" variant="secondary" />
-              <Button type="submit" label={isSubmitting ? "Saving..." : "Save"} variant="primary" disabled={isSubmitting} />
+              <Button
+                type="submit"
+                label={isSubmitting ? "Saving…" : "Save"}
+                variant="primary"
+                disabled={isSubmitting}
+              />
             </div>
           </Form>
         )}

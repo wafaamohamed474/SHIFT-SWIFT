@@ -52,6 +52,10 @@ const LastWork = () => {
         [companyId]: { score: 0, comment: "" },
       }));
     } catch (err) {
+    if (err?.response?.data?.statusCode === 409)
+    {
+      showAlert("You have already rated this company" , "error")
+    }
       console.error("Failed to submit rating:", err);
     }
   };

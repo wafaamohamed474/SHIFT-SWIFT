@@ -27,7 +27,7 @@ const Login = () => {
           if (userType === "user") {
             navigate("/home");
           } else if (userType === "company") {
-            navigate("/home/company/postjob");
+            navigate("/home/companyHome");
           }
         }
       } catch (error) {

@@ -1,5 +1,4 @@
 
-import Button from "../../../components/button/Button";
 import LogoutButton from "../../../components/logoutButton/LogoutButton";
 
 const devices = [

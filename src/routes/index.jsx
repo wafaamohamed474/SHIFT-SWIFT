@@ -56,16 +56,16 @@ export const routes = createBrowserRouter([
         ],
       },
       {
+        path: "companyHome",
+        Component: CompanyHome,
+      },
+      {
         path: "company",
         Component: CompanyLayout,
         children: [
           {
             path: "postjob",
             Component: PostJob,
-          },
-          {
-            path: "home",
-            Component: CompanyHome,
           },
           {
             path: "applicants",

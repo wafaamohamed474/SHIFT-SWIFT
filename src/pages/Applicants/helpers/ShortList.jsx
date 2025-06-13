@@ -2,23 +2,53 @@ import { useEffect, useState } from "react";
 import ApplicantCard from "../../../components/ApplicantCard/ApplicantCard";
 import Button from "../../../components/button/Button";
 import NoSavePhoto from "../../../assets/NoSavePhoto.png";
-import { useNavigate } from "react-router";
-const ShortList = ({ onView }) => {
-  const [shortListApplicants, setShortList] = useState([]);
-  const navigate = useNavigate()
-  useEffect(() => {
-    const storedApplicants = JSON.parse(localStorage.getItem("shortList")) || [];
-    setShortList(storedApplicants);
-  }, []);
+import { useNavigate, useLocation } from "react-router";
+import { getShortlistedApplicants, removeFromShortList } from "../../../services/api/company";
+import { useAlert } from "../../../context/AlertContext";
 
-  const handleRemoveFromShortList = (applicantToRemove) => {
-    const updatedApplicants = shortListApplicants.filter(
-      (applicant) =>
-        !(applicant.name === applicantToRemove.name && applicant.jobName === applicantToRemove.jobName)
-    );
-    setShortList(updatedApplicants);
-    localStorage.setItem("shortList", JSON.stringify(updatedApplicants));
+const ShortList = ({ onView }) => {
+  const [shortListApplicants, setShortListApplicants] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const jobId = query.get("jobId");
+  const { showAlert } = useAlert();
+
+  useEffect(() => {
+    const fetchShortListed = async () => {
+      try {
+        if (jobId) {
+          const data = await getShortlistedApplicants(jobId);
+          setShortListApplicants(data.data);
+          console.log("shortlist", data);
+        }
+      } catch (error) {
+        console.log("Failed to fetch short list", error);
+        setShortListApplicants([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchShortListed();
+  }, [jobId]);
+
+  const handleRemoveFromShortList = async (applicantToRemove) => {
+    try {
+      await removeFromShortList(jobId, applicantToRemove.memberId); // طلب فعلي للـ API
+      const updated = shortListApplicants.filter(
+        (a) => a.memberId !== applicantToRemove.memberId
+      );
+      setShortListApplicants(updated);
+      showAlert("Removed from short list successfully");
+    } catch (error) {
+      console.error("Error removing applicant from shortlist", error);
+      showAlert("Failed to remove from short list", "error");
+    }
   };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="w-full mt-7">
@@ -31,7 +61,7 @@ const ShortList = ({ onView }) => {
           />
           <h1 className="text-2xl font-semibold mb-2">No Saved Applicants Yet!</h1>
           <p className="text-gray-600 mb-8 max-w-md">
-          Your notification will appear here once you've received them.
+            Your notification will appear here once you've received them.
           </p>
           <Button
             type="submit"

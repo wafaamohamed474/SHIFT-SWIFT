@@ -37,11 +37,12 @@ const handleSave = async () => {
       await saveJob(job.id, memberId);
      showAlert("Job Saved Successfully", "success");
     } catch (error) {
+      console.log("errorSaving",error)
      const errorMsg = error?.response?.data?.data?.[0];
       if (error?.response?.status === 409 && errorMsg === "The job has already been saved by this member.") {
       showAlert("You've already saved this job.");
      } else {
-     showAlert("Something went wrong while saving the job.");
+     showAlert("Something went wrong while saving the job.","error");
      }
 
     }

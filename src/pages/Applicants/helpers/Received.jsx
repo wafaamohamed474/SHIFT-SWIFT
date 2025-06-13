@@ -1,31 +1,28 @@
 import { useEffect, useState } from "react";
 import NoSavePhoto from "../../../assets/NoSavePhoto.png";
 import ApplicantCard from "../../../components/ApplicantCard/ApplicantCard";
-import { getApplicantsForJob } from "../../../services/api/company";
-import { toast } from "react-toastify";
+import { getApplicantsForJob, addToShortList } from "../../../services/api/company";
 import { useLocation } from "react-router";
+import { useAlert } from "../../../context/AlertContext";
 
 const Received = ({ onPrimaryAction }) => {
   const [applicants, setApplicants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { showAlert } = useAlert();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const jobId = query.get("jobId");
 
-  const handleMoveToShortList = (applicant) => {
-    const storedApplicants = JSON.parse(localStorage.getItem("shortList")) || [];
-    const isAlreadyAdded = storedApplicants.some(
-      (e) => e.name === applicant.name && e.jobName === applicant.jobName
-    );
-
-    if (!isAlreadyAdded) {
-      const updatedJobs = [...storedApplicants, applicant];
-      localStorage.setItem("shortList", JSON.stringify(updatedJobs));
-      toast.success(`${applicant.name} has been added to your Shortlist!`);
-    } else {
-      toast.info(`${applicant.name} is already in your Shortlist.`);
+  const handleMoveToShortList = async (applicant) => {
+    try {
+      await addToShortList(jobId, applicant.memberId);
+      showAlert("Applicant added to short list");
+      // إزالة المتقدم من القائمة بعد نقله
+      setApplicants((prev) => prev.filter((a) => a.memberId !== applicant.memberId));
+    } catch (error) {
+      // ممكن تضيفي showAlert هنا لو حابة تعرضي خطأ
+      console.error("Failed to move applicant to shortlist", error);
     }
   };
 
@@ -33,8 +30,9 @@ const Received = ({ onPrimaryAction }) => {
     const fetchApplicants = async () => {
       try {
         const data = await getApplicantsForJob(jobId);
-        setApplicants(data);
-        console.log("applicants", data);
+        // عرض فقط المتقدمين الجدد (status = 1)
+        setApplicants(data.filter((app) => app.status === 1));
+        console.log("Filtered applicants", data);
       } catch (err) {
         setApplicants([]);
         setError("Error fetching applicants");
@@ -63,9 +61,9 @@ const Received = ({ onPrimaryAction }) => {
           </p>
         </div>
       ) : (
-        applicants.map((applicant, index) => (
+        applicants.map((applicant) => (
           <ApplicantCard
-            key={index}
+            key={applicant.memberId}
             applicant={applicant}
             primaryLabel="View"
             secondaryLabel="Move to Short List"

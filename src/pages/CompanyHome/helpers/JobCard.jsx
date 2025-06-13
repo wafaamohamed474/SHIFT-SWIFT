@@ -32,9 +32,9 @@ const JobCard = ({ job, onClick ,navigateToApplicants ,ratingData }) => {
         </div>
 
        {/* logo */}
-        {job.companyLogo ? (
+        {job.imageUrl ? (
           <img
-            src={job.companyLogo}
+            src={job.imageUrl}
             alt="logo"
             className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover mt-4 sm:mt-0"
           />

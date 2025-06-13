@@ -3,7 +3,7 @@ import axios from "axios";
 import { getAuthToken } from "../authService";
  
  const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL : "https://shiftswift.tryasp.net/api"
    
 });
 

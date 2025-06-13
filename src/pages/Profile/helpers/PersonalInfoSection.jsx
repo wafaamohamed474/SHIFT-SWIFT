@@ -4,7 +4,7 @@ import Button from "../../../components/button/Button";
  
 import { getUserData } from "../../../services/authService";
 import { useAlert } from "../../../context/AlertContext";
-import { AddOrUpdateMemberProfileData } from "../../../services/api/Member";
+import { AddOrUpdateMemberProfileData } from "../../../services/api/member";
 
 const PersonalInfoSection = () => {
   const {showAlert}=useAlert()

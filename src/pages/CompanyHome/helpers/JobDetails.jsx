@@ -44,7 +44,7 @@ const JobDetails = ({ selectedJob, onClose, navigateToApplicants }) => {
           <p className="text-sm w-fit border-b border-border-color">{companyName}</p>
         </div>
         <span className="ml-auto mt-3 sm:mt-0">
-          <img src={selectedJob.logo} alt="company logo" className="text-dark-text rounded-lg" />
+          <img src={selectedJob.imageUrl} alt="company logo" className="text-dark-text w-20 h-20 rounded-lg" />
         </span>
       </div>
 

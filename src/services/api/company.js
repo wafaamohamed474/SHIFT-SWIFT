@@ -84,32 +84,76 @@ export const getAllJobsForCompany = async (companyId) => {
     throw error.response?.data || error;
   }
 };
-
-// fetch logo
-export const fetchCompanyLogo = async (companyId) => {
+//add to shortList
+export const addToShortList = async (jobId, memberId) => {
   try {
-    const token = getAuthToken();
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/Account/GetProfilePicture/${companyId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const response = await apiClient.post(
+      `Company/ApplyApplicant/${jobId}?MemberId=${memberId}&status=4`
     );
-
-    if (!response.ok) throw new Error("Failed to fetch logo");
-
-    const blob = await response.blob();
-    const imageObjectURL = URL.createObjectURL(blob);
-    return imageObjectURL;
+    return response.data;
   } catch (error) {
-    console.error("Error fetching company logo:", error);
-    return null;
+    console.error("Failed to add to shortlist:", error.response?.data || error.message);
+    throw error;
   }
 };
-
-
+//accept
+export const acceptApplicant = async (jobId, memberId) => {
+  try {
+    const response = await apiClient.post(
+      `Company/ApplyApplicant/${jobId}?MemberId=${memberId}&status=2`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Failed to accept:", error.response?.data || error.message);
+    throw error;
+  }
+};
+//reject
+export const rejectApplicant = async (jobId, memberId) => {
+  try {
+    const response = await apiClient.post(
+      `Company/ApplyApplicant/${jobId}?MemberId=${memberId}&status=3`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Failed to reject:", error.response?.data || error.message);
+    throw error;
+  }
+};
+//reject
+export const pendingApplicants = async (jobId, memberId) => {
+  try {
+    const response = await apiClient.post(
+      `Company/ApplyApplicant/${jobId}?MemberId=${memberId}&status=1`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Failed to reject:", error.response?.data || error.message);
+    throw error;
+  }
+};
+//remove from shortList
+export const removeFromShortList = async (jobId, memberId) => {
+  try {
+    const response = await apiClient.post(
+      `Company/ApplyApplicant/${jobId}?MemberId=${memberId}&status=5`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Failed to remove from shortlist:", error.response?.data || error.message);
+    throw error;
+  }
+};
+//get short list applicants
+export const getShortlistedApplicants = async (jobId) => {
+  try {
+    const response = await apiClient.get(`/Company/GetShortlistedMembers/${jobId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching shortlisted applicants:", error);
+    throw error.response?.data || error;
+  }
+};
 export const changeCompanyEmail = async(CompanyID , Email)=>{
     try{
         const response = await apiClient.post(`/Company/ChangeCompanyEmail/${CompanyID}?Email=${encodeURIComponent(Email)}`)

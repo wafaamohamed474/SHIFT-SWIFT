@@ -75,6 +75,32 @@ export const AddRating = async(companyID , RatedByid , data)=>{
     }
 
 }
+//save job
+export const saveJob = async (jobId, memberId) => {
+  try {
+    const response = await apiClient.post(`/Member/SaveJob`, null, {
+      params: {
+        JobId: jobId,
+        MemberId: memberId
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error saving job:", error);
+    throw error;
+  }
+};
+export const applyToJob = async (jobId, memberId) => {
+  try {
+    const response = await apiClient.post("/Member/AddJobApplication", {
+      jobId,
+      memberId,
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+}
 
  export const RemoveJobFromSavedJobs  = async (jobId) => {
   try {

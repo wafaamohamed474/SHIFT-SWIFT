@@ -30,11 +30,7 @@ const Login = () => {
               window.location.reload();
             }, 2000);
           } else if (userType === "company") {
-            navigate("/home/company/postjob");
- 
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
+            navigate("/home/companyHome");
           }
         }
       } catch (error) {

@@ -1,4 +1,4 @@
-import SearchSection from './helpers/SearchSection'
+import FindJobSection from './helpers/FindJobSection'
 import PersonalJobsSection from './helpers/PersonalJobsSection'
 import ExploreJobsSection from './helpers/ExploreJobsSection'
 import SideJobsSection from './helpers/SideJobsSection'
@@ -9,12 +9,12 @@ import DownloadAppSection from './helpers/DownloadAppSection'
 const Home = () => {
   return (
     <div className='w-full'>
-    {/*Search*/}
-     <SearchSection />
+    {/*FindJob*/}
+     <FindJobSection />
      {/*PersonalJobs */}
      <PersonalJobsSection />
      {/*ExploreJobs */}
-     <ExploreJobsSection />
+     <ExploreJobsSection companyId={123} />
      {/*SideJobs */}
      <SideJobsSection />
      {/*Brands*/}

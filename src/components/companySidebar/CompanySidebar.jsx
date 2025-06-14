@@ -1,6 +1,6 @@
-import bookIcon from "../../assets/Bookmark.png"
+import usersIcon from "../../assets/user_group.png"
 import SidebarItem from "../sidebarItem/SidebarItem";
-import plusIcon from "../../assets/Add_Plus.png"
+import plusIcon from "../../assets/basil_bag-solid .png"
 import penIcon from "../../assets/Edit_Pencil_01.png"
 import settingsIcon from "../../assets/Settings.png"
 import starIcon from "../../assets/Star.png"
@@ -16,7 +16,7 @@ const CompanySidebar = ({onItemClick}) => {
       <div>
         <ul>
         <li><SidebarItem onClick={onItemClick}  itemName="Post Job" icon={plusIcon} url="/home/company/postjob"/></li>
-        <li><SidebarItem onClick={onItemClick}  itemName="Applicants" icon={bookIcon} url="/home/company/applicants"/></li>
+        <li><SidebarItem onClick={onItemClick}  itemName="Applicants" icon={usersIcon} url="/home/company/applicants"/></li>
         <li><SidebarItem onClick={onItemClick} itemName="My Reviews" icon={starIcon} url="/home/company/reviews"/></li>
         <li ><SidebarItem onClick={onItemClick}  itemName="Edit Profile" icon={penIcon} url="/home/company/profile"/></li>
         <li><SidebarItem onClick={onItemClick} itemName="Settings" icon={settingsIcon} url="/home/company/settings"/></li>

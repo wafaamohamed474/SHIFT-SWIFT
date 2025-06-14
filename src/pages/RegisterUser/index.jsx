@@ -9,14 +9,23 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { RegisterMember } from "../../services/api/account";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 const RegisterUser = () => {
   const [error, setError] = useState("");
+  const [email, setEmail] = useState(""); ///////////////
   const navigate = useNavigate();
+//----------------------
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("userEmail");
+    if (storedEmail) {
+      setEmail(storedEmail);
+    }
+  }, []);
+//-------------------------------
+
   const formik = useFormik({
     initialValues: {
-      email: "",
+      email: email,/////////////
       userName: "",
       password: "",
       phoneNumber: "",

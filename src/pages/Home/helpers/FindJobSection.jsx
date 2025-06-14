@@ -1,7 +1,21 @@
 import SmallPhone from "../../../assets/Group 8936.png";
 import BigPhone from "../../../assets/Group 462.png";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+function FindJobSection() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-function SearchSection() {
+  const handleFindJobs = () => {
+  if (email.trim() !== "") {
+    setError("");
+    navigate(`/register-company?email=${encodeURIComponent(email)}`);
+  } else {
+    setError("Please enter your email.");
+  }
+};
+
   return (
     <div className="container justify-center py-10 flex flex-col-2 gap-x-10  ">
       {/* Search Section */}
@@ -15,15 +29,19 @@ function SearchSection() {
         <div className="flex border border-dark-text rounded-3xl w-full h-12">
           <input
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Your Email"
             className="focus:outline-none text-dark-text bg-bg-color w-full m-4 me-auto"
           />
           <button
-            className="rounded-3xl bg-main-color text-white lg:w-[300px] w-[200px]"
+           onClick={handleFindJobs}
+           className="rounded-3xl bg-main-color text-white lg:w-[300px] w-[200px]"
           >
             Find Jobs
           </button>
         </div>
+        {error && <span className="text-red-500 text-sm">{error}</span>}
       </div>
 
       {/* Mobile Phones Section */}
@@ -50,4 +68,4 @@ function SearchSection() {
   );
 }
 
-export default SearchSection;
+export default FindJobSection;

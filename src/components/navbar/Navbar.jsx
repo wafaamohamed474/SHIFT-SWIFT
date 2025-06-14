@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-
 import { getUserData, getUserType } from "../../services/authService";
 import userLogo from "../../assets/userLogo.jpg";
 import { useEffect, useState } from "react";
@@ -14,7 +13,8 @@ const Navbar = () => {
     userType === "company" ? "/home/company/profile" : "/home/user/profile";
   const aboutPath =
     userType === "company" ? "/home/company/about" : "/home/user/about";
-
+  const homePath =
+    userType === "company" ? "/home/companyHome" : "/home";
     const [imageUrl, setImageUrl] = useState(null);
      const id =
     getUserType() === "user"
@@ -41,7 +41,7 @@ const Navbar = () => {
           </Link>
           <ul className="ml-10 hidden md:flex">
             <li>
-              <Link to="/home" className="text-base font-normal mx-2 lg:mx-5">
+              <Link to={homePath} className="text-base font-normal mx-2 lg:mx-5">
                 Home
               </Link>
             </li>

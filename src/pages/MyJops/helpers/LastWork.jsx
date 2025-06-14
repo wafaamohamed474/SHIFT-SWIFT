@@ -81,8 +81,8 @@ const LastWork = () => {
                   {last.description}
                 </span>
               </div>
-              <div className="w-16 h-16">
-                <img src={last.companyPictureUrl} alt="company logo" />
+              <div className="w-16 h-20">
+                <img src={last.companyPictureUrl} alt="company logo" className="h-full "/>
               </div>
             </div>
 

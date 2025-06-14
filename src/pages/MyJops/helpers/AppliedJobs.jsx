@@ -44,8 +44,8 @@ const AppliedJobs = () => {
                     {job.description}
                   </span>
                 </div>
-                <div className="w-16 h-16">
-                  <img src={job.companyPictureUrl} alt="Company Logo" />
+                <div className="w-16 h-20">
+                  <img src={job.companyPictureUrl} alt="Company Logo" className="h-full w-full"/>
                 </div>
               </div>
 
@@ -118,41 +118,45 @@ const AppliedJobs = () => {
               </div>
 
               {/* Stepper */}
+
               <div className="flex flex-col space-y-6 relative ml-2">
-                {[
-                  { label: "Application Sent", code: 1 },
-                  { label: "Application viewed by recruiter", code: 4 },
-                  { label: "", code: 0 },
-                ].map((step, index, arr) => {
-                  const activeIndex = arr.findIndex(
+                {(job.jobApplicationStatus === 3
+                  ? [
+                      { label: "Application Sent", code: 1 },
+                      { label: "Application viewed by recruiter", code: 4 },
+                      { label: "Rejected", code: 3 },
+                    ]
+                  : [
+                      { label: "Application Sent", code: 1 },
+                      { label: "Application viewed by recruiter", code: 4 },
+                      { label: "Accepted", code: 2 },
+                    ]
+                ).map((step, index, arr) => {
+                  // تحديد المرحلة الحالية حسب الكود
+                  const currentIndex = arr.findIndex(
                     (s) => s.code === job.jobApplicationStatus
                   );
-                  const isPast = index < activeIndex;
-                  const isActive = index === activeIndex;
-                  const isFuture = index > activeIndex;
 
                   return (
-                    <div className="flex items-center relative" key={step.code}>
-                      {/* Vertical line */}
+                    <div key={step.code} className="flex items-center relative">
+                      {/* خط عمودي يصل الدوائر */}
                       {index < arr.length - 1 && (
                         <span className="absolute left-4 top-6 h-full w-0.5 bg-gray-300"></span>
                       )}
 
-                      {/* Circle */}
+                      {/* الدائرة */}
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center z-10 ${
-                          isPast
-                            ? "bg-green-600 text-white"
-                            : isActive
-                            ? "bg-green-600"
-                            : "bg-gray-300"
+                          index <= currentIndex
+                            ? "bg-green-600 text-gray-50" // المكتملة والنشطة
+                            : "bg-gray-300" // لاحقة
                         }`}
                       >
-                        {isPast ? "✔" : ""}
+                        {index <= currentIndex ? "✔" : ""}
                       </div>
 
-                      {/* Text */}
-                      <span className="ml-4 text-sm font-medium text-gray-800">
+                      {/* التسمية */}
+                      <span className="ml-4 text-sm font-semibold text-gray-800">
                         {step.label}
                       </span>
                     </div>

@@ -217,12 +217,13 @@ const PersonalInfoSection = () => {
               <label className="font-semibold text-2xl text-main-color">
                 Location <span className="text-red-500 text-md">*</span>
               </label>
-              <div className="flex gap-4 mt-5">
+
+              <div className="flex gap-8 mt-2">
                 {/* Nationality */}
-                <div className="flex-1">
+                <div className="w-1/3 flex items-center">
                   <label
                     htmlFor="location"
-                    className="block text-sm text-main-text"
+                    className="block text-sm text-main-text mr-2"
                   >
                     Nationality
                   </label>
@@ -230,12 +231,10 @@ const PersonalInfoSection = () => {
                     as="select"
                     id="location"
                     name="location"
-                    className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text"
+                    className="border rounded p-2 w-full focus:outline-none bg-fill-bg-color text-sm"
                   >
-                    <option value="">Select Nationality</option>
+                    <option value="">Choose</option>
                     <option value="Egyptian">Egyptian</option>
-                    <option value="Sudanese">Sudanese</option>
-                    <option value="Syrian">Syrian</option>
                   </Field>
                   <ErrorMessage
                     name="location"
@@ -245,10 +244,10 @@ const PersonalInfoSection = () => {
                 </div>
 
                 {/* City */}
-                <div className="flex-1">
+                <div className="w-1/3 flex items-center">
                   <label
                     htmlFor="city"
-                    className="block text-sm text-main-text"
+                    className="block text-sm text-main-text mr-2"
                   >
                     City
                   </label>
@@ -256,12 +255,15 @@ const PersonalInfoSection = () => {
                     as="select"
                     id="city"
                     name="city"
-                    className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text"
+                    className="border rounded p-2 w-full focus:outline-none bg-fill-bg-color text-sm"
                   >
-                    <option value="">Select City</option>
-                    <option value="Cairo">Cairo</option>
-                    <option value="Alexandria">Alexandria</option>
-                    <option value="Giza">Giza</option>
+                    <option value="">Choose</option>
+                    <option value="cairo">Cairo</option>
+                    <option value="giza">Giza</option>
+                    <option value="alexandria">Alexandria</option>
+                    <option value="qalyubiya">Qalyubiya</option>
+                    <option value="asyut">Asyut</option>
+                    <option value="luxor">Luxor</option>
                   </Field>
                   <ErrorMessage
                     name="city"
@@ -271,10 +273,10 @@ const PersonalInfoSection = () => {
                 </div>
 
                 {/* Area */}
-                <div className="flex-1">
+                <div className="w-1/3 flex items-center">
                   <label
                     htmlFor="area"
-                    className="block text-sm text-main-text"
+                    className="block text-sm text-main-text mr-2"
                   >
                     Area
                   </label>
@@ -282,12 +284,27 @@ const PersonalInfoSection = () => {
                     as="select"
                     id="area"
                     name="area"
-                    className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none text-dark-text"
+                    className="border rounded p-2 w-full focus:outline-none bg-fill-bg-color text-sm"
                   >
-                    <option value="">Select Area</option>
-                    <option value="Downtown">Downtown</option>
-                    <option value="Heliopolis">Heliopolis</option>
-                    <option value="Zamalek">Zamalek</option>
+                    <option value="">Choose</option>
+                    <option value="zamalek">Zamalek</option>
+                    <option value="maadi">Maadi</option>
+                    <option value="heliopolis">Heliopolis</option>
+                    <option value="dokki">Dokki</option>
+                    <option value="haram">Al Haram</option>
+                    <option value="6th_of_october">6th of October</option>
+                    <option value="manshiya">Manshiya</option>
+                    <option value="sidi_gaber">Sidi Gaber</option>
+                    <option value="montaza">Montaza</option>
+                    <option value="banha">Banha</option>
+                    <option value="qalyub">Qalyub</option>
+                    <option value="shubra_el_kheima">Shubra El Kheima</option>
+                    <option value="west_asyut">West Asyut</option>
+                    <option value="el_hamraa">El Hamraa</option>
+                    <option value="el_fath">El Fath</option>
+                    <option value="al_awamiya">Al Awamiya</option>
+                    <option value="el_karnak">El Karnak</option>
+                    <option value="central_luxor">Central Luxor</option>
                   </Field>
                   <ErrorMessage
                     name="area"

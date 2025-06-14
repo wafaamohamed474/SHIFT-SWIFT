@@ -51,7 +51,7 @@ const JobCard = ({ job, onView, isSelected }) => {
 
   return (
     <div
-      className={`bg-secondary-color rounded-xl p-4 hover:shadow-md transition cursor-pointer ${isSelected ? 'border-2 border-main-color' : ''}`}
+      className={`bg-fill-bg-color border border-border-color  rounded-xl p-4 hover:shadow-md transition cursor-pointer ${isSelected ? 'border-2 border-main-color' : ''}`}
       onClick={onView}
     >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
@@ -73,20 +73,20 @@ const JobCard = ({ job, onView, isSelected }) => {
       </div>
 
       <div className="flex flex-wrap gap-4 py-4 text-sm text-dark-text">
-        <span className="flex items-center gap-2">
+        <span className="flex items-center text-sm font-semibold gap-2">
           <FontAwesomeIcon icon={faLocationDot} className="text-dark-text" />
           {job.location}
         </span>
-        <span className="flex items-center gap-2">
+        <span className="flex text-sm font-semibold items-center gap-2">
           <FontAwesomeIcon icon={faClock} className="text-dark-text" />
           {jobTypeReverseMap[job.jobTypeTd]}
         </span>
-        <span className="flex items-center gap-2">
+        <span className="flex items-center text-sm font-semibold gap-2">
           <FontAwesomeIcon icon={faMoneyBillWave} className="text-dark-text" />
           {job.salary}
         </span>
         {ratingData !== null ? (
-          <span className="flex items-center gap-2 text-main-color">
+          <span className="flex items-center text-sm font-semibold gap-2 text-main-color">
             <span className="flex items-center gap-1">
               {ratingData.averageScore}
               <FontAwesomeIcon icon={faStar} className="text-yellow-400" />

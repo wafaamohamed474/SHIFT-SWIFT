@@ -96,19 +96,19 @@ const Home = () => {
       <div className='flex flex-col items-center justify-center gap-10 mb-10'>
         <img className="w-72 md:w-96" src={Logo} alt="Logo" />
         {/* Search Bar */}
-        <div className='flex flex-col md:flex-row border bg-secondary-color border-border-color h-auto md:h-14  rounded-2xl w-full md:w-[700px]'>
+        <div className='flex flex-col md:flex-row border bg-fill-bg-color  border-border-color h-auto md:h-14  rounded-2xl w-full md:w-[700px]'>
           <div className='flex items-center px-2'>
             <img className='w-10 h-6' src={SearchIcon} alt="Search" />
           </div>
           <input
-            className='focus:outline-none text-dark-text p-2 bg-secondary-color w-full border-t md:border-t-0 md:border-r border-border-color'
+            className='focus:outline-none text-dark-text p-2 bg-fill-bg-color  w-full border-t md:border-t-0 md:border-r border-border-color'
             type='text'
             placeholder='Job Title'
             value={searchTitle}
             onChange={(e) => setSearchTitle(e.target.value)}
           />
           <input
-            className='focus:outline-none text-dark-text p-2 bg-secondary-color w-full border-t md:border-t-0'
+            className='focus:outline-none text-dark-text p-2 bg-fill-bg-color  w-full border-t md:border-t-0'
             type='text'
             placeholder='City'
             value={searchLocation}

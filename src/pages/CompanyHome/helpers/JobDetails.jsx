@@ -27,7 +27,7 @@ const JobDetails = ({ selectedJob, onClose, navigateToApplicants }) => {
   };
 
   return (
-    <div className="border border-border-color rounded-xl flex flex-col gap-y-5 p-5 md:w-1/2 overflow-hidden">
+    <div className="border border-border-color rounded-xl flex flex-col gap-y-5 p-5  overflow-hidden">
       <div className="hover:bg-transparent hover:cursor-pointer ml-auto">
         <FontAwesomeIcon icon={faXmark} className="text-border-color" onClick={onClose} />
       </div>

@@ -41,10 +41,7 @@ export const getCurrentUserData = async () => {
   try {
     const response = await apiClient.get("/Account/GetCurrentUserInformation");
     const userData = response.data.data;
-     
-    
     Cookies.set("user_data", JSON.stringify(userData), { expires: 10 });  
-
     return userData;
   } catch (error) {
     console.error("Failed to get current user data:", error.response?.data || error);

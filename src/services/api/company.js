@@ -192,4 +192,12 @@ export const GetRating = async (companyId) => {
   }
 };
 
-
+export const getRandomApplicants = async () => {
+  try {
+    const response = await apiClient.get("/Company/GetRandomApplicants");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching random applicants:", error);
+    throw error;
+  }
+};

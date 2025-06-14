@@ -2,26 +2,19 @@ import { useEffect, useState } from "react";
 import ApplicantCard from "../../../components/ApplicantCard/ApplicantCard";
 import Button from "../../../components/button/Button";
 import NoSavePhoto from "../../../assets/NoSavePhoto.png";
-import { useNavigate, useLocation } from "react-router";
-import { getShortlistedApplicants, removeFromShortList } from "../../../services/api/company";
-import { useAlert } from "../../../context/AlertContext";
+import { useNavigate } from "react-router";
+import { getShortlistedApplicants } from "../../../services/api/company";
 
-const ShortList = ({ onView }) => {
+const ShortList = ({  jobId,onView, refresh, onRemove }) => {
   const [shortListApplicants, setShortListApplicants] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const jobId = query.get("jobId");
-  const { showAlert } = useAlert();
-
   useEffect(() => {
     const fetchShortListed = async () => {
       try {
         if (jobId) {
           const data = await getShortlistedApplicants(jobId);
           setShortListApplicants(data.data);
-          console.log("shortlist", data);
         }
       } catch (error) {
         console.log("Failed to fetch short list", error);
@@ -32,21 +25,7 @@ const ShortList = ({ onView }) => {
     };
 
     fetchShortListed();
-  }, [jobId]);
-
-  const handleRemoveFromShortList = async (applicantToRemove) => {
-    try {
-      await removeFromShortList(jobId, applicantToRemove.memberId); // طلب فعلي للـ API
-      const updated = shortListApplicants.filter(
-        (a) => a.memberId !== applicantToRemove.memberId
-      );
-      setShortListApplicants(updated);
-      showAlert("Removed from short list successfully");
-    } catch (error) {
-      console.error("Error removing applicant from shortlist", error);
-      showAlert("Failed to remove from short list", "error");
-    }
-  };
+  }, [jobId,refresh]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -68,18 +47,18 @@ const ShortList = ({ onView }) => {
             label="Go To Home"
             variant="primary"
             className="w-60 md:w-96 py-2 text-lg"
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/home/companyHome")}
           />
         </div>
       ) : (
-        shortListApplicants.map((applicant, index) => (
+        shortListApplicants.map((applicant) => (
           <ApplicantCard
-            key={index}
+            key={applicant.memberId}
             applicant={applicant}
             primaryLabel="View"
             secondaryLabel="Remove from Short List"
-            onPrimaryAction={() => onView(applicant)}
-            onSecondaryAction={() => handleRemoveFromShortList(applicant)}
+            onPrimaryAction={() => onView(applicant.memberId)}
+            onSecondaryAction={() => onRemove(jobId, applicant.memberId)}
             secondaryBtnStyle="text-red-600 border-red-600"
           />
         ))

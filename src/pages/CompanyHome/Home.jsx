@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import JobCard from "./helpers/JobCard";
-import { useNavigate } from 'react-router-dom';
-import Logo from '../../assets/logo.png';
-import JobDetails from './helpers/JobDetails';
+import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/logo.png";
+import JobDetails from "./helpers/JobDetails";
 import { getAllJobsForCompany, GetRating } from "../../services/api/company";
-import { getUserData } from '../../services/authService';
+import { getUserData } from "../../services/authService";
 
 const Home = () => {
   const [jobData, setJobData] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [expandedJobId, setExpandedJobId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [ratingData, setRatingData] = useState(null);
@@ -27,8 +28,8 @@ const Home = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const job = await getAllJobsForCompany(companyId);
-        setJobData(job);
+        const jobs = await getAllJobsForCompany(companyId);
+        setJobData(jobs);
         setLoading(false);
       } catch (err) {
         setError("Error Fetching Jobs");
@@ -46,9 +47,8 @@ const Home = () => {
   }, [jobData]);
 
   const handleViewDetails = (job) => {
-    if (job !== selectedJob) {
-      setSelectedJob(job);
-    }
+    setSelectedJob(job);
+    setExpandedJobId(job.jobId); 
   };
 
   const navigateToApplicants = (e, job) => {
@@ -60,34 +60,52 @@ const Home = () => {
     <div className="container py-10">
       {/* heading */}
       <div className="flex flex-col items-center justify-center gap-10">
-        <img className="w-96 pb-10" src={Logo} alt="Logo" />
+        <img className="w-60 md:w-96 pb-10" src={Logo} alt="Logo" />
       </div>
 
       {/* Jobs */}
       <div className="flex flex-col md:flex-row w-full py-10 gap-x-3">
+        
         <div className="flex flex-col gap-3 w-full md:w-1/2">
           {loading ? (
             <p>Loading...</p>
           ) : (
-            jobData.map((job, index) => (
-              <JobCard
-                key={index}
-                job={job}
-                onClick={handleViewDetails}
-                navigateToApplicants={(e) => navigateToApplicants(e, job)} // ✅ الصحيح
-                ratingData={ratingData}
-              />
+            jobData.map((job) => (
+              <div key={job.jobId}>
+                <JobCard
+                  job={job}
+                  onClick={() => handleViewDetails(job)}
+                  navigateToApplicants={(e) => navigateToApplicants(e, job)}
+                  ratingData={ratingData}
+                />
+
+                
+                {expandedJobId === job.jobId && (
+                  <div className="block md:hidden mt-2">
+                    <JobDetails
+                      selectedJob={job}
+                      onClose={() => setExpandedJobId(null)}
+                      navigateToApplicants={(e) =>
+                        navigateToApplicants(e, job)
+                      }
+                    />
+                  </div>
+                )}
+              </div>
             ))
           )}
         </div>
 
-        {selectedJob && (
-          <JobDetails
-            selectedJob={selectedJob}
-            onClose={() => setSelectedJob(null)}
-            navigateToApplicants={(e) => navigateToApplicants(e, selectedJob)}
-          />
-        )}
+   
+       <div className="hidden md:flex w-full md:w-1/2 flex-col">
+          {selectedJob && (
+            <JobDetails
+              selectedJob={selectedJob}
+              onClose={() => setSelectedJob(null)}
+              navigateToApplicants={(e) => navigateToApplicants(e, selectedJob)}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

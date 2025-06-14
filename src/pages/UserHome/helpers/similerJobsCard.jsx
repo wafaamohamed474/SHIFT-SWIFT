@@ -25,7 +25,6 @@ const similerJobCard = ({ job, onView }) => {
     GetRating(job.companyId)
       .then((data) => {
         setRatingData(data);
-        //console.log(data);
       })
       .catch((err) => {
         console.error("Error loading company rating:", err);

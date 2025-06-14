@@ -32,10 +32,18 @@ const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryL
           <FontAwesomeIcon icon={faPhone} className="text-dark-text" />
           <span className="text-sm font-semibold">{applicant.phoneNumber}</span>
         </div>
-        <div className="flex items-center gap-2">
+          <div className="flex gap-2">
           <FontAwesomeIcon icon={faUniversity} className="text-dark-text" />
-          <span className="text-sm font-semibold">{applicant.educations}</span>
+          {Array.isArray(applicant.educations) && applicant.educations.length > 0 && (
+            applicant.educations.map((edu) => (
+              <div key={edu.id} className="text-sm font-semibold">
+                <p>{edu.level} - {edu.faculty}</p>
+                <p>{edu.universityName}</p>
+              </div>
+            ))
+          )}
         </div>
+
         
       </div>
 

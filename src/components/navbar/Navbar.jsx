@@ -36,7 +36,7 @@ const Navbar = () => {
     <div className="border-b border-border-color py-4">
       <div className="container flex justify-between items-center">
         <div className=" flex justify-between items-center">
-          <Link className="text-main-color font-semibold tracking-extra-wide text-2xl lg:text-3xl">
+          <Link to={homePath} className="text-main-color font-semibold tracking-extra-wide text-2xl lg:text-3xl">
             SHIFT SWIFT
           </Link>
           <ul className="ml-10 hidden md:flex">

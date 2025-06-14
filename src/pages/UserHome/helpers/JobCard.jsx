@@ -57,10 +57,10 @@ const JobCard = ({ job, onView, isSelected }) => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
         <div className="flex flex-col gap-1 sm:w-3/4">
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl sm:text-3xl font-semibold">{job.title}</h1>
+            <h1 className="text-2xl md:text-3xl truncate max-w-[500px] font-semibold">{job.title}</h1>
             <img src={VectorImage} alt="vector" className="w-5 h-5 mt-1" />
           </div>
-          <p className="text-sm text-gray-600">{job.companyFirstName + " " + job.companyLastName}</p>
+          <p className="text-sm text-gray-600 font-semibold">{job.companyFirstName + " " + job.companyLastName}</p>
         </div>
 
         <span className="bg-white h-20 w-20 rounded-xl ml-auto overflow-hidden flex items-center justify-center">

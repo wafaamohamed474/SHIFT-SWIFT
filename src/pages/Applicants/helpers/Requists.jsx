@@ -43,7 +43,7 @@ function Requists({ jobId, memberId, onDecision }) {
       try {
         const data = await getSpecificApplicantForJob(jobId, memberId);
         setApplicant(data);
-       // console.log("request", data);
+       console.log("request", data);
       } catch (err) {
         console.error("Failed to load applicant", err);
       } finally {
@@ -67,41 +67,41 @@ function Requists({ jobId, memberId, onDecision }) {
       <div className="md:pl-10">
         {/* Header */}
         <div className="flex border-b border-dark-text pb-5">
-          <div className="w-20 h-20">
+          <div className="w-24 h-24 rounded-2xl">
             <img
-              className="rounded-lg w-full h-full"
+              className="rounded-2xl w-full h-full"
               src={applicant.memberImageUrl}
               alt="applicant"
             />
           </div>
           <div className="md:pl-10">
-            <h2 className="font-semibold text-2xl mb-1">{applicant.title}</h2>
-            <span className="text-xl mb-1">{applicant.fullName}</span>
+            <h2 className="font-semibold text-3xl mb-1">{applicant.jobTitle}</h2>
+            <span className="text-xl  mb-1">{applicant.companyFirstName +" " + applicant.companyLastName }</span>
           </div>
         </div>
 
         {/* Last Work */}
         <div className="flex items-center gap-4 py-5">
           <img src={last} className="w-6" alt="last work" />
-          <h1 className="text-2xl">Last Work</h1>
+          <h1 className="text-2xl font-semibold">Last Work</h1>
         </div>
         {applicant.lastWorkInJob ? (
           <div className="flex border-b border-dark-text pb-5">
-            <div className="w-20 h-20">
+            <div className="w-24 h-24 rounded-2xl">
               <img
-                className="rounded-lg w-full h-full"
+                className="rounded-2xl w-full h-full"
                 src={applicant.memberImageUrl}
                 alt="company"
               />
             </div>
             <div className="md:pl-10">
-              <h2 className="font-semibold text-2xl mb-2">
+              <h2 className="font-semibold text-3xl mb-2">
                 {applicant.lastWorkInJob.title}
               </h2>
-              <p className="text-sm text-gray-600 mb-2">
-                {applicant.lastWorkInJob.description}
-              </p>
-              <p className="text-xl text-gray-500">
+              <span className="text-xl  mb-2">
+                {applicant.lastWorkInJob.firstName + " " +applicant.lastWorkInJob.lastName }
+              </span>
+              <p className="text-lg text-gray-500">
                 {new Date(applicant.lastWorkInJob.postedOn).toLocaleDateString()}
               </p>
             </div>
@@ -113,7 +113,7 @@ function Requists({ jobId, memberId, onDecision }) {
         {/* Education */}
         <div className="flex items-center gap-4 py-5">
           <FontAwesomeIcon icon={faGraduationCap} className="text-2xl text-dark-text" />
-          <h1 className="text-2xl">Education</h1>
+          <h1 className="text-2xl font-semibold">Education</h1>
         </div>
         <div className=" border-b border-dark-text pb-5">
           {applicant.educations && applicant.educations.length > 0 ? (
@@ -132,7 +132,7 @@ function Requists({ jobId, memberId, onDecision }) {
         <div className="py-5 border-b border-dark-text pb-5">
           <div className="flex items-center gap-4 mb-2">
             <FontAwesomeIcon icon={faPhone} className="text-2xl text-dark-text" />
-            <h1 className="text-2xl">Phone Number</h1>
+            <h1 className="text-2xl font-semibold">Phone Number</h1>
           </div>
           <p className="text-xl">{applicant.phoneNumber}</p>
         </div>
@@ -141,7 +141,7 @@ function Requists({ jobId, memberId, onDecision }) {
         <div className="py-5  pb-10">
           <div className="flex items-center gap-4 mb-2">
             <FontAwesomeIcon icon={faLocationDot} className="text-2xl text-dark-text" />
-            <h1 className="text-2xl">Location</h1>
+            <h1 className="text-2xl font-semibold">Location</h1>
           </div>
           <p className="text-xl">{applicant.location}</p>
         </div>

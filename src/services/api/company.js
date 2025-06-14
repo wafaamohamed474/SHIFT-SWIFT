@@ -195,9 +195,15 @@ export const GetRating = async (companyId) => {
 export const getRandomApplicants = async () => {
   try {
     const response = await apiClient.get("/Company/GetRandomApplicants");
-    return response.data;
+
+    if (response?.data?.isSuccess && Array.isArray(response.data.data)) {
+      return response.data.data;
+    } else {
+      console.error("No applicants or response not successful:", response.data);
+      return [];
+    }
   } catch (error) {
     console.error("Error fetching random applicants:", error);
-    throw error;
+    return [];
   }
 };

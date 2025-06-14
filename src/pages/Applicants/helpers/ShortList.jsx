@@ -14,6 +14,7 @@ const ShortList = ({  jobId,onView, refresh, onRemove }) => {
       try {
         if (jobId) {
           const data = await getShortlistedApplicants(jobId);
+          console.log(data);
           setShortListApplicants(data.data);
         }
       } catch (error) {

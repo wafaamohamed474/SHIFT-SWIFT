@@ -49,16 +49,16 @@ const handleSave = async () => {
  
   return (
     <div
-      className="bg-secondary-color rounded-xl p-4 hover:shadow-md transition cursor-pointer"
+      className="bg-fill-bg-color border border-border-color rounded-xl p-4 hover:shadow-md transition cursor-pointer"
     >
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-border-color pb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center ">
         <div className="flex flex-col gap-1 sm:w-3/4">
-          <div className="flex items-center  gap-2">
-            <h1 className="text-lg w-fit sm:text-xl font-semibold ">{job.title}</h1>
-              <img src={VectorImage} alt="vector" className="w-5 h-5 " />
+          <div className="flex items-center w-fit gap-2">
+            <h1 className="text-lg w-fit md:text-3xl truncate max-w-[150px] font-semibold ">{job.title}</h1>
+              <img src={VectorImage} alt="vector" className="w-5 h-5" />
            
           </div>
-          <p className="text-sm text-gray-600">{job.companyFirstName + " " + job.companyLastName}</p>
+          <p className="text-sm font-semibold text-gray-600">{job.companyFirstName + " " + job.companyLastName}</p>
         </div>
 
        {/* logo */}
@@ -70,26 +70,26 @@ const handleSave = async () => {
           />
       </span>
       </div>
-        
+        <div className="bg-border-color w-2/3 mx-auto my-4 h-[1px]"></div>
         
       
 
       {/*job info*/}
       <div className=" flex flex-col gap-1 text-sm text-dark-text pt-4">
-        <span className="flex items-center gap-2">
+        <span className="flex items-center gap-2 text-sm font-semibold">
           <FontAwesomeIcon icon={faLocationDot} className="text-dark-text" />
           {job.location}
         </span>
-        <span className="flex items-center gap-2">
+        <span className="flex items-center gap-2 text-sm font-semibold">
           <FontAwesomeIcon icon={faClock} className="text-dark-text" />
           {jobTypeReverseMap[job.jobTypeTd]}
         </span>
-        <span className="flex items-center gap-2">
+        <span className="flex items-center gap-2 text-sm font-semibold">
           <FontAwesomeIcon icon={faMoneyBillWave} className="text-dark-text" />
           {job.salary}
         </span>
         {ratingData !== null ? (
-  <span className="flex items-center gap-2 text-main-color">                                                           
+  <span className="flex items-center gap-2 text-sm font-semibold text-main-color">                                                           
     <span className="flex items-center gap-1">
       {ratingData.averageScore}
       <FontAwesomeIcon icon={faStar} className="text-yellow-400" />

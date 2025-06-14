@@ -8,6 +8,9 @@ import { useAlert } from "../../../context/AlertContext";
 const PersonalInfoSection = () => {
   const { showAlert } = useAlert();
   const data = getUserData();
+  
+  console.log(data);
+  
 
   const initialValues = {
     firstName: data.firstName || "",

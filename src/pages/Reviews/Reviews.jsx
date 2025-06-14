@@ -5,12 +5,15 @@ import Button from "../../components/button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { GetRating } from "../../services/api/company";
+import { getUserData } from "../../services/authService";
  
 
-const Reviews = ({ companyId }) => {
+const Reviews = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  console.log( getUserData());
+  const companyId = getUserData()? getUserData().companyId : undefined
 
   const handleToggle = (tab) => {
     setActiveTab(tab);
@@ -25,8 +28,12 @@ const Reviews = ({ companyId }) => {
           ...review,
           // img: userLogo,
         }));
+        console.log("data",data);
+        
         setReviews(enrichedData);
       } catch (error) {
+        console.log(error);
+        
         console.error("Failed to fetch reviews:", error);
         setReviews([]);
       } finally {
@@ -85,7 +92,7 @@ const Reviews = ({ companyId }) => {
                 <div key={index} className="w-full pb-3 border-b border-border-color mb-5">
                   <div className="flex items-center gap-5 mb-3">
                     <div className="w-12 h-12 rounded-full overflow-hidden">
-                      <img src={review.ratedByImageUrl ? review.ratedByImageUrl : userLogo} alt={review.ratedByUserName} />
+                      <img src={review.ratedByImageUrl ? review.ratedByImageUrl : userLogo} alt={review.ratedByUserName} className="h-full"/>
                     </div>
                     <div>
                       <h4>{review.ratedByUserName}</h4>

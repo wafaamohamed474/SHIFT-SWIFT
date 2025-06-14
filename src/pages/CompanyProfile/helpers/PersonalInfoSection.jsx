@@ -6,19 +6,19 @@ import * as Yup from "yup";
 import { useAlert } from "../../../context/AlertContext";
 
 const PersonalInfoSection = () => {
-  const {showAlert} = useAlert()
+  const { showAlert } = useAlert();
   const data = getUserData();
- 
+
   const initialValues = {
-    firstName:data.firstName || "",
-    lastName: data.lastName ||"",
-    mobileNumber:data.phoneNumber || "",
-    overview:data.overview || "",
-    field:data.field || "",
-    dateOfEstablish:data.dateOfEstablish || "",
-    country:data.country || "",
-    city:data.city || "",
-    area:data.area || "",
+    firstName: data.firstName || "",
+    lastName: data.lastName || "",
+    mobileNumber: data.phoneNumber || "",
+    overview: data.overview || "",
+    field: data.field || "",
+    dateOfEstablish: data.dateOfEstablish || "",
+    country: data.country || "",
+    city: data.city || "",
+    area: data.area || "",
   };
 
   const validationSchema = Yup.object({
@@ -49,7 +49,7 @@ const PersonalInfoSection = () => {
         city: values.city,
         area: values.area,
       };
-       await AddCompanyProfileData( payload);
+      await AddCompanyProfileData(payload);
       showAlert("Company profile saved", "success");
     } catch (error) {
       showAlert("Failed to save company profile", "error");
@@ -187,7 +187,8 @@ const PersonalInfoSection = () => {
             {/* Date of Establish */}
             <div className="mt-6 w-full md:w-2/3">
               <label className="font-semibold text-2xl text-main-color">
-                Date of Establishment <span className="text-red-500 text-md">*</span>
+                Date of Establishment{" "}
+                <span className="text-red-500 text-md">*</span>
               </label>
               <div className="flex gap-4 mt-5">
                 <div className="w-1/2">
@@ -227,11 +228,7 @@ const PersonalInfoSection = () => {
                     className="border rounded p-2 w-full focus:outline-none bg-fill-bg-color text-sm"
                   >
                     <option value="">Choose</option>
-                    <option value="us">United States</option>
-                    <option value="uk">United Kingdom</option>
-                    <option value="ca">Canada</option>
-                    <option value="au">Australia</option>
-                    <option value="de">Germany</option>
+                    <option value="us">Egypt</option>
                   </Field>
                   <ErrorMessage
                     name="country"
@@ -255,12 +252,12 @@ const PersonalInfoSection = () => {
                     className="border rounded p-2 w-full focus:outline-none bg-fill-bg-color text-sm"
                   >
                     <option value="">Choose</option>
-                    <option value="ny">New York</option>
-                    <option value="la">Los Angeles</option>
-                    <option value="ldn">London</option>
-                    <option value="tor">Toronto</option>
-                    <option value="syd">Sydney</option>
-                    <option value="ber">Berlin</option>
+                    <option value="cairo">Cairo</option>
+                    <option value="giza">Giza</option>
+                    <option value="alexandria">Alexandria</option>
+                    <option value="qalyubiya">Qalyubiya</option>
+                    <option value="asyut">Asyut</option>
+                    <option value="luxor">Luxor</option>
                   </Field>
                   <ErrorMessage
                     name="city"
@@ -284,11 +281,29 @@ const PersonalInfoSection = () => {
                     className="border rounded p-2 w-full focus:outline-none bg-fill-bg-color text-sm"
                   >
                     <option value="">Choose</option>
-                    <option value="downtown">Downtown</option>
-                    <option value="uptown">Uptown</option>
-                    <option value="suburbs">Suburbs</option>
-                    <option value="midtown">Midtown</option>
-                    <option value="oldtown">Old Town</option>
+                    <option value="zamalek">Zamalek</option>
+                    <option value="maadi">Maadi</option>
+                    <option value="heliopolis">Heliopolis</option>
+
+                    <option value="dokki">Dokki</option>
+                    <option value="haram">Al Haram</option>
+                    <option value="6th_of_october">6th of October</option>
+
+                    <option value="manshiya">Manshiya</option>
+                    <option value="sidi_gaber">Sidi Gaber</option>
+                    <option value="montaza">Montaza</option>
+
+                    <option value="banha">Banha</option>
+                    <option value="qalyub">Qalyub</option>
+                    <option value="shubra_el_kheima">Shubra El Kheima</option>
+
+                    <option value="west_asyut">West Asyut</option>
+                    <option value="el_hamraa">El Hamraa</option>
+                    <option value="el_fath">El Fath</option>
+
+                    <option value="al_awamiya">Al Awamiya</option>
+                    <option value="el_karnak">El Karnak</option>
+                    <option value="central_luxor">Central Luxor</option>
                   </Field>
                   <ErrorMessage
                     name="area"

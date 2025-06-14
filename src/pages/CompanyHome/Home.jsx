@@ -16,7 +16,7 @@ const Home = () => {
 
   const navigate = useNavigate();
   const userData = getUserData();
-  const companyId = userData.companyId;
+  const companyId = userData ? userData.companyId : undefined;
 
   useEffect(() => {
     if (!companyId) return;

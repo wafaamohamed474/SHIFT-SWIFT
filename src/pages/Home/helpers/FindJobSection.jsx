@@ -10,7 +10,7 @@ function FindJobSection() {
   const handleFindJobs = () => {
   if (email.trim() !== "") {
     setError("");
-    navigate(`/register-company?email=${encodeURIComponent(email)}`);
+    navigate(`/login?email=${encodeURIComponent(email)}`);
   } else {
     setError("Please enter your email.");
   }

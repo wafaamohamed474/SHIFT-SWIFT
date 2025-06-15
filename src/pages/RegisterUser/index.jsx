@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
@@ -9,27 +9,27 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { RegisterMember } from "../../services/api/account";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
+
 const RegisterUser = () => {
   const [error, setError] = useState("");
-  const [email, setEmail] = useState(""); ///////////////
   const navigate = useNavigate();
-//----------------------
-  useEffect(() => {
-    const storedEmail = localStorage.getItem("userEmail");
-    if (storedEmail) {
-      setEmail(storedEmail);
-    }
-  }, []);
-//-------------------------------
+  const location = useLocation();
+
+  // Get email from query or localStorage
+  const email = useMemo(() => {
+    const query = new URLSearchParams(location.search);
+    return query.get("email") || localStorage.getItem("userEmail") || "";
+  }, [location.search]);
 
   const formik = useFormik({
     initialValues: {
-      email: email,/////////////
+      email: email,
       userName: "",
       password: "",
       phoneNumber: "",
     },
+    enableReinitialize: true, // Important to update form when email changes
     validationSchema: Yup.object({
       userName: Yup.string().required("required"),
       email: Yup.string().email("Invalid email").required("required"),
@@ -49,15 +49,17 @@ const RegisterUser = () => {
         await RegisterMember(values);
         navigate("/login");
       } catch (error) {
-        setError(error?.data);
+        setError(error?.data || "Registration failed");
       }
     },
   });
+
   return (
     <div className="flex justify-center items-center h-[calc(100vh-20rem)] md:h-[calc(100vh-22rem)] lg:min-h-screen bg-bg-color">
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-main-text mb-4">Sign Up</h2>
         <form onSubmit={formik.handleSubmit}>
+          {/* User Name */}
           <div className="mb-4">
             <div className="flex items-center w-full px-2 py-2 border text-md font-medium rounded-md">
               <FontAwesomeIcon icon={faUser} />
@@ -72,12 +74,12 @@ const RegisterUser = () => {
                 placeholder="User Name"
               />
             </div>
-
-            {formik.touched.userName && formik.errors.userName ? (
+            {formik.touched.userName && formik.errors.userName && (
               <p className="text-red-500 text-sm">{formik.errors.userName}</p>
-            ) : null}
+            )}
           </div>
 
+          {/* Email */}
           <div className="mb-4">
             <div className="flex items-center w-full px-2 py-2 border text-md font-medium rounded-md">
               <FontAwesomeIcon icon={faEnvelope} />
@@ -92,12 +94,12 @@ const RegisterUser = () => {
                 placeholder="Email"
               />
             </div>
-
-            {formik.touched.email && formik.errors.email ? (
+            {formik.touched.email && formik.errors.email && (
               <p className="text-red-500 text-sm">{formik.errors.email}</p>
-            ) : null}
+            )}
           </div>
 
+          {/* Password */}
           <div className="mb-4">
             <div className="flex items-center w-full px-2 py-2 border text-md font-medium rounded-md">
               <FontAwesomeIcon icon={faLock} />
@@ -112,12 +114,12 @@ const RegisterUser = () => {
                 placeholder="Password"
               />
             </div>
-
-            {formik.touched.password && formik.errors.password ? (
+            {formik.touched.password && formik.errors.password && (
               <p className="text-red-500 text-sm">{formik.errors.password}</p>
-            ) : null}
+            )}
           </div>
 
+          {/* Phone Number */}
           <div className="mb-4">
             <div className="flex items-center w-full px-2 py-2 border text-md font-medium rounded-md">
               <FontAwesomeIcon icon={faPhone} />
@@ -132,23 +134,21 @@ const RegisterUser = () => {
                 placeholder="Phone"
               />
             </div>
-
-            {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
-              <p className="text-red-500 text-sm">
-                {formik.errors.phoneNumber}
-              </p>
-            ) : null}
+            {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+              <p className="text-red-500 text-sm">{formik.errors.phoneNumber}</p>
+            )}
           </div>
 
           <button
             type="submit"
-            className={`w-full text-white py-2 rounded-md  bg-gray-400   bg-blue-500 hover:bg-blue-600
-            }`}
+            className="w-full text-white py-2 rounded-md bg-blue-500 hover:bg-blue-600"
           >
             Register
           </button>
         </form>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+
         <div className="mt-4 flex items-center justify-center">
           <p className="text-sm text-dark-text">Already have an account?</p>
           <Link to="/login" className="text-blue-500 hover:underline ml-1">

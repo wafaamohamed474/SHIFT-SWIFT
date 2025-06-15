@@ -23,12 +23,10 @@ function CreatePost() {
     SalaryType: Yup.string().required("Salary Type is required"),
     JobDescription: Yup.string().required("Job Description is required"),
     JobRequirements: Yup.string().required("Job Requirements is required"),
-    Keywords: Yup.string().required("Keywords are required"),
   });
 
   /* -------------------------------- onSubmit ---------------------------------- */
   const handleSubmit = async (values) => {
-    console.log("Submitting form with values:", values);
     const payload = {
       title: values.JobTitle,
       description: values.JobDescription,
@@ -38,7 +36,7 @@ function CreatePost() {
       salary: Number(values.Salary),
       salaryType: salaryTypeMap[values.SalaryType] || 0,
       requirements: values.JobRequirements,
-      keywords: values.Keywords,
+      keywords: "constant, constant, constant",
     };
 
     try {
@@ -67,7 +65,6 @@ function CreatePost() {
             SalaryType: "",
             JobDescription: "",
             JobRequirements: "",
-            Keywords: "",
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -153,6 +150,7 @@ function CreatePost() {
                   placeholder="Enter salary"
                   className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none"
                 />
+                 <ErrorMessage name="Salary" component="div" className="text-red-500 text-sm" />
                 <Field
                   as="select"
                   name="SalaryType"
@@ -164,7 +162,6 @@ function CreatePost() {
                   <option value="Contract">Contract</option>
                 </Field>
               </div>
-              <ErrorMessage name="Salary" component="div" className="text-red-500 text-sm" />
               <ErrorMessage name="SalaryType" component="div" className="text-red-500 text-sm" />
 
               {/* --------------------------- Job Description --------------------------- */}
@@ -174,7 +171,7 @@ function CreatePost() {
               <Field
                 as="textarea"
                 name="JobDescription"
-                className="border rounded p-2 w-full h-24 bg-fill-bg-color text-sm focus:outline-none"
+                className="border rounded p-2 w-full h-28 bg-fill-bg-color text-sm focus:outline-none"
               />
               <ErrorMessage name="JobDescription" component="div" className="text-red-500 text-sm" />
 
@@ -185,21 +182,11 @@ function CreatePost() {
               <Field
                 as="textarea"
                 name="JobRequirements"
-                className="border rounded p-2 w-full h-24 bg-fill-bg-color text-sm focus:outline-none"
+                className="border rounded p-2 w-full h-28 bg-fill-bg-color text-sm focus:outline-none"
               />
               <ErrorMessage name="JobRequirements" component="div" className="text-red-500 text-sm" />
 
-              {/* ------------------------------ Keywords -------------------------------- */}
-              <label className="font-semibold text-2xl text-main-color ">
-                Keywords <span className="text-red-500">*</span>
-              </label>
-              <Field
-                name="Keywords"
-                placeholder="e.g. React, Node, SQL"
-                className="border border-dark-text rounded px-2 py-2 text-sm w-full bg-transparent focus:outline-none"
-              />
-              <ErrorMessage name="Keywords" component="div" className="text-red-500 text-sm" />
-
+              
               {/* ------------------------------- Submit -------------------------------- */}
               <div>
                 <button

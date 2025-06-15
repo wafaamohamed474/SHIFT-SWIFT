@@ -1,19 +1,26 @@
 import apiClient from "./apiClient";
 
-export const getRandomJobs = async () => {
+export const getRandomJobs = async ({
+  pageNumber = 1,
+  pageSize = 10,
+  sortBy = 'JobType',
+  sortOrder = 'asc',
+  jobTypeId = 0,
+  salaryTypeId = 0,
+} = {}) => {
   try {
     const response = await apiClient.get('/Home/GetRandomJobs', {
       params: {
-        PageNumber: 1,
-        PageSize: 10,
-        SortBy: 'JobType',
-        SortOrder: 'asc',
-        JobTypeIdFilterValue: 0,
-        SalaryTypeIdFilterValue: 0,
+        PageNumber: pageNumber,
+        PageSize: pageSize,
+        SortBy: sortBy,
+        SortOrder: sortOrder,
+        JobTypeIdFilterValue: jobTypeId,
+        SalaryTypeIdFilterValue: salaryTypeId,
       },
     });
 
-    if (response.data.isSuccess) {
+    if (response.data?.isSuccess && response.data?.data?.data) {
       return response.data.data.data;
     } else {
       console.error('API Error:', response.data.message);
@@ -24,6 +31,7 @@ export const getRandomJobs = async () => {
     return [];
   }
 };
+
 
 export const getJobDetails = async (jobId) => {
   const response = await apiClient.get(`/Home/GetJobPostById/${jobId}`);

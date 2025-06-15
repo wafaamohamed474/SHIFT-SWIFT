@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -10,6 +10,10 @@ const Login = () => {
   const [userType, setUserType] = useState("user");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const email = query.get("email") || "";
+
   const formik = useFormik({
     initialValues: {
       userName: "",
@@ -26,16 +30,23 @@ const Login = () => {
         if (userData) {
           if (userType === "user") {
             navigate("/home");
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
+            setTimeout(() => window.location.reload(), 2000);
           } else if (userType === "company") {
             navigate("/home/companyHome");
           }
         }
       } catch (error) {
         console.error("Login failed:", error);
-        setError(error?.data);
+
+        // ✅ تحسين عرض الأخطاء:
+        if (error?.response?.data?.Errors) {
+          const backendErrors = Object.values(error.response.data.Errors).flat();
+          setError(backendErrors.join(" - "));
+        } else if (typeof error?.response?.data === "string") {
+          setError(error.response.data);
+        } else {
+          setError("An unexpected error occurred");
+        }
       }
     },
   });
@@ -59,11 +70,11 @@ const Login = () => {
                 placeholder="User Name"
               />
             </div>
-
-            {formik.touched.userName && formik.errors.userName ? (
+            {formik.touched.userName && formik.errors.userName && (
               <p className="text-red-500 text-sm">{formik.errors.userName}</p>
-            ) : null}
+            )}
           </div>
+
           <div className="mb-4">
             <div className="flex items-center w-full px-2 py-2 border text-md font-medium rounded-md">
               <FontAwesomeIcon icon={faLock} />
@@ -78,10 +89,9 @@ const Login = () => {
                 placeholder="Password"
               />
             </div>
-
-            {formik.touched.password && formik.errors.password ? (
+            {formik.touched.password && formik.errors.password && (
               <p className="text-red-500 text-sm">{formik.errors.password}</p>
-            ) : null}
+            )}
           </div>
 
           <div className="mb-4">
@@ -116,25 +126,29 @@ const Login = () => {
             Login
           </button>
         </form>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+
+        {/* ✅ عرض خطأ الـ API تحت الزر */}
+        {error && (
+          <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
+        )}
+
         <div className="mt-4 text-center">
           <p className="text-sm text-dark-text">Don't have an account?</p>
           <p className="text-dark-text text-sm">
             Are you a User?
             <Link
-              to="/register-user"
+              to={`/register-user?email=${encodeURIComponent(email)}`}
               className="text-blue-500 hover:underline ml-2"
             >
               Click here
             </Link>
           </p>
           <p className="text-dark-text text-sm">
-            Are you a Company?{" "}
+            Are you a Company?
             <Link
-              to="/register-company"
+              to={`/register-company?email=${encodeURIComponent(email)}`}
               className="text-blue-500 hover:underline ml-2"
             >
-              {" "}
               Click here
             </Link>
           </p>

@@ -5,7 +5,6 @@ import {
   getApplicantsForJob,
   getRandomApplicants,
 } from "../../../services/api/company";
-import { useAlert } from "../../../context/AlertContext";
 import { useLocation } from "react-router";
 
 const Received = ({ jobId: propJobId, onPrimaryAction, refresh, onAddToShortList }) => {
@@ -21,11 +20,13 @@ const Received = ({ jobId: propJobId, onPrimaryAction, refresh, onAddToShortList
       setLoading(true);
       try {
         let data = [];
+
         if (jobId) {
-          data = await getApplicantsForJob(jobId);
-          data = data.filter((app) => app.status === 1 || app.status === 5);
+          const response = await getApplicantsForJob(jobId);
+          data = response.filter((app) => app.status === 1 || app.status === 5);
         } else {
-          data = await getRandomApplicants();
+          const random = await getRandomApplicants();
+          data = random;
         }
         setApplicants(data);
       } catch (err) {
@@ -43,7 +44,20 @@ const Received = ({ jobId: propJobId, onPrimaryAction, refresh, onAddToShortList
 
   return (
     <div className="w-full mt-7">
-      {applicants.length === 0 ? (
+      {Array.isArray(applicants) && applicants.length > 0 ? (
+        applicants.map((applicant) => (
+           <ApplicantCard
+            key={applicant.memberId}
+            applicant={applicant}
+            {...(jobId && {
+              primaryLabel: "View",
+              secondaryLabel: "Move to Short List",
+              onPrimaryAction: () => onPrimaryAction(applicant.memberId),
+              onSecondaryAction: () => onAddToShortList(jobId, applicant.memberId),
+            })}
+           />
+        ))
+      ) : (
         <div className="flex flex-col items-center justify-center w-full my-20 text-center px-4">
           <img src={NoSavePhoto} alt="No Applicants" className="w-40 md:w-1/4 mb-6" />
           <h1 className="text-2xl font-semibold mb-2">
@@ -55,19 +69,6 @@ const Received = ({ jobId: propJobId, onPrimaryAction, refresh, onAddToShortList
               : "No random applicants available now. Try again later."}
           </p>
         </div>
-      ) : (
-        applicants.map((applicant) => (
-          <ApplicantCard
-            key={applicant.memberId}
-            applicant={applicant}
-            primaryLabel="View"
-            secondaryLabel={jobId ? "Move to Short List" : undefined}
-            onPrimaryAction={() => onPrimaryAction(applicant.memberId)}
-            onSecondaryAction={
-              jobId ? () => onAddToShortList(jobId, applicant.memberId) : undefined
-            }
-          />
-        ))
       )}
     </div>
   );

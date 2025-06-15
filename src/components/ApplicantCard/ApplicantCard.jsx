@@ -13,11 +13,11 @@ const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryL
           <h2 className="font-semibold text-3xl">{applicant.fullName ? applicant.fullName : " "}</h2>
           <span className="text-dark-text text-sm font-semibold">{applicant.jobTitle}</span>
         </div>
-        <div className="w-20 h-20">
+        <div className="w-24 h-24 ">
           <img
             src={applicant.memberImageUrl}
             alt="Applicant Logo"
-            className="object-cover w-full h-full rounded-md"
+            className="object-cover w-full h-full rounded-2xl"
           />
         </div>
       </div>

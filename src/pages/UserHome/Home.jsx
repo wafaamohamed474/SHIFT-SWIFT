@@ -58,13 +58,17 @@ const Home = () => {
 
   const handleViewDetails = async (job) => {
     try {
-      console.log("Fetching details for job:", job.id);
       const response = await getJobDetails(job.id);
       setSelectedJobId(job.id);
       setSelectedJobDetails(response.data);
     } catch (error) {
       console.error("Failed to load job details", error);
     }
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedJobId(null);
+    setSelectedJobDetails(null);
   };
 
   const handleSearch = () => {
@@ -92,23 +96,21 @@ const Home = () => {
 
   return (
     <div className="container py-10 px-4 mx-auto">
-      {/* heading */}
       <div className='flex flex-col items-center justify-center gap-10 mb-10'>
         <img className="w-72 md:w-96" src={Logo} alt="Logo" />
-        {/* Search Bar */}
-        <div className='flex flex-col md:flex-row border bg-fill-bg-color  border-border-color h-auto md:h-14  rounded-2xl w-full md:w-[700px]'>
+        <div className='flex flex-col md:flex-row border bg-fill-bg-color border-border-color h-auto md:h-14 rounded-2xl w-full md:w-[700px]'>
           <div className='flex items-center px-2'>
             <img className='w-10 h-6' src={SearchIcon} alt="Search" />
           </div>
           <input
-            className='focus:outline-none text-dark-text p-2 bg-fill-bg-color  w-full border-t md:border-t-0 md:border-r border-border-color'
+            className='focus:outline-none text-dark-text p-2 bg-fill-bg-color w-full border-t md:border-t-0 md:border-r border-border-color'
             type='text'
             placeholder='Job Title'
             value={searchTitle}
             onChange={(e) => setSearchTitle(e.target.value)}
           />
           <input
-            className='focus:outline-none text-dark-text p-2 bg-fill-bg-color  w-full border-t md:border-t-0'
+            className='focus:outline-none text-dark-text p-2 bg-fill-bg-color w-full border-t md:border-t-0'
             type='text'
             placeholder='City'
             value={searchLocation}
@@ -123,16 +125,20 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Main layout */}
       <div className="flex flex-col lg:flex-row p-4 gap-4">
-        {/* Left: Job List */}
         <div className="w-full lg:w-1/2 space-y-4">
           {filteredJobs.length > 0 ? (
             filteredJobs.map((job) => (
               <div key={job.id}>
                 <JobCard job={job} onView={() => handleViewDetails(job)} />
                 {isMobile && job.id === selectedJobId && selectedJobDetails && (
-                  <div className="mt-2">
+                  <div className="mt-2 relative border border-gray-200 p-4 rounded-xl">
+                    <button
+                      onClick={handleCloseDetails}
+                      className="absolute top-2 right-2 text-gray-600 hover:text-red-500 text-lg font-bold"
+                    >
+                      &times;
+                    </button>
                     <JobDetails selectedJob={selectedJobDetails} />
                   </div>
                 )}
@@ -143,7 +149,6 @@ const Home = () => {
           )}
         </div>
 
-        {/* Right: desktop display details */}
         {!isMobile && (
           <div className="hidden lg:block w-1/2">
             {selectedJobDetails && Object.keys(selectedJobDetails).length > 0 && (
@@ -153,10 +158,9 @@ const Home = () => {
         )}
       </div>
 
-      {/* Similar Jobs Section */}
       <div className="mt-10 px-4">
-        <h2 className="text-2xl font-semibold mb-6">Similar Jobs</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <h2 className="text-3xl font-semibold mb-6">Similar Jobs</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {similarJobs.length > 0 ? (
             similarJobs.map(job => (
               <SimilerJobCard key={job.id} job={job} onView={() => handleViewDetails(job)} />
@@ -171,3 +175,4 @@ const Home = () => {
 };
 
 export default Home;
+

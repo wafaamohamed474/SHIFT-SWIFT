@@ -61,20 +61,20 @@ const salaryTypeReverseMap = {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-5">
           {jobs.map((job, index) => (
-            <div key={index} className="bg-secondary-color rounded-lg w-full p-3">
+            <div key={index} className="bg-fill-bg-color border border-border-color rounded-lg w-full p-3">
               <div className="flex">
                 <div>
-                  <div className="w-28 h-5 bg-main-color rounded-lg flex items-center justify-center">
-                    <FontAwesomeIcon icon={faChartLine} className="text-white text-sm mr-1" />
-                    <p className="text-white text-xs">Trending Now</p>
+                  <div className="w-fit py-[2px] px-2  bg-main-color rounded-md flex items-center justify-center">
+                    <FontAwesomeIcon icon={faChartLine} className="text-white text-xs font-semibold mr-1" />
+                    <p className="text-white text-[10px] font-semibold">Trending Now</p>
                   </div>
                   <div className="flex items-center">
-                    <h1 className="text-lg mr-2">{job.title}</h1>
+                    <h1 className="font-semibold text-3xl truncate max-w-[150px] mr-2">{job.title}</h1>
                     <span>
                       <img src={Vector} className="w-5" alt="Verified" />
                     </span>
                   </div>
-                  <p className="text-sm">{job.companyFirstName + " " + job.companyLastName}</p>
+                  <p className="text-sm font-semibold">{job.companyFirstName + " " + job.companyLastName}</p>
                 </div>
                 <span className="bg-white h-20 w-20 rounded-xl ml-auto overflow-hidden flex items-center justify-center">
                   <img
@@ -89,17 +89,17 @@ const salaryTypeReverseMap = {
               <div className="bg-border-color w-2/3 mx-auto my-4 h-[1px]"></div>
 
               <div className="space-y-1">
-                <span className="flex items-center">
+                <span className="flex items-center text-sm font-semibold">
                   <FontAwesomeIcon icon={faMapMarkerAlt} className="text-dark-text mr-2 mt-1" />
-                  <h6 className="text-md">{job.location}</h6>
+                  <h6 >{job.location}</h6>
                 </span>
-                <span className="flex items-center">
+                <span className="flex items-center text-sm font-semibold">
                   <FontAwesomeIcon icon={faClock} className="text-dark-text mr-2 mt-1" />
-                  <h6 className="text-md">{jobTypeReverseMap[job.jobTypeTd]}</h6>
+                  <h6 >{jobTypeReverseMap[job.jobTypeTd]}</h6>
                 </span>
-                <span className="flex items-center">
+                <span className="flex items-center text-sm font-semibold">
                   <FontAwesomeIcon icon={faMoneyBillWave} className="text-dark-text mr-2 mt-1" />
-                  <h6 className="text-md">{job.salary + " EGP/" +salaryTypeReverseMap[job.salaryTypeId]}</h6>
+                  <h6 >{job.salary + " EGP/" +salaryTypeReverseMap[job.salaryTypeId]}</h6>
                 </span>
               </div>
 

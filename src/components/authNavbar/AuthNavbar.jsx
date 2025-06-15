@@ -30,7 +30,7 @@ const AuthNavbar =()=> {
           <Link to="/login" className="mx-1">
           <Button className="rounded-lg  w-40" type="submit" label="Login" variant="secondary" />
           </Link>
-          <Link to="/" className="mx-1">
+          <Link to="/register-user" className="mx-1">
           <Button className="rounded-lg w-40  me-3" type="submit" label="Sign Up" variant="primary" />
           </Link>
         </div>

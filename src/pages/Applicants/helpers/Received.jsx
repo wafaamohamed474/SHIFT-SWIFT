@@ -23,6 +23,8 @@ const Received = ({ jobId: propJobId, onPrimaryAction, refresh, onAddToShortList
         let data = [];
         if (jobId) {
           data = await getApplicantsForJob(jobId);
+          console.log("data from recived" , data);
+          
           data = data.filter((app) => app.status === 1 || app.status === 5);
         } else {
           data = await getRandomApplicants();

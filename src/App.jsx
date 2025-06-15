@@ -5,6 +5,7 @@ import "./App.css";
 import { useEffect} from "react";
 import { getCurrentUserData } from "./services/api/account";
 import Cookies from "js-cookie";
+ 
 
 function App() {
   useEffect(() => {
@@ -18,6 +19,8 @@ function App() {
       }
     })();
   }, []);
+
+  
 
   return <RouterProvider router={routes} />;
 }

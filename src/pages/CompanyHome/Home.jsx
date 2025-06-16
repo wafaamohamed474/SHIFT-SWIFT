@@ -32,7 +32,8 @@ const Home = () => {
         setJobData(jobs);
         setLoading(false);
       } catch (err) {
-        setError("Error Fetching Jobs");
+        setError("Error Fetching Jobs",err);
+        console.log(error)
         setLoading(false);
       }
     };

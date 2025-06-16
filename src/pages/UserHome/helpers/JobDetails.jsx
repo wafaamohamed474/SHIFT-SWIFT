@@ -15,7 +15,7 @@ import Image from "../../../assets/userLogo.jpg";
 import { useAlert } from '../../../context/AlertContext';
 import { getUserData } from '../../../services/authService';
 import { applyToJob, getAllMyJobApplications } from '../../../services/api/member';
-const JobDetails = ({ selectedJob }) => {
+const JobDetails = ({ selectedJob , onClick}) => {
   if (!selectedJob) return null;
   const [ratingData, setRatingData] = useState(null);
   const [applied, setApplied] = useState(false);
@@ -74,10 +74,17 @@ const handleApply = async (jobId) => {
 
   return (
     <div className="border border-border-color rounded-xl flex flex-col gap-y-5 p-5 overflow-hidden">
-      <div className="hover:bg-transparent hover:cursor-pointer ml-auto">
-        <FontAwesomeIcon icon={faXmark} className="text-border-color" />
-      </div>
-
+    <div className="hover:bg-transparent hover:cursor-pointer ml-auto">
+  <FontAwesomeIcon
+    icon={faXmark}
+    className="text-border-color hover:text-main-color cursor-pointer"
+    onClick={() => {
+      if (window.innerWidth < 768 && onClick) {
+        onClick(); 
+      }
+    }}
+  />
+</div>
       {/* Title */}
       <div className="flex flex-col sm:flex-row items-center">
         <div className='flex flex-col gap-y-3'>

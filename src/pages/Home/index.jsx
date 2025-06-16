@@ -14,7 +14,7 @@ const Home = () => {
      {/*PersonalJobs */}
      <PersonalJobsSection />
      {/*ExploreJobs */}
-     <ExploreJobsSection/>
+     <ExploreJobsSection companyId={123} />
      {/*SideJobs */}
      <SideJobsSection />
      {/*Brands*/}

@@ -4,14 +4,9 @@ import { faLocationDot, faClock, faMoneyBillWave, faStar } from '@fortawesome/fr
 import { GetRating } from '../../../services/api/company';
 import VectorImage from "../../../assets/Vector_tech.png"
 import BookMark from "../../../assets/Bookmark.png"
-import { getUserData } from '../../../services/authService';
-import { saveJob } from '../../../services/api/member';
-import { useAlert } from '../../../context/AlertContext';
 import Image from "../../../assets/userLogo.jpg";
 
-const JobCard = ({ job, onView, isSelected }) => {
-  const userData = getUserData();
-  const { showAlert } = useAlert();
+const JobCard = ({ job, onView, onSave, isSelected }) => {
   const [ratingData, setRatingData] = useState(null);
 
   const jobTypeReverseMap = {
@@ -28,30 +23,14 @@ const JobCard = ({ job, onView, isSelected }) => {
       .catch((err) => console.error("Error loading company rating:", err));
   }, [job.companyId]);
 
-  const handleSave = async (e) => {
+  const handleSaveClick = (e) => {
     e.stopPropagation();
-    try {
-      const memberId = userData?.memberId;
-      if (!memberId) {
-        showAlert("Please log in to save jobs", "error");
-        return;
-      }
-      await saveJob(job.id, memberId);
-      showAlert("Job Saved Successfully", "success");
-    } catch (error) {
-      console.log("errorSaving", error);
-      const errorMsg = error?.response?.data?.data?.[0];
-      if (error?.response?.status === 409 && errorMsg === "The job has already been saved by this member.") {
-        showAlert("You've already saved this job.");
-      } else {
-        showAlert("Something went wrong while saving the job.", "error");
-      }
-    }
+    onSave?.();
   };
 
   return (
     <div
-      className={`bg-fill-bg-color border border-border-color  rounded-xl p-4 hover:shadow-md transition cursor-pointer ${isSelected ? 'border-2 border-main-color' : ''}`}
+      className={`bg-fill-bg-color border border-border-color rounded-xl p-4 hover:shadow-md transition cursor-pointer`}
       onClick={onView}
     >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
@@ -101,7 +80,7 @@ const JobCard = ({ job, onView, isSelected }) => {
       <div className="flex gap-3 mt-2">
         <button
           className="border border-main-color text-main-color w-36 h-8 rounded-xl flex items-center justify-center gap-2"
-          onClick={handleSave}
+          onClick={handleSaveClick}
         >
           <img src={BookMark} alt="bookmark" className="w-4 h-4" />
           Save

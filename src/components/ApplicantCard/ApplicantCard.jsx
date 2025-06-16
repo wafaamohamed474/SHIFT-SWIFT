@@ -8,7 +8,7 @@ const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryL
   return (
     <div className="rounded-md bg-fill-bg-color w-full px-4 pt-8 pb-3 mb-10 border border-border-color">
       {/* Applicant Header */}
-      <div className="flex justify-between items-start mb-5">
+      <div className="flex justify-between items-start ">
         <div>
           <h2 className="font-semibold text-3xl">{applicant.fullName ? applicant.fullName : " "}</h2>
           <span className="text-dark-text text-sm font-semibold">{applicant.jobTitle}</span>
@@ -34,14 +34,11 @@ const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryL
         </div>
           <div className="flex gap-2">
           <FontAwesomeIcon icon={faUniversity} className="text-dark-text" />
-          {Array.isArray(applicant.educations) && applicant.educations.length > 0 && (
-            applicant.educations.map((edu) => (
-              <div key={edu.id} className="text-sm font-semibold">
-                <p>{edu.level} - {edu.faculty}</p>
-                <p>{edu.universityName}</p>
+          
+              <div className="text-sm font-semibold">
+                <p>{applicant.educations[length].level} - {applicant.educations[length].faculty}</p>
+                <p>{applicant.educations[length].universityName}</p>
               </div>
-            ))
-          )}
         </div>
 
         

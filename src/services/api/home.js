@@ -37,3 +37,32 @@ export const getJobDetails = async (jobId) => {
   const response = await apiClient.get(`/Home/GetJobPostById/${jobId}`);
   return response.data;
 };
+//Search
+export const searchJobs = async ({
+  searchTitle = '',
+  searchLocation = '',
+  pageNumber = 1,
+  pageSize = 10,
+  sortBy = 'latest',
+  jobTypeIdFilterValue = 0,
+  minSalary = 0,
+  maxSalary = 0,
+}) => {
+  const response = await apiClient.get('/Member/SearchJobs', {
+    params: {
+      search: searchTitle,
+      area: searchLocation,
+      pageNumber,
+      pageSize,
+      sortBy,
+      jobTypeIdFilterValue,
+      minSalary,
+      maxSalary,
+    },
+  });
+  return response.data.data.data;
+};
+
+
+
+

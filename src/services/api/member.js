@@ -20,6 +20,27 @@ export const addEducation = async ( MemberID ,data )=>{
     }
 }
 
+export const GetEducation = async ( MemberID)=>{
+    try{
+        const response = await apiClient.get(`/Member/GetEducation/${MemberID}`)
+        return response.data
+    }catch(error){
+        console.error("Error get education:", error.response?.data || error)
+        throw error.response?.data || error;
+    }
+}
+
+
+export const UpdateEducation = async ( MemberID , data)=>{
+    try{
+        const response = await apiClient.put(`/Member/UpdateEducation/${MemberID}` , data)
+        return response.data
+    }catch(error){
+        console.error("Error update education:", error.response?.data || error)
+        throw error.response?.data || error;
+    }
+}
+
 export const getAllSavedJobs = async(MemberID)=>{
     try{
         const response = await apiClient.get(`/Member/GetAllSavedJobs/${MemberID}`)

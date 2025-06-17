@@ -16,7 +16,6 @@ const [currentUser, setCurrentUser] = useState(null);
     (async () => {
       try {
         const user = await getCurrentUserData();
-        console.log("user info" , user);
         setCurrentUser(user);
       } catch (error) {
         console.error("Failed to fetch current user", error);
@@ -41,7 +40,7 @@ const [currentUser, setCurrentUser] = useState(null);
     area: currentUser?.area || "",
   };
 
-  console.log("initialValues" , initialValues);
+ 
   
 
   const validationSchema = Yup.object({

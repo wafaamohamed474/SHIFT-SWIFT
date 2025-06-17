@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getJobDetails, getRandomJobs } from "../../services/api/home";
+import { getJobDetails, getRandomJobs, searchJobs } from "../../services/api/home";
+import { saveJob } from '../../services/api/member';
+import { getUserData } from '../../services/authService';
+import { useAlert } from '../../context/AlertContext';
 import JobCard from './helpers/JobCard';
 import JobDetails from './helpers/JobDetails';
 import Logo from '../../assets/logo.png';
@@ -18,6 +21,7 @@ const Home = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const [searchParams] = useSearchParams();
   const urlJobId = searchParams.get('jobId');
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     const handleResize = () => {
@@ -71,7 +75,7 @@ const Home = () => {
     setSelectedJobDetails(null);
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (searchTitle.trim() === '' && searchLocation.trim() === '') {
       setFilteredJobs(jobs);
       if (!isMobile && jobs.length > 0) {
@@ -83,15 +87,43 @@ const Home = () => {
       return;
     }
 
-    const filtered = jobs.filter((job) => {
-      const matchesTitle = job.title.toLowerCase().includes(searchTitle.toLowerCase());
-      const matchesLocation = job.location.toLowerCase().includes(searchLocation.toLowerCase());
-      return matchesTitle && matchesLocation;
-    });
+    try {
+      const results = await searchJobs({
+        searchTitle,
+        searchLocation,
+        minSalary: 0,
+        maxSalary: 10000
+      });
+      setFilteredJobs(results);
+      if (!isMobile && results.length > 0) {
+        handleViewDetails(results[0]);
+      } else {
+        setSelectedJobId(null);
+        setSelectedJobDetails(null);
+      }
+    } catch (err) {
+      console.error("Search failed", err.response?.status, err.response?.data);
+    }
+  };
 
-    setFilteredJobs(filtered);
-    setSelectedJobId(null);
-    setSelectedJobDetails(null);
+  const handleSaveJob = async (jobId) => {
+    const userData = getUserData();
+    try {
+      if (!userData?.memberId) {
+        showAlert("Please log in to save jobs", "error");
+        return;
+      }
+
+      await saveJob(jobId, userData.memberId);
+      showAlert("Job Saved Successfully", "success");
+    } catch (error) {
+      const errorMsg = error?.response?.data?.data?.[0];
+      if (error?.response?.status === 409 && errorMsg === "The job has already been saved by this member.") {
+        showAlert("You've already saved this job.");
+      } else {
+        showAlert("Something went wrong while saving the job.", "error");
+      }
+    }
   };
 
   return (
@@ -130,16 +162,15 @@ const Home = () => {
           {filteredJobs.length > 0 ? (
             filteredJobs.map((job) => (
               <div key={job.id}>
-                <JobCard job={job} onView={() => handleViewDetails(job)} />
+                <JobCard
+                  job={job}
+                  onView={() => handleViewDetails(job)}
+                  onSave={() => handleSaveJob(job.id)}
+                  isSelected={job.id === selectedJobId}
+                />
                 {isMobile && job.id === selectedJobId && selectedJobDetails && (
                   <div className="mt-2 relative border border-gray-200 p-4 rounded-xl">
-                    <button
-                      onClick={handleCloseDetails}
-                      className="absolute top-2 right-2 text-gray-600 hover:text-red-500 text-lg font-bold"
-                    >
-                      &times;
-                    </button>
-                    <JobDetails selectedJob={selectedJobDetails} />
+                    <JobDetails selectedJob={selectedJobDetails} onClick={handleCloseDetails} />
                   </div>
                 )}
               </div>
@@ -163,7 +194,11 @@ const Home = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {similarJobs.length > 0 ? (
             similarJobs.map(job => (
-              <SimilerJobCard key={job.id} job={job} onView={() => handleViewDetails(job)} />
+              <SimilerJobCard
+                key={job.id}
+                job={job}
+                onView={() => handleViewDetails(job)}
+              />
             ))
           ) : (
             <p className="text-gray-500">No similar jobs found.</p>
@@ -175,4 +210,3 @@ const Home = () => {
 };
 
 export default Home;
-

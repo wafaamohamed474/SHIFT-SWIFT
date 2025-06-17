@@ -41,6 +41,7 @@ export default function ProfilePictureUpload() {
     try {
       await AddOrUpdateProfilePicture(uploadFile);
       showAlert("Profile picture updated successfully!", "success");
+      window.location.reload();
     } catch (err) {
       console.error("Upload failed:", err);
       showAlert("Upload failed. Please try again.", "error");

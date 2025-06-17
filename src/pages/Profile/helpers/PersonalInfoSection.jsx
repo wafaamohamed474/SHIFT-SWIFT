@@ -10,8 +10,6 @@ const PersonalInfoSection = () => {
 
   const data = getUserData();
 
-  console.log("data", data);
-
   const initialValues = {
     memberId: data?.memberId || "",
     firstName: data?.firstName || "",
@@ -46,12 +44,13 @@ const PersonalInfoSection = () => {
     area: Yup.string().required("Area is required"),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting , resetForm}) => {
     try {
       const res = await AddOrUpdateMemberProfileData(values);
       console.log("res is ", res.data);
-
+      resetForm({ values: res.data });
       showAlert("Profile updated successfully!", "success");
+      window.location.reload();
     } catch (error) {
       console.error("Failed to update profile: " + (error.message || error));
       showAlert("Failed to update profile", "error");

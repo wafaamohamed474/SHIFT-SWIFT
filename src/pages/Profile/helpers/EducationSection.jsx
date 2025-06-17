@@ -19,6 +19,7 @@ const EducationSection = () => {
     try {
       await addEducation(userId, values);
       showAlert("Education added successfully", "success");
+      window.location.reload();
     } catch (error) {
       console.error("Failed to add education. Please try again.", error);
 

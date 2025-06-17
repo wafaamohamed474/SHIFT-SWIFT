@@ -8,9 +8,6 @@ import { useAlert } from "../../../context/AlertContext";
 const PersonalInfoSection = () => {
   const { showAlert } = useAlert();
   const data = getUserData();
-
-  console.log(data);
-
   const initialValues = {
     firstName: data.firstName || "",
     lastName: data.lastName || "",
@@ -53,6 +50,7 @@ const PersonalInfoSection = () => {
       };
       await AddCompanyProfileData(payload);
       showAlert("Company profile saved", "success");
+      window.location.reload();
     } catch (error) {
       showAlert("Failed to save company profile", "error");
     } finally {
@@ -253,36 +251,34 @@ const PersonalInfoSection = () => {
                     id="city"
                     className="border rounded p-2 w-full focus:outline-none bg-fill-bg-color text-sm"
                   >
-                   
-                      <option value="">Choose</option>
-                      <option value="alexandria">Alexandria</option>
-                      <option value="aswan">Aswan</option>
-                      <option value="asyut">Asyut</option>
-                      <option value="beheira">Beheira</option>
-                      <option value="beni_suef">Beni Suef</option>
-                      <option value="cairo">Cairo</option>
-                      <option value="dakahlia">Dakahlia</option>
-                      <option value="damietta">Damietta</option>
-                      <option value="fayoum">Fayoum</option>
-                      <option value="gharbia">Gharbia</option>
-                      <option value="giza">Giza</option>
-                      <option value="ismailia">Ismailia</option>
-                      <option value="kafr_el_sheikh">Kafr El Sheikh</option>
-                      <option value="luxor">Luxor</option>
-                      <option value="matrouh">Matrouh</option>
-                      <option value="minya">Minya</option>
-                      <option value="monufia">Monufia</option>
-                      <option value="new_valley">New Valley</option>
-                      <option value="north_sinai">North Sinai</option>
-                      <option value="port_said">Port Said</option>
-                      <option value="qalyubia">Qalyubia</option>
-                      <option value="qena">Qena</option>
-                      <option value="red_sea">Red Sea</option>
-                      <option value="Sharqia">Sharqia</option>
-                      <option value="sohag">Sohag</option>
-                      <option value="south_sinai">South Sinai</option>
-                      <option value="suez">Suez</option>
-                    
+                    <option value="">Choose</option>
+                    <option value="alexandria">Alexandria</option>
+                    <option value="aswan">Aswan</option>
+                    <option value="asyut">Asyut</option>
+                    <option value="beheira">Beheira</option>
+                    <option value="beni_suef">Beni Suef</option>
+                    <option value="cairo">Cairo</option>
+                    <option value="dakahlia">Dakahlia</option>
+                    <option value="damietta">Damietta</option>
+                    <option value="fayoum">Fayoum</option>
+                    <option value="gharbia">Gharbia</option>
+                    <option value="giza">Giza</option>
+                    <option value="ismailia">Ismailia</option>
+                    <option value="kafr_el_sheikh">Kafr El Sheikh</option>
+                    <option value="luxor">Luxor</option>
+                    <option value="matrouh">Matrouh</option>
+                    <option value="minya">Minya</option>
+                    <option value="monufia">Monufia</option>
+                    <option value="new_valley">New Valley</option>
+                    <option value="north_sinai">North Sinai</option>
+                    <option value="port_said">Port Said</option>
+                    <option value="qalyubia">Qalyubia</option>
+                    <option value="qena">Qena</option>
+                    <option value="red_sea">Red Sea</option>
+                    <option value="Sharqia">Sharqia</option>
+                    <option value="sohag">Sohag</option>
+                    <option value="south_sinai">South Sinai</option>
+                    <option value="suez">Suez</option>
                   </Field>
                   <ErrorMessage
                     name="city"

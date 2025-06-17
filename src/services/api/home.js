@@ -38,31 +38,32 @@ export const getJobDetails = async (jobId) => {
   return response.data;
 };
 //Search
+
 export const searchJobs = async ({
-  searchTitle = '',
-  searchLocation = '',
-  pageNumber = 1,
-  pageSize = 10,
-  sortBy = 'latest',
-  jobTypeIdFilterValue = 0,
-  minSalary = 0,
-  maxSalary = 0,
-}) => {
-  const response = await apiClient.get('/Member/SearchJobs', {
-    params: {
-      search: searchTitle,
-      area: searchLocation,
+  searchTitle       = "",
+  searchLocation    = "",
+  pageNumber        = 1,
+  pageSize          = 1000,   
+  sortBy            = "latest",
+  jobTypeIdFilterValue,
+  
+} = {}) => {
+  try {
+    const params = {
+      search : searchTitle.trim(),  
+      area   : searchLocation.trim(),
       pageNumber,
       pageSize,
       sortBy,
-      jobTypeIdFilterValue,
-      minSalary,
-      maxSalary,
-    },
-  });
-  return response.data.data.data;
+    };
+
+  
+    if (jobTypeIdFilterValue && jobTypeIdFilterValue !== 0)
+      params.jobTypeIdFilterValue = jobTypeIdFilterValue;
+    const res = await apiClient.get("/Member/SearchJobs", { params });
+    return res.data?.data?.data || [];
+  } catch (err) {
+    console.error("searchJobs error:", err);
+    return [];
+  }
 };
-
-
-
-

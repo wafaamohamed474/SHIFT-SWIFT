@@ -16,7 +16,7 @@ function PersonalJobsSection() {
         {/* Personalized Jobbing Section 1 */}
         <div className="bg-secondary-color lg:w-[500px] lg:h-[550px] text-center rounded-3xl py-2 flex flex-col items-center gap-2">
           <h6 className="font-bold text-2xl">Personalized Jobbing</h6>
-          <p className="lg:w-[350px] w-[300px] capitalize">
+          <p className="lg:w-[350px] w-[250px] capitalize">
             We make it easy for{" "}
             <span className="tracking-extra-wide">SHIFT SWIFT</span> you to get
             the job!
@@ -31,7 +31,7 @@ function PersonalJobsSection() {
         {/* Personalized Jobbing Section 2 */}
         <div className="bg-secondary-color lg:w-[500px] lg:h-[550px] text-center lg:ml-auto rounded-3xl py-2 flex flex-col items-center gap-2">
           <h6 className="font-bold text-2xl">Personalized Jobbing</h6>
-          <p className="lg:w-[350px] w-[300px] capitalize">
+          <p className="lg:w-[350px] w-[250px] capitalize">
             We make it easy for{" "}
             <span className="tracking-extra-wide">SHIFT SWIFT</span> you to get
             the job!

@@ -9,7 +9,7 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { getUserData } from "../../../services/authService";
-
+import Image from "../../../assets/userLogo.jpg";
 const JobDetails = ({ selectedJob, onClose, navigateToApplicants }) => {
   const userData = getUserData();
   const companyName = userData.firstName + " " + userData.lastName;
@@ -44,7 +44,7 @@ const JobDetails = ({ selectedJob, onClose, navigateToApplicants }) => {
           <p className="text-sm w-fit border-b border-border-color">{companyName}</p>
         </div>
         <span className="ml-auto mt-3 sm:mt-0">
-          <img src={selectedJob.imageUrl} alt="company logo" className="text-dark-text w-20 h-20 rounded-lg" />
+          <img src={selectedJob.imageUrl || Image} alt="company logo" className="text-dark-text w-20 h-20 rounded-lg" />
         </span>
       </div>
 

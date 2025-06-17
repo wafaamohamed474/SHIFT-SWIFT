@@ -13,11 +13,22 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [ratingData, setRatingData] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const navigate = useNavigate();
   const userData = getUserData();
   const companyId = userData ? userData.companyId : undefined;
 
+  // Detect mobile view on resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Get Rating
   useEffect(() => {
     if (!companyId) return;
     GetRating(companyId)
@@ -25,6 +36,7 @@ const Home = () => {
       .catch(console.error);
   }, [companyId]);
 
+  // Get jobs
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -32,24 +44,25 @@ const Home = () => {
         setJobData(jobs);
         setLoading(false);
       } catch (err) {
-        setError("Error Fetching Jobs",err);
-        console.log(error)
+        console.error("Error Fetching Jobs", err);
+        setError("Error Fetching Jobs");
         setLoading(false);
       }
     };
 
-    fetchJobs();
-  }, []);
+    if (companyId) fetchJobs();
+  }, [companyId]);
 
+  // Set first job as selected on desktop only
   useEffect(() => {
-    if (jobData.length > 0 && !selectedJob) {
+    if (!isMobile && jobData.length > 0 && !selectedJob) {
       setSelectedJob(jobData[0]);
     }
-  }, [jobData]);
+  }, [jobData, isMobile]);
 
   const handleViewDetails = (job) => {
     setSelectedJob(job);
-    setExpandedJobId(job.jobId); 
+    setExpandedJobId(job.jobId);
   };
 
   const navigateToApplicants = (e, job) => {
@@ -66,7 +79,7 @@ const Home = () => {
 
       {/* Jobs */}
       <div className="flex flex-col md:flex-row w-full py-10 gap-x-3">
-        
+        {/* Left Side: Job Cards */}
         <div className="flex flex-col gap-3 w-full md:w-1/2">
           {loading ? (
             <p>Loading...</p>
@@ -80,9 +93,9 @@ const Home = () => {
                   ratingData={ratingData}
                 />
 
-                
-                {expandedJobId === job.jobId && (
-                  <div className="block md:hidden mt-2">
+                {/* Show job details inside card (on mobile only) */}
+                {isMobile && expandedJobId === job.jobId && (
+                  <div className="mt-2 border border-gray-200 rounded-xl">
                     <JobDetails
                       selectedJob={job}
                       onClose={() => setExpandedJobId(null)}
@@ -97,16 +110,20 @@ const Home = () => {
           )}
         </div>
 
-   
-       <div className="hidden md:flex w-full md:w-1/2 flex-col">
-          {selectedJob && (
-            <JobDetails
-              selectedJob={selectedJob}
-              onClose={() => setSelectedJob(null)}
-              navigateToApplicants={(e) => navigateToApplicants(e, selectedJob)}
-            />
-          )}
-        </div>
+        {/* Right Side: Job Details (Desktop only) */}
+        {!isMobile && (
+          <div className="hidden md:flex w-full md:w-1/2 flex-col">
+            {selectedJob && (
+              <JobDetails
+                selectedJob={selectedJob}
+                onClose={() => setSelectedJob(null)}
+                navigateToApplicants={(e) =>
+                  navigateToApplicants(e, selectedJob)
+                }
+              />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

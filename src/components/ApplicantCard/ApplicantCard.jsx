@@ -3,7 +3,7 @@ import {
 import { faLocationDot, faPhone, faUniversity } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../button/Button";
-
+import Image from "../../assets/userLogo.jpg";
 const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryLabel, secondaryLabel }) => {
   return (
     <div className="rounded-md bg-fill-bg-color w-full px-4 pt-8 pb-3 mb-10 border border-border-color">
@@ -15,7 +15,7 @@ const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryL
         </div>
         <div className="w-24 h-24 ">
           <img
-            src={applicant.memberImageUrl}
+            src={applicant.memberImageUrl || Image} 
             alt="Applicant Logo"
             className="object-cover w-full h-full rounded-2xl"
           />

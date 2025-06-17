@@ -92,11 +92,18 @@ const Home = () => {
         searchTitle,
         searchLocation,
         minSalary: 0,
-        maxSalary: 10000
+        maxSalary: 100000
       });
+
       setFilteredJobs(results);
-      if (!isMobile && results.length > 0) {
-        handleViewDetails(results[0]);
+
+      if (results.length > 0) {
+        if (!isMobile) {
+          handleViewDetails(results[0]);
+        } else {
+          setSelectedJobId(null);
+          setSelectedJobDetails(null);
+        }
       } else {
         setSelectedJobId(null);
         setSelectedJobDetails(null);

@@ -6,7 +6,6 @@ import Button from "../button/Button";
 import Image from "../../assets/userLogo.jpg";
 const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryLabel, secondaryLabel }) => {
   console.log("applicant",applicant.educations);
-  
   return (
     <div className="rounded-md bg-fill-bg-color w-full px-4 pt-8 pb-3 mb-10 border border-border-color">
       {/* Applicant Header */}
@@ -38,8 +37,8 @@ const ApplicantCard = ({ applicant, onPrimaryAction, onSecondaryAction, primaryL
           <FontAwesomeIcon icon={faUniversity} className="text-dark-text" />
           
               <div className="text-sm font-semibold">
-                <p>{applicant?.educations?.level || " "} - {applicant?.educations?.faculty || " "}</p>
-                <p>{applicant?.educations?.universityName || " "}</p>
+                <p>{applicant?.educations[0]?.level || " "} - {applicant?.educations[0]?.faculty || " "}</p>
+                <p>{applicant?.educations[0]?.universityName || " "}</p>
               </div>
         </div>
 

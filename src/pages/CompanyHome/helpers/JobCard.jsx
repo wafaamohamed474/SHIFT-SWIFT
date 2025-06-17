@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faClock, faMoneyBillWave, faStar } from '@fortawesome/free-solid-svg-icons';
 import {  getUserData } from '../../../services/authService';
 import VectorImage from "../../../assets/Vector_tech.png"
+import Image from "../../../assets/userLogo.jpg";
 const JobCard = ({ job, onClick ,navigateToApplicants ,ratingData }) => {
   const userData = getUserData();
   const companyName = userData.firstName + " " + userData.lastName;
@@ -34,7 +35,7 @@ const JobCard = ({ job, onClick ,navigateToApplicants ,ratingData }) => {
        {/* logo */}
         {job.imageUrl ? (
           <img
-            src={job.imageUrl}
+            src={job.imageUrl || Image}
             alt="logo"
             className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover mt-4 sm:mt-0"
           />

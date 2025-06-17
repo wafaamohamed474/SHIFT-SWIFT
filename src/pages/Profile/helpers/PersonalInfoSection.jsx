@@ -1,29 +1,48 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import Button from "../../../components/button/Button";
-import { getUserData } from "../../../services/authService";
 import { useAlert } from "../../../context/AlertContext";
 import { AddOrUpdateMemberProfileData } from "../../../services/api/member";
+import { useEffect, useState } from "react";
+import { getCurrentUserData } from "../../../services/api/account";
 
 const PersonalInfoSection = () => {
   const { showAlert } = useAlert();
+const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  
+  useEffect(() => {
+    (async () => {
+      try {
+        const user = await getCurrentUserData();
+        console.log("user info" , user);
+        setCurrentUser(user);
+      } catch (error) {
+        console.error("Failed to fetch current user", error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
 
-  const data = getUserData();
-
-  const initialValues = {
-    memberId: data?.memberId || "",
-    firstName: data?.firstName || "",
-    lastName: data?.lastName || "",
-    phoneNumber: data?.phoneNumber || "",
-    alternativeNumber: data?.alternativeNumber || "",
-    genderId: data?.genderId?.toString() || "",
-    dateOfBirth: data?.dateOfBirth
-      ? new Date(data.dateOfBirth).toISOString().split("T")[0]
+ const initialValues = {
+    memberId: currentUser?.memberId || "",
+    firstName: currentUser?.firstName || "",
+    lastName: currentUser?.lastName || "",
+    phoneNumber: currentUser?.phoneNumber || "",
+    alternativeNumber: currentUser?.alternativeNumber || "",
+    genderId: currentUser?.genderId?.toString() || "",
+    dateOfBirth: currentUser?.dateOfBirth
+      ? new Date(currentUser.dateOfBirth).toISOString().split("T")[0]
       : "",
-    location: data?.location || "",
-    city: data?.city || "",
-    area: data?.area || "",
+    location: currentUser?.location || "",
+    city: currentUser?.city || "",
+    area: currentUser?.area || "",
   };
+
+  console.log("initialValues" , initialValues);
+  
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First Name is required"),
@@ -44,21 +63,34 @@ const PersonalInfoSection = () => {
     area: Yup.string().required("Area is required"),
   });
 
-  const handleSubmit = async (values, { setSubmitting , resetForm}) => {
+
+
+   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       const res = await AddOrUpdateMemberProfileData(values);
-      console.log("res is ", res.data);
-      resetForm({ values: res.data });
+      console.log("res of user" , res);
+      
       showAlert("Profile updated successfully!", "success");
-      window.location.reload();
+
+      // Update the currentUser with the new data
+      setCurrentUser((prev) => ({
+        ...prev,
+        ...res.data,
+      }));
+
     } catch (error) {
-      console.error("Failed to update profile: " + (error.message || error));
+      console.error("Failed to update profile: " + (error.message || error)); 
       showAlert("Failed to update profile", "error");
+
     } finally {
       setSubmitting(false);
     }
-  };
+  };  
 
+  
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="mt-4 border-b border-border-color pb-6">
       <Formik

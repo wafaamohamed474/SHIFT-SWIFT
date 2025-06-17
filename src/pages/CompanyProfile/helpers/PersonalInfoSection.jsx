@@ -1,24 +1,56 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Button from "../../../components/button/Button";
 import { AddCompanyProfileData } from "../../../services/api/company";
-import { getUserData } from "../../../services/authService";
+import { getCurrentUserData } from "../../../services/api/account";
 import * as Yup from "yup";
 import { useAlert } from "../../../context/AlertContext";
+import { useEffect, useState } from "react";
 
 const PersonalInfoSection = () => {
   const { showAlert } = useAlert();
-  const data = getUserData();
-  const initialValues = {
-    firstName: data.firstName || "",
-    lastName: data.lastName || "",
-    mobileNumber: data.phoneNumber || "",
-    overview: data.overview || "",
-    field: data.field || "",
-    dateOfEstablish: data.dateOfEstablish || "",
-    country: data.country || "",
-    city: data.city || "",
-    area: data.area || "",
-  };
+
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch current user data on component mount
+  useEffect(() => {
+    (async () => {
+      try {
+        const user = await getCurrentUserData();
+        setCurrentUser(user);
+      } catch (error) {
+        console.error("Failed to fetch current user", error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
+  const initialValues = currentUser
+    ? {
+        firstName: currentUser?.firstName || "",
+        lastName: currentUser?.lastName || "",
+        mobileNumber: currentUser?.phoneNumber || "",
+        overview: currentUser?.overview || "",
+        field: currentUser?.field || "",
+        dateOfEstablish: currentUser?.dateOfEstablish
+          ? new Date(currentUser.dateOfEstablish).toISOString().split("T")[0]
+          : "",
+        country: currentUser?.country || "",
+        city: currentUser?.city || "",
+        area: currentUser?.area || "",
+      }
+    : {
+        firstName: "",
+        lastName: "",
+        mobileNumber: "",
+        overview: "",
+        field: "",
+        dateOfEstablish: "",
+        country: "",
+        city: "",
+        area: "",
+      };
 
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First name is required"),
@@ -37,7 +69,7 @@ const PersonalInfoSection = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       const payload = {
-        companyId: data.companyId,
+        companyId: currentUser?.companyId,
         firstName: values.firstName,
         lastName: values.lastName,
         phoneNumber: values.mobileNumber,
@@ -50,7 +82,10 @@ const PersonalInfoSection = () => {
       };
       await AddCompanyProfileData(payload);
       showAlert("Company profile saved", "success");
-      window.location.reload();
+
+      // refresh current user data after submission
+      const updatedUser = await getCurrentUserData();
+      setCurrentUser(updatedUser);
     } catch (error) {
       showAlert("Failed to save company profile", "error");
     } finally {
@@ -58,12 +93,17 @@ const PersonalInfoSection = () => {
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="mt-4 border-b border-border-color pb-6">
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
+        enableReinitialize
       >
         {({ isSubmitting }) => (
           <Form className="flex flex-col">

@@ -2,12 +2,23 @@ import { Link } from "react-router";
 import { getUserData, getUserType } from "../../services/authService";
 import userLogo from "../../assets/userLogo.jpg";
 import { useEffect, useState } from "react";
-import { GetProfilePicture } from "../../services/api/account";
+import { getCurrentUserData, GetProfilePicture } from "../../services/api/account";
 
 const Navbar = () => {
-  const userData = getUserData();
-  const Name = (userData?.firstName ?? "") + " " + (userData?.lastName ?? "");
-
+  
+  const [currentUser, setCurrentUser] = useState(null);
+  const Name = (currentUser?.firstName ?? "") + " " + (currentUser?.lastName ?? "");
+   useEffect(() => {
+      (async () => {
+        try {
+          const user = await getCurrentUserData();
+          console.log("user info in nav" , user);
+          setCurrentUser(user);
+        } catch (error) {
+          console.error("Failed to fetch current user", error);
+        } 
+      })();
+    }, []);
   const userType = getUserType();
   const profilePath =
     userType === "company" ? "/home/company/profile" : "/home/user/profile";

@@ -1,12 +1,27 @@
 import { useEffect, useState } from "react";
 import ProfilePictureUpload from "../profilePictureUpload/ProfilePictureUpload";
 import { getUserData, getUserType } from "../../services/authService";
-import { GetProfilePicture } from "../../services/api/account";
+import { getCurrentUserData, GetProfilePicture } from "../../services/api/account";
 import userLogo from "../../assets/userLogo.jpg";
 import ModalPortal from "../modalPortal/ModalPortal";
 
 export default function ProfileCard() {
-  const { firstName = "", lastName = "", email = "" } = getUserData() ?? {};
+
+  const [currentUser, setCurrentUser] = useState(null);
+    const Name = (currentUser?.firstName ?? "") + "  " + (currentUser?.lastName ?? "");
+    const email = currentUser?.email ?? ""
+     useEffect(() => {
+        (async () => {
+          try {
+            const user = await getCurrentUserData();
+            console.log("user info in nav" , user);
+            setCurrentUser(user);
+          } catch (error) {
+            console.error("Failed to fetch current user", error);
+          } 
+        })();
+      }, []);
+  
   const id =
     getUserType() === "user"
       ? getUserData()?.memberId
@@ -40,7 +55,7 @@ export default function ProfileCard() {
             className="object-cover w-full h-full"
           />
         </div>
-        <h4 className="text-bg-color">{firstName + " " + lastName}</h4>
+        <h4 className="text-bg-color">{Name}</h4>
         <p className="text-border-color">{email}</p>
       </div>
 

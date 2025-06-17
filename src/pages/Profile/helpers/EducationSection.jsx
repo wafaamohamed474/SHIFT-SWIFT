@@ -19,7 +19,7 @@ const EducationSection = () => {
     (async () => {
       try {
         const education = await GetEducation(userId);
-        console.log("Fetched education", education.data);
+        console.log("Fetched user education", education.data);
         setCurrentUserEducation(education.data);
       } catch (error) {
         console.error("Failed to fetch education", error);
